@@ -5,7 +5,8 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { MOCK_TEMPLATES } from "@/mocks/templates";
-import { FileCode, Plus } from "lucide-react";
+import { FileCode, Plus, FileText, Download, Star, Clock } from "lucide-react";
+import { MetricCard } from "@/components/cards";
 
 export default function TemplatesPage() {
   const { addToast } = useNotifications();
@@ -16,7 +17,9 @@ export default function TemplatesPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Templates" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <FileCode className="w-5 h-5 text-indigo-400" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600/15 border border-indigo-500/30">
+              <FileCode className="w-4 h-4 text-indigo-400" />
+            </span>
             <span>Document Templates</span>
           </h1>
           <p className="text-xs text-slate-400">Access pre-approved templates for NDAs, Sub-licensing agreements, and court motions.</p>
@@ -28,6 +31,14 @@ export default function TemplatesPage() {
         >
           Add Template
         </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Total Templates" value={MOCK_TEMPLATES.length} info="Approved" trend="up" />
+        <MetricCard title="Practice Areas" value="6" info="Covered" trend="neutral" />
+        <MetricCard title="Avg Version" value="2.4" info="Lifecycle" trend="neutral" />
+        <MetricCard title="Uses (30d)" value="128" info="Drafted from" trend="up" change="+18" />
       </div>
 
       <DataTable

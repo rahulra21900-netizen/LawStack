@@ -5,8 +5,9 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { Input, Select } from "@/components/forms";
+import { Card, MetricCard } from "@/components/cards";
 import { MOCK_CASES } from "@/mocks/cases";
-import { Briefcase, Plus, Filter, Search, Download } from "lucide-react";
+import { Briefcase, Plus, ListFilter as Filter, Search, Download, Scale, Users, FileText, TrendingUp, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function CasesListPage() {
@@ -24,12 +25,13 @@ export default function CasesListPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Cases" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Briefcase className="w-5 h-5 text-blue-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/15 border border-blue-500/30">
+              <Briefcase className="w-4 h-4 text-blue-400" />
+            </span>
             <span>Matter Management</span>
           </h1>
           <p className="text-xs text-slate-400">Search, filter, and audit active client case matters.</p>
@@ -44,39 +46,53 @@ export default function CasesListPage() {
           </Button>
           <Link href="/workspace/cases/new">
             <Button variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
-              New Case Matter
+              New Matter
             </Button>
           </Link>
         </div>
       </div>
 
-      {/* Filter Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-900 border border-slate-800 p-4 rounded-xl">
-        <Input
-          placeholder="Search by name or number..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Select
-          options={[
-            { label: "All Practice Areas", value: "all" },
-            { label: "Intellectual Property", value: "Intellectual Property" },
-            { label: "Tax Law", value: "Tax Law" },
-            { label: "Corporate Law", value: "Corporate Law" }
-          ]}
-          value={selectedPractice}
-          onChange={(e) => setSelectedPractice(e.target.value)}
-        />
-        <Select
-          options={[
-            { label: "All Statuses", value: "all" },
-            { label: "Active", value: "Active" },
-            { label: "Archived", value: "Archived" }
-          ]}
-          value={selectedStatus}
-          onChange={(e) => setSelectedStatus(e.target.value)}
-        />
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Active Matters" value={MOCK_CASES.filter((c) => c.status === "Active").length} info="In docket" trend="up" />
+        <MetricCard title="In Discovery" value={MOCK_CASES.filter((c) => c.stage === "Discovery").length} info="Discovery stage" trend="neutral" />
+        <MetricCard title="Pre-Trial" value={MOCK_CASES.filter((c) => c.stage === "Pre-Trial").length} info="Approaching trial" trend="neutral" />
+        <MetricCard title="Hearings (30d)" value="3" info="Scheduled" trend="up" change="+1" />
       </div>
+
+      {/* Filter Bar */}
+      <Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+            <input
+              placeholder="Search by name or number..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full pl-9 pr-3 py-2 bg-slate-950/50 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-slate-700 transition-all"
+            />
+          </div>
+          <Select
+            options={[
+              { label: "All Practice Areas", value: "all" },
+              { label: "Intellectual Property", value: "Intellectual Property" },
+              { label: "Tax Law", value: "Tax Law" },
+              { label: "Corporate Law", value: "Corporate Law" },
+            ]}
+            value={selectedPractice}
+            onChange={(e) => setSelectedPractice(e.target.value)}
+          />
+          <Select
+            options={[
+              { label: "All Statuses", value: "all" },
+              { label: "Active", value: "Active" },
+              { label: "Archived", value: "Archived" },
+            ]}
+            value={selectedStatus}
+            onChange={(e) => setSelectedStatus(e.target.value)}
+          />
+        </div>
+      </Card>
 
       {/* Cases Data Table */}
       <DataTable
@@ -88,13 +104,13 @@ export default function CasesListPage() {
               <Link href={`/workspace/cases/${c.id}`} className="font-bold text-blue-400 hover:underline">
                 {c.title}
               </Link>
-            )
+            ),
           },
           { header: "Case Number", accessor: (c) => <span className="font-mono text-[10px] text-slate-400">{c.caseNumber}</span> },
           { header: "Practice Area", accessor: (c) => <span>{c.practiceArea}</span> },
           { header: "Lead Attorney", accessor: (c) => <span className="font-semibold">{c.leadCounsel}</span> },
           { header: "Stage", accessor: (c) => <Badge label={c.stage} variant="info" /> },
-          { header: "Status", accessor: (c) => <Badge label={c.status} variant={c.status === "Active" ? "success" : "neutral"} /> }
+          { header: "Status", accessor: (c) => <Badge label={c.status} variant={c.status === "Active" ? "success" : "neutral"} /> },
         ]}
       />
     </div>

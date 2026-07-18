@@ -5,7 +5,8 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { MOCK_KNOWLEDGE_ARTICLES } from "@/mocks/knowledge";
-import { BookOpen, Plus } from "lucide-react";
+import { BookOpen, Plus, Star, Clock, TrendingUp } from "lucide-react";
+import { MetricCard } from "@/components/cards";
 
 export default function KnowledgeBasePage() {
   const { addToast } = useNotifications();
@@ -16,7 +17,9 @@ export default function KnowledgeBasePage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Knowledge Base" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-indigo-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600/15 border border-indigo-500/30">
+              <BookOpen className="w-4 h-4 text-indigo-400" />
+            </span>
             <span>Firm Knowledge Base</span>
           </h1>
           <p className="text-xs text-slate-400">Access research, Delaware chancery rules summaries, and precedents libraries.</p>
@@ -28,6 +31,14 @@ export default function KnowledgeBasePage() {
         >
           New Article
         </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Articles" value={MOCK_KNOWLEDGE_ARTICLES.length} info="Published" trend="up" />
+        <MetricCard title="Categories" value="6" info="Practice areas" trend="neutral" />
+        <MetricCard title="Favorites" value="24" info="Bookmarked" trend="up" />
+        <MetricCard title="Views (30d)" value="412" info="Read" trend="up" change="+18%" />
       </div>
 
       <DataTable

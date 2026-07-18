@@ -4,7 +4,8 @@ import React from "react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
-import { Bell, Check } from "lucide-react";
+import { Bell, Check, BellOff, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2 } from "lucide-react";
+import { MetricCard } from "@/components/cards";
 
 export default function NotificationsPage() {
   const { notifications, markAsRead, clearAll, addToast } = useNotifications();
@@ -15,7 +16,9 @@ export default function NotificationsPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Notifications" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Bell className="w-5 h-5 text-blue-400" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/15 border border-blue-500/30">
+              <Bell className="w-4 h-4 text-blue-400" />
+            </span>
             <span>My Notifications Center</span>
           </h1>
           <p className="text-xs text-slate-400">Manage case alert logs, system upgrades, and invoice alerts.</p>
@@ -30,6 +33,14 @@ export default function NotificationsPage() {
         >
           Mark All Read
         </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Unread" value={notifications.filter((n) => !n.read).length} info="Requires attention" trend="up" />
+        <MetricCard title="Read" value={notifications.filter((n) => n.read).length} info="Archived" trend="neutral" />
+        <MetricCard title="Critical" value="1" info="High priority" trend="down" />
+        <MetricCard title="Today" value="3" info="New today" trend="up" />
       </div>
 
       <DataTable

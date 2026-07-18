@@ -1,31 +1,33 @@
 "use client";
 
 import React, { useState } from "react";
-import { useNotifications } from "@/hooks/useNotifications";
-import { Breadcrumb, Button, Badge } from "@/components/ui";
-import { DataTable } from "@/components/tables";
-import { Input } from "@/components/forms";
-import { MOCK_TENANTS } from "@/mocks/tenants";
-import { Building, Plus } from "lucide-react";
 import Link from "next/link";
+import { Breadcrumb, Button, Badge } from "@/components/ui";
+import { MOCK_TENANTS } from "@/mocks/tenants";
+import { Building2, Plus, Search, ChevronRight, Globe, Users, TrendingUp, TriangleAlert as AlertTriangle, Shield, ListFilter as Filter } from "lucide-react";
 
 export default function TenantAdminListPage() {
-  const { addToast } = useNotifications();
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("All");
 
-  const filteredTenants = MOCK_TENANTS.filter((t) => t.name.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filtered = MOCK_TENANTS.filter((t) => {
+    const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase()) || t.subdomain.includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === "All" || t.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
-          <Breadcrumb items={[{ name: "Platform", href: "/platform/dashboard" }, { name: "Tenants" }]} />
+          <Breadcrumb items={[{ name: "Platform", href: "/platform/dashboard" }, { name: "Tenant Administration" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Building className="w-5 h-5 text-blue-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/15 border border-blue-500/30">
+              <Building2 className="w-4 h-4 text-blue-400" />
+            </span>
             <span>Tenant Administration</span>
           </h1>
-          <p className="text-xs text-slate-400">Manage client namespaces databases, subscriptions, and quotas.</p>
+          <p className="text-xs text-slate-400">Manage client namespaces, subscriptions, quotas, and user seats.</p>
         </div>
         <Link href="/platform/tenant-provisioning/new">
           <Button variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
@@ -34,32 +36,91 @@ export default function TenantAdminListPage() {
         </Link>
       </div>
 
-      {/* Filter Bar */}
-      <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl max-w-md">
-        <Input
-          placeholder="Search by firm name..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { label: "Total Tenants", value: MOCK_TENANTS.length, icon: Building2, color: "text-blue-400" },
+          { label: "Active", value: MOCK_TENANTS.filter((t) => t.status === "Active").length, icon: TrendingUp, color: "text-emerald-400" },
+          { label: "Pending", value: MOCK_TENANTS.filter((t) => t.status === "Pending").length, icon: AlertTriangle, color: "text-amber-400" },
+          { label: "Suspended", value: MOCK_TENANTS.filter((t) => t.status === "Suspended").length, icon: Shield, color: "text-red-400" },
+        ].map((s) => {
+          const Icon = s.icon;
+          return (
+            <div key={s.label} className="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">{s.label}</span>
+                <Icon className={`w-4 h-4 ${s.color}`} />
+              </div>
+              <div className="mt-1 text-2xl font-extrabold text-white">{s.value}</div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Tenants Table */}
-      <DataTable
-        data={filteredTenants}
-        columns={[
-          {
-            header: "Firm Name",
-            accessor: (t) => (
-              <Link href={`/platform/tenant-administration/${t.id}`} className="font-bold text-blue-400 hover:underline">
-                {t.name}
-              </Link>
-            )
-          },
-          { header: "Tenant ID", accessor: (t) => <span className="font-mono text-[10px] text-slate-400">{t.id}</span> },
-          { header: "Subscription Tier", accessor: (t) => <Badge label={t.tier} variant="info" /> },
-          { header: "Status", accessor: (t) => <Badge label={t.status} variant={t.status === "Active" ? "success" : "neutral"} /> }
-        ]}
-      />
+      {/* Filter bar */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+          <input
+            type="text"
+            placeholder="Search by firm name or subdomain..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="block w-full pl-10 pr-3 py-2.5 bg-slate-950/50 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-slate-700 transition-all"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-slate-500" />
+          {["All", "Active", "Pending", "Suspended"].map((s) => (
+            <button
+              key={s}
+              onClick={() => setStatusFilter(s)}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${
+                statusFilter === s ? "bg-blue-600 text-white" : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Tenant table */}
+      <div className="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden">
+        <div className="grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-800 bg-slate-950/40 text-[10px] uppercase tracking-wider text-slate-500 font-bold">
+          <div className="col-span-5">Firm</div>
+          <div className="col-span-3">Subdomain</div>
+          <div className="col-span-2">Tier</div>
+          <div className="col-span-2 text-right">Status</div>
+        </div>
+        {filtered.length === 0 ? (
+          <div className="px-4 py-10 text-center text-xs text-slate-500">No tenants match your filters.</div>
+        ) : (
+          filtered.map((t) => (
+            <Link
+              key={t.id}
+              href={`/platform/tenant-administration/${t.id}`}
+              className="grid grid-cols-12 gap-2 px-4 py-3 border-b border-slate-800 last:border-0 hover:bg-slate-900/60 transition-colors items-center"
+            >
+              <div className="col-span-5 flex items-center gap-3 min-w-0">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-white text-[10px] font-bold">
+                  {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-bold text-white truncate">{t.name}</div>
+                  <div className="text-[10px] text-slate-500">Joined {new Date(t.joinedDate).toLocaleDateString()}</div>
+                </div>
+              </div>
+              <div className="col-span-3 font-mono text-[11px] text-slate-400 truncate">{t.subdomain}.lawstack.com</div>
+              <div className="col-span-2"><Badge label={t.tier} variant="neutral" /></div>
+              <div className="col-span-2 flex items-center justify-end gap-1">
+                <Badge label={t.status} variant={t.status === "Active" ? "success" : t.status === "Suspended" ? "error" : "warning"} />
+                <ChevronRight className="w-4 h-4 text-slate-600" />
+              </div>
+            </Link>
+          ))
+        )}
+      </div>
     </div>
   );
 }

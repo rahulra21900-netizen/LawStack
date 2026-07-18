@@ -5,8 +5,9 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { MOCK_INVOICES } from "@/mocks/billing";
-import { DollarSign, Download } from "lucide-react";
+import { DollarSign, Download, TrendingUp, Clock, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2 } from "lucide-react";
 import { formatCurrency } from "@/utils";
+import { MetricCard, Card } from "@/components/cards";
 
 export default function BillingPage() {
   const { addToast } = useNotifications();
@@ -17,7 +18,9 @@ export default function BillingPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Billing" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <DollarSign className="w-5 h-5 text-emerald-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/15 border border-emerald-500/30">
+              <DollarSign className="w-4 h-4 text-emerald-400" />
+            </span>
             <span>Billing Ledger & Invoices</span>
           </h1>
           <p className="text-xs text-slate-400">Track outstanding retainer fees, payment receipts, and draft bills.</p>
@@ -29,6 +32,14 @@ export default function BillingPage() {
         >
           Export Ledger Report
         </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Outstanding" value="$42,180" trend="up" change="6 invoices" info="Awaiting payment" />
+        <MetricCard title="Collected (MTD)" value="$128.4k" trend="up" change="+12.4%" info="This month" />
+        <MetricCard title="Overdue" value="2" trend="down" change="Past due" info="Requires follow-up" />
+        <MetricCard title="Billable Hours" value="1,284" trend="up" change="+86 this week" info="Logged" />
       </div>
 
       <DataTable

@@ -6,8 +6,9 @@ import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { Input, Select } from "@/components/forms";
 import { MOCK_TASKS } from "@/mocks/tasks";
-import { CheckSquare, Plus, Download, Kanban } from "lucide-react";
+import { SquareCheck as CheckSquare, Plus, Download, Kanban, Clock, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { MetricCard } from "@/components/cards";
 
 export default function TasksListPage() {
   const { addToast } = useNotifications();
@@ -22,7 +23,9 @@ export default function TasksListPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Tasks" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <CheckSquare className="w-5 h-5 text-blue-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-600/15 border border-cyan-500/30">
+              <CheckSquare className="w-4 h-4 text-cyan-400" />
+            </span>
             <span>Tasks Workspace</span>
           </h1>
           <p className="text-xs text-slate-400">Track and allocate attorney dockets action items.</p>
@@ -46,6 +49,14 @@ export default function TasksListPage() {
             </Button>
           </Link>
         </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Open Tasks" value={MOCK_TASKS.filter((t) => t.status !== "Completed").length} info="In progress" trend="up" />
+        <MetricCard title="Completed" value={MOCK_TASKS.filter((t) => t.status === "Completed").length} info="Closed" trend="neutral" />
+        <MetricCard title="Critical" value={MOCK_TASKS.filter((t) => t.priority === "Critical").length} info="High priority" trend="down" />
+        <MetricCard title="Due This Week" value="4" info="Approaching" trend="neutral" />
       </div>
 
       {/* Filter Bar */}

@@ -6,8 +6,9 @@ import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { Input, Select } from "@/components/forms";
 import { MOCK_HEARINGS } from "@/mocks/hearings";
-import { Scale, Plus, Download } from "lucide-react";
+import { Scale, Plus, Download, Calendar, Users, Clock, CircleCheck as CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { MetricCard } from "@/components/cards";
 
 export default function HearingsListPage() {
   const { addToast } = useNotifications();
@@ -22,7 +23,9 @@ export default function HearingsListPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Hearings" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Scale className="w-5 h-5 text-amber-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/15 border border-amber-500/30">
+              <Scale className="w-4 h-4 text-amber-400" />
+            </span>
             <span>Hearings & Trials Docket</span>
           </h1>
           <p className="text-xs text-slate-400">Track court appearances, judge assignments, and trial statuses.</p>
@@ -41,6 +44,14 @@ export default function HearingsListPage() {
             </Button>
           </Link>
         </div>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Scheduled" value={MOCK_HEARINGS.filter((h) => h.status === "Scheduled").length} info="Upcoming" trend="up" />
+        <MetricCard title="Completed" value={MOCK_HEARINGS.filter((h) => h.status === "Completed").length} info="Concluded" trend="neutral" />
+        <MetricCard title="This Week" value="3" info="Next 7 days" trend="up" />
+        <MetricCard title="Courtrooms" value="4" info="Active venues" trend="neutral" />
       </div>
 
       {/* Filter Bar */}

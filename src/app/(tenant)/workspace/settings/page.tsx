@@ -17,7 +17,9 @@ export default function WorkspaceSettingsPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Settings" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <Settings className="w-5 h-5 text-slate-400" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-700/40 border border-slate-600/40">
+              <Settings className="w-4 h-4 text-slate-300" />
+            </span>
             <span>Workspace Preferences</span>
           </h1>
           <p className="text-xs text-slate-400">Configure firm profile details, theme settings, and module locks.</p>

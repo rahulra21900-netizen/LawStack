@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { MOCK_CALENDAR_EVENTS } from "@/mocks/calendar";
-import { Calendar as CalendarIcon, Plus } from "lucide-react";
+import { Calendar as CalendarIcon, Plus, Clock, Scale, Users, TriangleAlert as AlertTriangle } from "lucide-react";
+import { MetricCard, Card } from "@/components/cards";
 
 export default function MasterCalendarPage() {
   const { addToast } = useNotifications();
@@ -17,7 +18,9 @@ export default function MasterCalendarPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Calendar" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5 text-amber-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-600/15 border border-amber-500/30">
+              <CalendarIcon className="w-4 h-4 text-amber-400" />
+            </span>
             <span>Master Practice Calendar</span>
           </h1>
           <p className="text-xs text-slate-400">Track trials, depositions, filing deadlines, and client consults.</p>
@@ -29,6 +32,14 @@ export default function MasterCalendarPage() {
         >
           Add Calendar Event
         </Button>
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard title="Events (30d)" value={MOCK_CALENDAR_EVENTS.length} info="Scheduled" trend="up" />
+        <MetricCard title="Hearings" value="3" info="Court appearances" trend="neutral" />
+        <MetricCard title="Deadlines" value="2" info="Filing due" trend="down" change="Approaching" />
+        <MetricCard title="Consults" value="4" info="Client meetings" trend="up" />
       </div>
 
       {/* Switcher & Calendar Frame */}

@@ -28,7 +28,9 @@ export default function DocumentsListPage() {
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Documents" }]} />
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <FileText className="w-5 h-5 text-indigo-500" />
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600/15 border border-indigo-500/30">
+              <FileText className="w-4 h-4 text-indigo-400" />
+            </span>
             <span>Document Workspace</span>
           </h1>
           <p className="text-xs text-slate-400">Manage pleadings, brief motions, contracts, and retention locks.</p>
