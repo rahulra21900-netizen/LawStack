@@ -5,11 +5,12 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { Card } from "@/components/cards";
 import { Switch } from "@/components/forms";
-import { Settings, Shield, Lock, Globe, KeyRound, Server, Database, Bell, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2 } from "lucide-react";
+import { Settings, Shield, Lock, Globe, KeyRound, Server, Database, Bell, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle2, BookOpen, X } from "lucide-react";
 
 export default function PlatformSettingsPage() {
   const { addToast } = useNotifications();
   const [maintenance, setMaintenance] = useState(false);
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
   const [enforceMfa, setEnforceMfa] = useState(true);
   const [auditExport, setAuditExport] = useState(true);
   const [allowSignup, setAllowSignup] = useState(false);
@@ -135,11 +136,136 @@ export default function PlatformSettingsPage() {
         </Card>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-2">
+        <Button variant="outline" leftIcon={<BookOpen className="w-4 h-4" />} onClick={() => setShowDeveloperGuide(true)}>
+          Developer Guide
+        </Button>
         <Button variant="primary" onClick={() => addToast("Settings Saved", "Platform settings persisted successfully.", "success")}>
           Save settings
         </Button>
       </div>
+
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-blue-400">Developer Guide</p>
+                <h2 className="text-lg font-bold text-white">Platform Settings Handoff Notes</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-6 p-5 text-sm text-slate-300">
+              <section>
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
+                <p>
+                  This page is the control center for platform-wide operational settings. It should let administrators change security posture, maintenance state, notification channels, and region visibility for the SaaS platform.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What each section should do</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  {[
+                    {
+                      title: "Security Controls",
+                      detail: "Manage MFA enforcement, audit export behavior, and self-signup rules. These settings directly affect platform security posture and compliance posture."
+                    },
+                    {
+                      title: "Operations & Maintenance",
+                      detail: "Handle maintenance mode, region visibility, and platform alert channels. These controls are used during incidents and platform-wide changes."
+                    },
+                    {
+                      title: "Save settings",
+                      detail: "Persist all current toggles to a settings store and show a success or failure toast to the user."
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                      <p className="mb-1 font-semibold text-white">{item.title}</p>
+                      <p className="text-xs leading-5 text-slate-400">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Implementation logic</h3>
+                <ul className="space-y-2">
+                  <li><span className="font-semibold text-white">State model:</span> keep each toggle in local component state first, then map it to a settings object that can be sent to the backend later.</li>
+                  <li><span className="font-semibold text-white">Save action:</span> when the user clicks Save settings, the page should validate the current values and persist them through a settings service.</li>
+                  <li><span className="font-semibold text-white">Toast feedback:</span> show success, error, or warning feedback depending on whether the save succeeds or a dependency fails.</li>
+                  <li><span className="font-semibold text-white">Persistence:</span> in production, this page should pull from a platform settings API and write back through a secure admin endpoint.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">How each toggle should work</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Enforce MFA for all admins</p>
+                    <p className="text-xs leading-5 text-slate-400">
+                      This means every platform admin must complete a second verification step after entering their password. The logic should check the user role, then trigger a TOTP or OTP challenge during sign-in. If the admin has not enrolled MFA yet, the flow should guide them to set it up before access is granted.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Auto-export audit trail</p>
+                    <p className="text-xs leading-5 text-slate-400">
+                      This enables scheduled export of immutable audit logs to a secure compliance destination. It is useful for legal, regulatory, and incident-response workflows because it preserves a backup trail even if the primary platform instance is unavailable.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Allow admin self-signup</p>
+                    <p className="text-xs leading-5 text-slate-400">
+                      This controls whether a new admin can register themselves through a public or self-service signup route. In most enterprise SaaS setups, this should stay disabled by default so only approved internal operators or controlled provisioning flows can create admin accounts.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Global maintenance mode</p>
+                    <p className="text-xs leading-5 text-slate-400">
+                      This is a platform-wide safety switch used during deployments, incidents, or upgrades. When enabled, non-admin users should see the maintenance experience and be blocked from normal access, while admins can still enter to manage the incident or restore service.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Operational alert routing</h3>
+                <p className="text-xs leading-5 text-slate-400">
+                  The three alert channels below are meant to cover different levels of incident response. Email is for operational visibility, Slack is for team coordination, and PagerDuty is reserved for critical priority incidents so the right on-call people are notified immediately.
+                </p>
+                <div className="mt-3 grid gap-3 md:grid-cols-3">
+                  {[
+                    { title: "Email", detail: "ops@lawstack.com — used for operational notices and incident summaries." },
+                    { title: "Slack", detail: "#platform-alerts — used for real-time team coordination and updates." },
+                    { title: "PagerDuty", detail: "P1 only — used for urgent production incidents that need immediate escalation." },
+                  ].map((channel) => (
+                    <div key={channel.title} className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                      <p className="mb-1 font-semibold text-white">{channel.title}</p>
+                      <p className="text-xs leading-5 text-slate-400">{channel.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Future backend hooks</h3>
+                <ul className="space-y-2">
+                  <li><span className="font-semibold text-white">Settings service:</span> create a dedicated settings service for reading and writing platform-wide configuration.</li>
+                  <li><span className="font-semibold text-white">Security policies:</span> apply the values to authentication, audit export, and maintenance middleware in the backend.</li>
+                  <li><span className="font-semibold text-white">Audit trail:</span> every change made from this page should emit an audit event so the platform retains an immutable record of admin actions.</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

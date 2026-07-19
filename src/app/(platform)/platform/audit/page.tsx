@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Breadcrumb, Badge, Button } from "@/components/ui";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_ACTIVITIES } from "@/mocks/activity";
-import { ShieldAlert, Search, ListFilter as Filter, Download, Activity, FileText, Users, Settings, Lock, ChevronRight, Calendar } from "lucide-react";
+import { ShieldAlert, Search, ListFilter as Filter, Download, Activity, FileText, Users, Settings, Lock, ChevronRight, Calendar, BookOpen, X } from "lucide-react";
 
 const typeIcon: Record<string, { color: string; icon: React.ComponentType<{ className?: string }> }> = {
   Document: { color: "text-blue-400", icon: FileText },
@@ -17,6 +17,7 @@ const typeIcon: Record<string, { color: string; icon: React.ComponentType<{ clas
 export default function AuditCenterPage() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All");
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   const filtered = MOCK_ACTIVITIES.filter((a) => {
     const matchesSearch = a.action.toLowerCase().includes(search.toLowerCase()) || a.userName.toLowerCase().includes(search.toLowerCase());
@@ -37,9 +38,14 @@ export default function AuditCenterPage() {
           </h1>
           <p className="text-xs text-slate-400">Immutable record of every administrative and tenant-scoped action across the platform.</p>
         </div>
-        <Button variant="secondary" leftIcon={<Download className="w-4 h-4" />}>
-          Export Trail
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" leftIcon={<BookOpen className="w-4 h-4" />} onClick={() => setShowDeveloperGuide(true)}>
+            Developer Guide
+          </Button>
+          <Button variant="secondary" leftIcon={<Download className="w-4 h-4" />}>
+            Export Trail
+          </Button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -153,6 +159,115 @@ export default function AuditCenterPage() {
           </div>
         </Card>
       </div>
+
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-blue-400">Developer Guide</p>
+                <h2 className="text-lg font-bold text-white">Platform Audit Center Handoff Notes</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-6 p-5 text-sm text-slate-300">
+              <section>
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
+                <p>
+                  This page is the platform-wide audit console. It should show a searchable, filterable history of actions performed by platform admins, tenant admins, and other system actors so security teams can review what happened and when.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What each section should do</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  {[
+                    {
+                      title: "Header and summary",
+                      detail: "Present the page title, a short description, and primary actions such as Export Trail and Developer Guide. This is the entry point for the audit experience."
+                    },
+                    {
+                      title: "Metric cards",
+                      detail: "Show a quick snapshot of the most important audit health indicators such as recent events, failed auth, admin actions, and security-related incidents."
+                    },
+                    {
+                      title: "Search and filters",
+                      detail: "Allow the user to find events by action, actor, entity, or event type. Filters should narrow the visible list without reloading the page."
+                    },
+                    {
+                      title: "Timeline and records table",
+                      detail: "Show a visual event stream on the left and a full audit table on the right. The table is the primary working surface for reviewing individual events."
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                      <p className="mb-1 font-semibold text-white">{item.title}</p>
+                      <p className="text-xs leading-5 text-slate-400">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Implementation logic</h3>
+                <ul className="space-y-2">
+                  <li><span className="font-semibold text-white">Data source:</span> the page should read from an audit event list provided by the platform service layer. Each event should include action, actor, tenant, entity type, timestamp, and an ID.</li>
+                  <li><span className="font-semibold text-white">Filtering:</span> keep filter state locally in the component and derive the visible list from the full event set. This makes the page fast and easy to refine.</li>
+                  <li><span className="font-semibold text-white">Detail navigation:</span> clicking an audit row should route to /platform/audit/[id] where the developer can show a detailed event view.</li>
+                  <li><span className="font-semibold text-white">Export:</span> the Export Trail button should call a service that prepares a CSV or JSON export of the currently filtered audit events.</li>
+                  <li><span className="font-semibold text-white">Real-time behavior:</span> in a production system, this page should subscribe to a stream or polling endpoint so new events appear without manual refresh.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What each event should contain</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Action</p>
+                    <p className="text-xs leading-5 text-slate-400">A short text label such as “User invited”, “Document downloaded”, or “Security policy changed”.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Actor</p>
+                    <p className="text-xs leading-5 text-slate-400">The user or system identity that triggered the event.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Tenant</p>
+                    <p className="text-xs leading-5 text-slate-400">The target tenant or workspace associated with the activity. If the action is platform-wide, this can be blank or set to SaaS Admin.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Entity Type</p>
+                    <p className="text-xs leading-5 text-slate-400">Used to categorize the event: Document, User, Settings, or Security.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Timestamp</p>
+                    <p className="text-xs leading-5 text-slate-400">The exact time the event occurred. This should be stored in UTC and displayed in the local timezone if desired.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Metadata</p>
+                    <p className="text-xs leading-5 text-slate-400">Optional fields such as IP address, device, change summary, and previous/new values for compliance or investigations.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Future backend hooks</h3>
+                <ul className="space-y-2">
+                  <li><span className="font-semibold text-white">Audit service:</span> create an audit service that reads and writes events to an immutable store or log pipeline.</li>
+                  <li><span className="font-semibold text-white">Event ingestion:</span> every create/update/delete operation across the platform should emit an event to the audit stream.</li>
+                  <li><span className="font-semibold text-white">Security alerts:</span> flag suspicious patterns such as repeated failed logins or high-risk admin changes.</li>
+                  <li><span className="font-semibold text-white">Retention:</span> the backend should enforce audit retention and access control so only authorized users can view sensitive logs.</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

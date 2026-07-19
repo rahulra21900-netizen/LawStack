@@ -1,11 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { Building2, ArrowRight, CircleCheck as CheckCircle2, Sparkles } from "lucide-react";
 
 export default function TenantSignupPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/tenant/join-workspace");
+  }, [router]);
   return (
     <AuthShell
       badge="Firm Practice Room"

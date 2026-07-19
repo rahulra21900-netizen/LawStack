@@ -5,8 +5,6 @@ import { useSimulation } from "@/providers/SimulationProvider";
 import { useTheme } from "@/providers/ThemeProvider";
 import { useNotifications } from "@/providers/NotificationProvider";
 import { useCommandPalette } from "@/providers/CommandPaletteProvider";
-import { MOCK_TENANTS } from "@/mocks/tenants";
-import { MOCK_USERS } from "@/mocks/users";
 import { MOCK_CASES } from "@/mocks/cases";
 import { searchArray } from "@/utils/search";
 import {
@@ -15,15 +13,14 @@ import {
   HelpCircle,
   Sun,
   Moon,
-  ChevronDown,
   Shield,
   Building,
   Menu,
-  Terminal,
   LogOut,
   Settings,
   Briefcase,
   Check,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "../ui";
@@ -37,16 +34,12 @@ export function Header({ onToggleSidebar, layoutType }: HeaderProps) {
   const {
     activeUser,
     activeRole,
-    activeTenant,
-    setActiveTenant,
-    setActiveUser,
   } = useSimulation();
 
   const { theme, setTheme } = useTheme();
   const { notifications, unreadCount, markAsRead, clearAll } = useNotifications();
   const { isOpen: isSearchOpen, setIsOpen: setIsSearchOpen } = useCommandPalette();
 
-  const [showTenantDropdown, setShowTenantDropdown] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -110,48 +103,6 @@ export function Header({ onToggleSidebar, layoutType }: HeaderProps) {
         >
           <Search className="w-5 h-5" />
         </button>
-
-        {/* Tenant Switcher */}
-        {(layoutType === "tenant" || layoutType === "client" || layoutType === "dev") && (
-          <div className="relative">
-            <button
-              onClick={() => setShowTenantDropdown(!showTenantDropdown)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-lg text-xs font-semibold text-slate-200 transition-colors focus:ring-2 focus:ring-blue-500"
-              aria-label="Switch Law Firm Tenant"
-            >
-              <Building className="w-3.5 h-3.5 text-blue-400" />
-              <span className="max-w-[80px] sm:max-w-[120px] truncate">{activeTenant.name}</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
-            </button>
-
-            {showTenantDropdown && (
-              <div className="absolute right-0 mt-2 w-56 bg-slate-900 border border-slate-800 rounded-lg shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                <div className="px-3 py-2 border-b border-slate-800 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                  Select Law Firm Tenant
-                </div>
-                {MOCK_TENANTS.map((tenant) => (
-                  <button
-                    key={tenant.id}
-                    onClick={() => {
-                      setActiveTenant(tenant);
-                      setShowTenantDropdown(false);
-                    }}
-                    className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-800/80 transition-colors ${
-                      activeTenant.id === tenant.id ? "text-blue-400 font-bold bg-slate-800/45" : "text-slate-300"
-                    }`}
-                  >
-                    <span>{tenant.name}</span>
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded ${
-                      tenant.status === "Active" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
-                    }`}>
-                      {tenant.tier}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Notifications Button */}
         <div className="relative">
@@ -241,39 +192,10 @@ export function Header({ onToggleSidebar, layoutType }: HeaderProps) {
                 </div>
               </div>
 
-              <div className="py-1">
-                <Link
-                  href="/dev"
-                  onClick={() => setShowProfileDropdown(false)}
-                  className="px-4 py-2 text-xs text-slate-300 hover:bg-slate-800/80 flex items-center gap-2 transition-colors"
-                >
-                  <Terminal className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Developer Portal & Simulator</span>
-                </Link>
-                <div className="px-4 py-1.5 text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-                  Switch Persona
-                </div>
-                {MOCK_USERS.slice(0, 4).map((u) => (
-                  <button
-                    key={u.id}
-                    onClick={() => {
-                      setActiveUser(u as any);
-                      setShowProfileDropdown(false);
-                    }}
-                    className={`w-full text-left px-4 py-1.5 text-xs flex items-center justify-between hover:bg-slate-800/80 transition-colors ${
-                      activeUser.id === u.id ? "text-blue-400 font-bold bg-slate-800/40" : "text-slate-400"
-                    }`}
-                  >
-                    <span>{u.name}</span>
-                    <span className="text-[8px] text-slate-500">{u.role}</span>
-                  </button>
-                ))}
-              </div>
-
               <div className="border-t border-slate-800 mt-2 pt-1">
                 <button className="w-full text-left px-4 py-2 text-xs text-red-400 hover:bg-slate-800/80 flex items-center gap-2 transition-colors">
                   <LogOut className="w-3.5 h-3.5" />
-                  <span>Logout (Simulation)</span>
+                  <span>Logout</span>
                 </button>
               </div>
             </div>
@@ -353,8 +275,8 @@ export function Header({ onToggleSidebar, layoutType }: HeaderProps) {
                       className="p-2.5 rounded-lg hover:bg-slate-800/50 cursor-pointer flex items-center justify-between text-xs text-slate-300"
                     >
                       <div className="flex items-center gap-2">
-                        <Terminal className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Launch Developer Simulator Dashboard</span>
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Launch Workspace Overview</span>
                       </div>
                       <span className="text-[10px] text-slate-500">Developer</span>
                     </Link>

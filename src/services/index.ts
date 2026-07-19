@@ -7,3 +7,4 @@ export * from "./calendar.service";
 export * from "./notification.service";
 export * from "./activity.service";
 export * from "./ai.service";
+export * from "./provisioning.service";

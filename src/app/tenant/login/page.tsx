@@ -7,6 +7,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Button } from "@/components/ui";
 import { AuthShell } from "@/components/auth/AuthShell";
 import { Building2, Mail, Lock, Eye, EyeOff, ArrowRight, Globe } from "lucide-react";
+import { setAuthSession } from "@/lib/auth";
 
 export default function TenantLoginPage() {
   const router = useRouter();
@@ -21,8 +22,17 @@ export default function TenantLoginPage() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      addToast("Tenant Authorized", "Welcome to your firm practice room.", "success");
-      router.push("/workspace/dashboard");
+      setAuthSession({
+        authenticated: true,
+        mfaVerified: false,
+        scope: "tenant",
+        role: "Tenant Owner",
+        email,
+        tenantId: "oakwood-llp",
+        tenantName: "Oakwood LLP",
+      });
+      addToast("Tenant Authorized", "Invite-only access confirmed. MFA is required before entering the workspace.", "success");
+      router.push("/tenant/mfa");
     }, 700);
   };
 
@@ -35,8 +45,8 @@ export default function TenantLoginPage() {
       footer={
         <>
           Don't have a firm workspace?{" "}
-          <Link href="/tenant/signup" className="text-emerald-400 hover:underline font-semibold">
-            Register your firm
+          <Link href="/tenant/join-workspace" className="text-emerald-400 hover:underline font-semibold">
+            Request access through an invitation
           </Link>
         </>
       }
@@ -100,8 +110,7 @@ export default function TenantLoginPage() {
         <div className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/40 p-3">
           <Globe className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
           <p className="text-[10px] text-slate-400">
-            Your workspace URL:{" "}
-            <span className="font-mono text-slate-300">oakwood.lawstack.com</span>
+            Invite-only workspace access. Only accounts invited to the tenant namespace can log in.
           </p>
         </div>
       </form>

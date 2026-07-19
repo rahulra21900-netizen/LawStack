@@ -7,7 +7,6 @@ import { useSimulation } from "@/providers/SimulationProvider";
 import {
   LayoutDashboard,
   Building2,
-  UserPlus,
   ShieldAlert,
   Settings,
   Briefcase,
@@ -23,6 +22,7 @@ import {
   BookOpen,
   FileCode,
   Sparkles,
+  BrainCircuit,
   Activity,
   Bell,
   MessageSquare,
@@ -30,8 +30,6 @@ import {
   LifeBuoy,
   Database,
   Layers,
-  ToggleLeft,
-  Compass,
   X,
 } from "lucide-react";
 
@@ -50,13 +48,12 @@ interface MenuItem {
 
 export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
-  const { activeTenant, activeRole } = useSimulation();
+  const { activeTenant } = useSimulation();
 
   // Define Platform Sidebar Items
   const platformItems: MenuItem[] = [
     { name: "Dashboard", href: "/platform/dashboard", icon: LayoutDashboard },
     { name: "Tenant Administration", href: "/platform/tenant-administration", icon: Building2, badge: "5" },
-    { name: "Tenant Provisioning", href: "/platform/tenant-provisioning", icon: UserPlus },
     { name: "Audit Center", href: "/platform/audit", icon: ShieldAlert },
     { name: "Platform Settings", href: "/platform/settings", icon: Settings },
   ];
@@ -73,9 +70,9 @@ export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
     { name: "Team", href: "/workspace/team", icon: UserCheck },
     { name: "Billing", href: "/workspace/billing", icon: DollarSign },
     { name: "Reports", href: "/workspace/reports", icon: BarChart2 },
-    { name: "Analytics", href: "/workspace/analytics", icon: PieChart },
     { name: "Knowledge Base", href: "/workspace/knowledge-base", icon: BookOpen },
     { name: "Templates", href: "/workspace/templates", icon: FileCode },
+    { name: "Intelligence", href: "/workspace/intelligence", icon: BrainCircuit, badge: "New" },
     { name: "AI Workspace", href: "/workspace/ai-workspace", icon: Sparkles, badge: "New" },
     { name: "Activity", href: "/workspace/activity", icon: Activity },
     { name: "Notifications", href: "/workspace/notifications", icon: Bell },
@@ -95,12 +92,9 @@ export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
 
   // Define Developer Sidebar Items
   const devItems: MenuItem[] = [
-    { name: "Role Simulator", href: "/dev?tab=role", icon: UserCheck },
-    { name: "Tenant Simulator", href: "/dev?tab=tenant", icon: Building2 },
-    { name: "Mock Data Browser", href: "/dev?tab=mockdata", icon: Database },
-    { name: "Component Gallery", href: "/dev?tab=components", icon: Layers },
-    { name: "Feature Flags", href: "/dev?tab=flags", icon: ToggleLeft },
-    { name: "Navigation Viewer", href: "/dev?tab=nav", icon: Compass },
+    { name: "Overview", href: "/dev", icon: LayoutDashboard },
+    { name: "Components", href: "/dev?tab=components", icon: Layers },
+    { name: "Mock Data", href: "/dev?tab=mockdata", icon: Database },
   ];
 
   // Map type to items list
@@ -150,18 +144,6 @@ export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
             </div>
             <p className="mt-1 text-sm font-semibold text-white truncate">{activeTenant.name}</p>
             <p className="text-[10px] text-slate-400 mt-0.5">Tier: {activeTenant.tier} • status: {activeTenant.status}</p>
-          </div>
-        )}
-
-        {/* Developer Simulator Quick Indicator */}
-        {layoutType === "dev" && (
-          <div className="p-4 border-b border-slate-900 bg-amber-950/20">
-            <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></div>
-              <span className="text-[10px] uppercase font-bold tracking-wider text-amber-500">Developer Portal</span>
-            </div>
-            <p className="mt-1 text-sm font-semibold text-white">Simulation Engine</p>
-            <p className="text-[10px] text-slate-400 mt-0.5">Active Role: {activeRole}</p>
           </div>
         )}
 

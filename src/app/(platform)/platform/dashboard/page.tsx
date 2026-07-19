@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Breadcrumb, Button, Badge, Avatar } from "@/components/ui";
 import { MetricCard, Card } from "@/components/cards";
 import { MOCK_TENANTS } from "@/mocks/tenants";
-import { Shield, Users, Terminal, Layers, Building2, Activity, Server, Cpu, HardDrive, Network, ArrowUpRight, CircleCheck as CheckCircle2, TriangleAlert as AlertTriangle, Clock, Plus, ChevronRight, Zap, Database, Globe, TrendingUp } from "lucide-react";
+import { PERMISSIONS } from "@/constants/permissions";
+import { ROLES_LIST } from "@/constants/roles";
+import { Shield, Users, Terminal, Layers, Building2, Activity, Server, Cpu, HardDrive, Network, ArrowUpRight, CircleCheck as CheckCircle2, TriangleAlert as AlertTriangle, Clock, Plus, ChevronRight, Zap, Database, Globe, TrendingUp, BookOpen, X } from "lucide-react";
 import Link from "next/link";
 
 const recentAudits = [
@@ -66,6 +68,7 @@ export default function PlatformDashboardPage() {
   const activeTenants = MOCK_TENANTS.filter((t) => t.status === "Active");
   const suspended = MOCK_TENANTS.filter((t) => t.status === "Suspended");
   const pending = MOCK_TENANTS.filter((t) => t.status === "Pending");
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -73,27 +76,28 @@ export default function PlatformDashboardPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Platform", href: "/platform/dashboard" }, { name: "Dashboard" }]} />
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/15 border border-blue-500/30">
-              <Shield className="w-4 h-4 text-blue-400" />
-            </span>
-            <span>SaaS Control Plane</span>
-          </h1>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white" />
           <p className="text-xs text-slate-400">
-            Manage tenant registries, provision namespaces, and audit compliance trails.
+            Manage tenant registries and audit compliance trails.
           </p>
         </div>
-        <Link href="/platform/tenant-provisioning/new">
-          <Button variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
-            Provision Tenant
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" leftIcon={<BookOpen className="w-4 h-4" />} onClick={() => setShowDeveloperGuide(true)}>
+            Developer Guide
           </Button>
-        </Link>
+          <Link href="/tenant/login">
+            <Button variant="secondary" leftIcon={<Building2 className="w-4 h-4" />}>
+              Tenant Login
+            </Button>
+          </Link>
+
+        </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard title="Total Tenants" value={MOCK_TENANTS.length} info="Subscribed SaaS accounts" trend="up" change="+1 this week" />
-        <MetricCard title="Active Firms" value={activeTenants.length} info="Clear namespaces" trend="up" change={`${activeTenants.length}/${MOCK_TENANTS.length} live`} />
+        <MetricCard title="Total Tenants" value={MOCK_TENANTS.length} info="Firms and Individuals" trend="up" change="+1 this week" />
+        <MetricCard title="Active Tenants" value={activeTenants.length} info="Clear namespaces" trend="up" change={`${activeTenants.length}/${MOCK_TENANTS.length} live`} />
         <MetricCard title="Suspended" value={suspended.length} info="Access revoked" trend="down" change="Manual hold" />
         <MetricCard title="Pending Review" value={pending.length} info="Awaiting provisioning" trend="neutral" change="In queue" />
       </div>
@@ -176,47 +180,47 @@ export default function PlatformDashboardPage() {
           </div>
         </Card>
 
-        {/* Tenant registry snapshot */}
+        {/* Platform quick actions */}
         <Card
           header={
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-blue-400" />
-                <span className="font-bold text-white text-xs">Tenant Registry</span>
-              </div>
-              <Link href="/platform/tenant-administration" className="text-[10px] text-blue-400 hover:underline flex items-center gap-0.5">
-                View all <ChevronRight className="w-3 h-3" />
-              </Link>
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-amber-400" />
+              <span className="font-bold text-white text-xs">Platform Quick Actions</span>
             </div>
           }
         >
-          <div className="space-y-2">
-            {MOCK_TENANTS.map((t) => (
-              <Link
-                key={t.id}
-                href={`/platform/tenant-administration/${t.id}`}
-                className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/40 px-3 py-2.5 hover:border-slate-700 hover:bg-slate-900/60 transition-colors"
-              >
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-[10px] font-bold text-white">
-                    {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-white truncate">{t.name}</div>
-                    <div className="text-[10px] text-slate-500 truncate font-mono">{t.subdomain}.lawstack.com</div>
-                  </div>
-                </div>
-                <Badge
-                  label={t.status}
-                  variant={t.status === "Active" ? "success" : t.status === "Suspended" ? "error" : "warning"}
-                />
-              </Link>
-            ))}
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { icon: Building2, label: "Manage Tenants", href: "/platform/tenant-administration", color: "text-emerald-400" },
+              { icon: Activity, label: "Audit Center", href: "/platform/audit", color: "text-cyan-400" },
+              { icon: Shield, label: "Security Settings", href: "/platform/settings", color: "text-amber-400" },
+            ].map((a) => {
+              const Icon = a.icon;
+              return (
+                <Link
+                  key={a.label}
+                  href={a.href}
+                  className="group flex flex-col gap-2 rounded-lg border border-slate-800 bg-slate-950/40 p-3 hover:border-slate-700 hover:bg-slate-900/60 transition-all"
+                >
+                  <Icon className={`w-4 h-4 ${a.color}`} />
+                  <span className="text-[11px] font-semibold text-white">{a.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 rounded-lg border border-slate-800 bg-slate-950/40 p-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Platform Region</span>
+              <Globe className="w-3.5 h-3.5 text-slate-400" />
+            </div>
+            <div className="mt-1 text-xs font-bold text-white">us-east-1 · eu-west-1</div>
+            <div className="mt-0.5 text-[10px] text-slate-500">Multi-region replication active</div>
           </div>
         </Card>
       </div>
 
-      {/* Audit feed + quick actions */}
+      {/* Audit feed + tenant registry */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card
           className="lg:col-span-2"
@@ -256,43 +260,41 @@ export default function PlatformDashboardPage() {
           </ol>
         </Card>
 
-        {/* Quick actions */}
         <Card
           header={
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-amber-400" />
-              <span className="font-bold text-white text-xs">Platform Quick Actions</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-blue-400" />
+                <span className="font-bold text-white text-xs">Tenant Registry</span>
+              </div>
+              <Link href="/platform/tenant-administration" className="text-[10px] text-blue-400 hover:underline flex items-center gap-0.5">
+                View all <ChevronRight className="w-3 h-3" />
+              </Link>
             </div>
           }
         >
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { icon: Plus, label: "Provision Tenant", href: "/platform/tenant-provisioning/new", color: "text-blue-400" },
-              { icon: Building2, label: "Manage Tenants", href: "/platform/tenant-administration", color: "text-emerald-400" },
-              { icon: Activity, label: "Audit Center", href: "/platform/audit", color: "text-cyan-400" },
-              { icon: Shield, label: "Security Settings", href: "/platform/settings", color: "text-amber-400" },
-            ].map((a) => {
-              const Icon = a.icon;
-              return (
-                <Link
-                  key={a.label}
-                  href={a.href}
-                  className="group flex flex-col gap-2 rounded-lg border border-slate-800 bg-slate-950/40 p-3 hover:border-slate-700 hover:bg-slate-900/60 transition-all"
-                >
-                  <Icon className={`w-4 h-4 ${a.color}`} />
-                  <span className="text-[11px] font-semibold text-white">{a.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="mt-4 rounded-lg border border-slate-800 bg-slate-950/40 p-3">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Platform Region</span>
-              <Globe className="w-3.5 h-3.5 text-slate-400" />
-            </div>
-            <div className="mt-1 text-xs font-bold text-white">us-east-1 · eu-west-1</div>
-            <div className="mt-0.5 text-[10px] text-slate-500">Multi-region replication active</div>
+          <div className="space-y-2">
+            {MOCK_TENANTS.map((t) => (
+              <Link
+                key={t.id}
+                href={`/platform/tenant-administration/${t.id}`}
+                className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/40 px-3 py-2.5 hover:border-slate-700 hover:bg-slate-900/60 transition-colors"
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-[10px] font-bold text-white">
+                    {t.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs font-bold text-white truncate">{t.name}</div>
+                    <div className="text-[10px] text-slate-500 truncate font-mono">{t.subdomain}.lawstack.com</div>
+                  </div>
+                </div>
+                <Badge
+                  label={t.status}
+                  variant={t.status === "Active" ? "success" : t.status === "Suspended" ? "error" : "warning"}
+                />
+              </Link>
+            ))}
           </div>
         </Card>
       </div>
@@ -303,6 +305,155 @@ export default function PlatformDashboardPage() {
         <MetricCard title="Total Seats" value="1,840" trend="up" change="+86 this week" info="Licensed users" />
         <MetricCard title="API Requests (24h)" value="2.4M" trend="up" change="+8.1%" info="Avg 27.8k/min" />
       </div>
+
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] text-blue-400">Developer Guide</p>
+                <h2 className="text-lg font-bold text-white">Platform Dashboard Handoff Notes</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-6 p-5 text-sm text-slate-300">
+              <section>
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
+                <p>
+                  This page is the main control screen for platform staff. It should show the health of the platform, the list of tenants, recent activity, and the main actions a platform admin can take.
+                </p>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Why each section is needed and what it should do</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  {[
+                    {
+                      title: "System Service Health",
+                      detail: "This section is important because platform staff need to know whether the platform is healthy. It should show service status, uptime, CPU, storage, and network load. It should also include the Notification Queue so admins can see whether alerts and user notifications are being delivered properly."
+                    },
+                    {
+                      title: "Platform Quick Actions",
+                      detail: "This section exists to give fast access to the most common tasks. It should help admins move quickly to tenant setup, tenant management, audit review, and security settings without searching through the whole app."
+                    },
+                    {
+                      title: "Notifications and Alerts",
+                      detail: "This is the delivery layer for operational updates, incident notices, tenant events, and security warnings. In implementation, it should route messages through a notification service, support retries and priority levels, and ensure the right users receive the right alert at the right time."
+                    },
+                    {
+                      title: "Recent Platform Audit Trail",
+                      detail: "This section is needed for visibility and accountability. It should show the latest important platform events such as tenant changes, policy updates, suspensions, and provisioning actions. It helps admins understand what happened recently and why."
+                    },
+                    {
+                      title: "Tenant Registry",
+                      detail: "This section is the main list of tenants. It should show tenant names, domains, and status so admins can quickly review who is active, pending, or suspended. It is the core list for platform operations."
+                    },
+                    {
+                      title: "Platform MRR",
+                      detail: "This metric is needed for business visibility. It should show recurring monthly revenue from all tenants so the platform team can track growth and subscription health."
+                    },
+                    {
+                      title: "Total Seats",
+                      detail: "This metric shows how many users are currently licensed or active across the platform. It matters for capacity planning, onboarding, and license management."
+                    },
+                    {
+                      title: "API Requests (24h)",
+                      detail: "This metric shows platform usage volume. It helps the team understand traffic, performance pressure, and whether the platform is growing or becoming overloaded."
+                    },
+                    {
+                      title: "Tenant count cards",
+                      detail: "These cards give a quick summary of tenant health. The logic should count tenants by status so the admin can see how many are active, suspended, or waiting for review."
+                    },
+                  ].map((item) => (
+                    <div key={item.title} className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                      <p className="mb-1 font-semibold text-white">{item.title}</p>
+                      <p className="text-xs leading-5 text-slate-400">{item.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Buttons, search, and navigation</h3>
+                <ul className="space-y-2">
+                  <li><span className="font-semibold text-white">Developer Guide:</span> opens this pop-up guide so the team can review the page purpose and implementation notes.</li>
+                  <li><span className="font-semibold text-white">Tenant Login:</span> this button is for switching to the tenant-facing login experience. It helps test or access the tenant side from the platform area.</li>
+                  <li><span className="font-semibold text-white">Provision Tenant:</span> this is the main action for onboarding a new tenant. It should open the tenant setup flow at /platform/tenant-provisioning/new.</li>
+                  <li><span className="font-semibold text-white">Manage Tenants:</span> this should open the tenant management page at /platform/tenant-administration.</li>
+                  <li><span className="font-semibold text-white">Audit Center:</span> this should open /platform/audit.</li>
+                  <li><span className="font-semibold text-white">Security Settings:</span> this should open /platform/settings.</li>
+                  <li><span className="font-semibold text-white">Tenant Registry rows:</span> these should open the tenant detail page at /platform/tenant-administration/[id].</li>
+                  <li><span className="font-semibold text-white">Search bar:</span> this should allow platform staff to quickly find a tenant, user, or relevant record without manually browsing the full list.</li>
+                  <li><span className="font-semibold text-white">Sidebar:</span> the sidebar is the main navigation structure. It should guide the platform admin to the main areas of the product such as dashboard, tenant management, audit, settings, and provisioning.</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Simple glossary for developers</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Tenant</p>
+                    <p className="text-xs leading-5 text-slate-400">A tenant is a separate client organization using the platform. Each tenant may have its own users, workspace, settings, and data.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Provisioning</p>
+                    <p className="text-xs leading-5 text-slate-400">Provisioning means creating a new tenant setup, including its workspace, access, and initial configuration.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Audit Trail</p>
+                    <p className="text-xs leading-5 text-slate-400">An audit trail is a history of important actions such as changes, suspensions, updates, and security events.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Platform Admin</p>
+                    <p className="text-xs leading-5 text-slate-400">A platform admin is the person who manages the whole system, including tenants, platform settings, and operational health.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Sidebar</p>
+                    <p className="text-xs leading-5 text-slate-400">The sidebar is the main navigation panel. It helps users move between the main areas of the product.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Platform MRR</p>
+                    <p className="text-xs leading-5 text-slate-400">MRR means monthly recurring revenue. It shows the predictable income coming from subscriptions.</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Tenant status lifecycle</p>
+                    <p className="text-xs leading-5 text-slate-400">Active means the tenant is fully onboarded and can use the platform normally. Pending means the tenant exists but setup, approval, or onboarding is still not complete. Suspended means the tenant has been blocked from using the platform, usually because of billing, compliance, or security issues.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Who can use this page</h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Platform Owner / Platform Admin</p>
+                    <ul className="space-y-1 text-xs text-slate-400">
+                      <li>• {PERMISSIONS.PLATFORM.MANAGE_TENANTS}</li>
+                      <li>• {PERMISSIONS.PLATFORM.PROVISION_TENANTS}</li>
+                      <li>• {PERMISSIONS.PLATFORM.VIEW_AUDIT_LOGS}</li>
+                      <li>• {PERMISSIONS.PLATFORM.MANAGE_SETTINGS}</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                    <p className="mb-2 font-semibold text-white">Who should not use it</p>
+                    <ul className="space-y-1 text-xs text-slate-400">
+                      <li>• Tenant users should use the tenant workspace, not this platform dashboard.</li>
+                      <li>• Regular firm users should not access this page unless they are given platform-level permissions.</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -10,8 +10,8 @@ export default function PlatformSignupPage() {
     <AuthShell
       badge="SaaS Control Plane"
       accent="blue"
-      title="Platform Registration Locked"
-      subtitle="Platform administrator accounts cannot self-register. They must be provisioned via internal credentials CLI by an existing lead platform engineer."
+      title="Request Platform Access"
+      subtitle="Platform administrator accounts are provisioned through an internal approval workflow. Use this page to understand the process and return to the secure sign-in experience."
       footer={
         <Link href="/platform/login" className="text-blue-400 hover:underline font-semibold">
           Back to Login
@@ -31,11 +31,11 @@ export default function PlatformSignupPage() {
         <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
           <div className="flex items-center gap-2 mb-2">
             <Lock className="w-4 h-4 text-amber-400" />
-            <span className="text-xs font-bold text-amber-300">Self-registration disabled</span>
+            <span className="text-xs font-bold text-amber-300">Access is controlled</span>
           </div>
           <p className="text-[11px] text-slate-400 leading-relaxed">
-            This is a controlled surface. To request platform admin access, open a ticket with the platform
-            engineering team and include the business justification, requested scope, and approver.
+            To request platform admin access, contact the platform engineering team with the business justification,
+            requested scope, and approver details. Once approved, the account will be provisioned through the internal workflow.
           </p>
         </div>
 
