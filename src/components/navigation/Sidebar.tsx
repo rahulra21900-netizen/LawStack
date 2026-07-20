@@ -84,7 +84,7 @@ export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
     { name: "Dashboard", href: "/client/dashboard", icon: LayoutDashboard },
     { name: "My Matters", href: "/client/matters", icon: Briefcase },
     { name: "Documents", href: "/client/documents", icon: FileText },
-    { name: "Invoices", href: "/client/invoices", icon: DollarSign, badge: "2 Due" },
+    { name: "Invoices & Billing", href: "/client/billing", icon: DollarSign, badge: "2 Due" },
     { name: "Messages", href: "/client/messages", icon: MessageSquare },
     { name: "Profile", href: "/client/profile", icon: User },
     { name: "Support", href: "/client/support", icon: LifeBuoy },

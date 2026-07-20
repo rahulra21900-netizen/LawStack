@@ -337,7 +337,7 @@ export default function PlatformDashboardPage() {
                   {[
                     {
                       title: "System Service Health",
-                      detail: "This section is important because platform staff need to know whether the platform is healthy. It should show service status, uptime, CPU, storage, and network load. It should also include the Notification Queue so admins can see whether alerts and user notifications are being delivered properly."
+                      detail: "Monitors real-time infrastructure and message delivery metrics. Developer Breakdown:\n• System Status: Overall health badge (Operational / Degraded / Outage) based on active health checks.\n• Uptime: SLA tracking percentage (e.g. 99.98% over last 30 days) measuring system availability.\n• CPU Usage: Processor utilization percentage (warn if >80%, alert if >90%).\n• Storage: Disk usage for database & document uploads (e.g. 4.2 TB / 10 TB used).\n• Network Load: Incoming/outgoing bandwidth throughput and active connections per second.\n• Notification Queue: Background message queue depth, worker processing speed, and failed delivery retry counts."
                     },
                     {
                       title: "Platform Quick Actions",
