@@ -30,6 +30,8 @@ import {
   LifeBuoy,
   Database,
   Layers,
+  MessageCircle,
+  Gavel,
   X,
 } from "lucide-react";
 
@@ -69,6 +71,7 @@ export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
     { name: "Tasks", href: "/workspace/tasks", icon: CheckSquare },
     { name: "Team", href: "/workspace/team", icon: UserCheck },
     { name: "Billing", href: "/workspace/billing", icon: DollarSign },
+    { name: "WhatsApp Hub", href: "/workspace/whatsapp", icon: MessageCircle, badge: "New" },
     { name: "Legal Intelligence", href: "/workspace/intelligence", icon: BrainCircuit, badge: "IN" },
     { name: "AI Copilot", href: "/workspace/ai-workspace", icon: Sparkles },
     { name: "Reports", href: "/workspace/reports", icon: BarChart2 },

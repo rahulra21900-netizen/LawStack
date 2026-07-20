@@ -79,9 +79,9 @@ Product-document review delivered, then user asked to fix each item raised.
 - Simulated auth (sessionStorage), MFA screens, invite-only tenant workspace flow.
 
 ## Backlog / Not Implemented
-- **P1** — GST-aware invoice templates (currently only INR display; no GSTIN/HSN/CGST/SGST fields).
-- **P1** — Court Mode (mobile-first offline cause-list + voice-memo capture in court).
-- **P1** — WhatsApp Business Hub UI (client updates, template gallery).
+- **P1** — GST-aware invoice templates. **✅ Completed 2026-01-20** — new tax invoice at `/workspace/billing/invoices/[id]/overview` with GSTIN, HSN/SAC 998216, CGST/SGST/IGST split (auto-detects inter-state), amount-in-words (Indian numbering: Lakh/Crore), UPI QR + Razorpay + NEFT payment strip, Section 31 declaration.
+- **P1** — Court Mode. **✅ Completed 2026-01-20** — new mobile-first `/court-mode` route (public, no auth wall). Live cause list with color-coded status pills, next-hearing countdown, giant red clash/escalate button, voice memo with recording timer + auto-transcript stub, live notes feed, offline connectivity toggle, mobile viewport optimised (430×932) and centred on desktop. Amber "Court Mode" CTA now in the tenant header.
+- **P1** — WhatsApp Business Hub. **✅ Completed 2026-01-20** — `/workspace/whatsapp` with Meta-verified badge, approved template library (Hearing Reminder / Case Status / Invoice Payment / Adjournment), live conversations sidebar with per-client opt-in status, template variable preview, 24-hour session timer, BCI Rule 36 compliance ledger, invite-client flow.
 - **P2** — Break-glass dual-approval flow (mentioned in copy only).
 - **P2** — Light-theme wiring (toggle exists in `/dev` but slate-950 is hard-coded in RootLayout).
 - **P2** — `tailwindcss-animate` plugin (some `animate-in fade-in slide-in-from-top` classes currently no-op).

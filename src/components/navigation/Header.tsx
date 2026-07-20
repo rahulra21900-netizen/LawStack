@@ -21,6 +21,7 @@ import {
   Briefcase,
   Check,
   Sparkles,
+  Gavel,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "../ui";
@@ -94,6 +95,18 @@ export function Header({ onToggleSidebar, layoutType }: HeaderProps) {
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-md">
           Skip to main content
         </a>
+
+        {/* Court Mode CTA — visible only inside tenant workspace */}
+        {layoutType === "tenant" && (
+          <Link
+            href="/court-mode"
+            className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/15 text-amber-300 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors"
+            data-testid="header-court-mode-cta"
+          >
+            <Gavel className="w-3.5 h-3.5" />
+            Court Mode
+          </Link>
+        )}
 
         {/* Global Search Button (Mobile/Tablet) */}
         <button
