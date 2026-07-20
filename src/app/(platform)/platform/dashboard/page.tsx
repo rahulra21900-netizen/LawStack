@@ -6,7 +6,7 @@ import { MetricCard, Card } from "@/components/cards";
 import { MOCK_TENANTS } from "@/mocks/tenants";
 import { PERMISSIONS } from "@/constants/permissions";
 import { ROLES_LIST } from "@/constants/roles";
-import { Shield, Users, Terminal, Layers, Building2, Activity, Server, Cpu, HardDrive, Network, ArrowUpRight, CircleCheck as CheckCircle2, TriangleAlert as AlertTriangle, Clock, Plus, ChevronRight, Zap, Database, Globe, TrendingUp, BookOpen, X } from "lucide-react";
+import { Shield, Users, Terminal, Layers, Building2, Activity, Server, Cpu, HardDrive, Network, ArrowUpRight, CircleCheck as CheckCircle2, TriangleAlert as AlertTriangle, Clock, Plus, ChevronRight, Zap, Database, Globe, TrendingUp, BookOpen, X, FileText, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const recentAudits = [
@@ -69,6 +69,7 @@ export default function PlatformDashboardPage() {
   const suspended = MOCK_TENANTS.filter((t) => t.status === "Suspended");
   const pending = MOCK_TENANTS.filter((t) => t.status === "Pending");
   const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
+  const [showProductDoc, setShowProductDoc] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -82,6 +83,9 @@ export default function PlatformDashboardPage() {
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <Button variant="primary" leftIcon={<FileText className="w-4 h-4" />} onClick={() => setShowProductDoc(true)}>
+            Product Document
+          </Button>
           <Button variant="outline" leftIcon={<BookOpen className="w-4 h-4" />} onClick={() => setShowDeveloperGuide(true)}>
             Developer Guide
           </Button>
@@ -90,7 +94,6 @@ export default function PlatformDashboardPage() {
               Tenant Login
             </Button>
           </Link>
-
         </div>
       </div>
 
@@ -331,6 +334,109 @@ export default function PlatformDashboardPage() {
                 </p>
               </section>
 
+              <section className="rounded-xl border border-blue-500/30 bg-blue-500/5 p-4 space-y-4">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-400 flex items-center gap-2">
+                  <span>Detailed System Service Health Implementation Guide</span>
+                </h3>
+                <div className="space-y-4 text-xs">
+                  {/* 1. System Status */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-3.5 space-y-1.5">
+                    <div className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>🟢 1. System Status</span>
+                    </div>
+                    <p><span className="font-semibold text-slate-300">What it is:</span> The overall operational status badge of the entire platform.</p>
+                    <p><span className="font-semibold text-slate-300">Why it’s needed:</span> Admins need an instant visual indicator to see if all core services (Database, Authentication, Storage, AI Services, APIs) are operational.</p>
+                    <div className="text-slate-400 space-y-1 pt-1">
+                      <p className="font-semibold text-slate-300">Developer Implementation:</p>
+                      <p className="pl-2">• Aggregate status based on health check endpoints (<code className="text-blue-400">/api/health</code>).</p>
+                      <p className="font-semibold text-slate-300 pl-2">Status Levels:</p>
+                      <p className="pl-4">• <span className="text-emerald-400 font-semibold">Operational (Green):</span> All health checks return 200 OK.</p>
+                      <p className="pl-4">• <span className="text-amber-400 font-semibold">Degraded Performance (Yellow):</span> High latency (&gt;1000ms) or 1 non-critical subservice failing.</p>
+                      <p className="pl-4">• <span className="text-red-400 font-semibold">Partial / Major Outage (Red):</span> Database or Core Auth service unresponsive.</p>
+                    </div>
+                  </div>
+
+                  {/* 2. Uptime Percentage */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-3.5 space-y-1.5">
+                    <div className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>⏱️ 2. Uptime Percentage</span>
+                    </div>
+                    <p><span className="font-semibold text-slate-300">What it is:</span> The availability score of the platform measured over a period of time (e.g., 99.98% over the trailing 30 days).</p>
+                    <p><span className="font-semibold text-slate-300">Why it’s needed:</span> Tracks Service Level Agreements (SLAs) promised to legal enterprise clients.</p>
+                    <div className="text-slate-400 space-y-1 pt-1">
+                      <p className="font-semibold text-slate-300">Developer Implementation:</p>
+                      <p className="pl-2 font-mono bg-slate-900 p-2 rounded border border-slate-800 text-blue-300">
+                        Uptime % = ((Total Operational Minutes - Downtime Minutes) / Total Minutes) * 100
+                      </p>
+                      <p className="pl-2">• Updated automatically by synthetic ping monitors running every 60 seconds.</p>
+                    </div>
+                  </div>
+
+                  {/* 3. CPU Usage */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-3.5 space-y-1.5">
+                    <div className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>⚡ 3. CPU Usage</span>
+                    </div>
+                    <p><span className="font-semibold text-slate-300">What it is:</span> The average processor utilization across application server nodes.</p>
+                    <p><span className="font-semibold text-slate-300">Why it’s needed:</span> Alerts developers if background workloads or high user traffic are consuming excessive processing power.</p>
+                    <div className="text-slate-400 space-y-1 pt-1">
+                      <p className="font-semibold text-slate-300">Developer Implementation:</p>
+                      <p className="pl-2">• Monitored via server metrics agent (e.g., OS CPU load average).</p>
+                      <p className="font-semibold text-slate-300 pl-2">Threshold Rules:</p>
+                      <p className="pl-4">• <span className="text-emerald-400 font-semibold">&lt; 70%:</span> Normal (Green)</p>
+                      <p className="pl-4">• <span className="text-amber-400 font-semibold">70% – 85%:</span> Warning (Amber) — trigger auto-scaling / pod expansion</p>
+                      <p className="pl-4">• <span className="text-red-400 font-semibold">&gt; 85%:</span> Critical (Red) — trigger immediate alert notification</p>
+                    </div>
+                  </div>
+
+                  {/* 4. Storage Usage */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-3.5 space-y-1.5">
+                    <div className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>💾 4. Storage Usage</span>
+                    </div>
+                    <p><span className="font-semibold text-slate-300">What it is:</span> Total disk space utilized for primary databases and file attachments (e.g., legal PDFs, case evidence, generated documents).</p>
+                    <p><span className="font-semibold text-slate-300">Why it’s needed:</span> Prevents database write locks or upload failures due to disk space exhaustion.</p>
+                    <div className="text-slate-400 space-y-1 pt-1">
+                      <p className="font-semibold text-slate-300">Developer Implementation:</p>
+                      <p className="pl-2">• Displays used volume vs max capacity (e.g., 4.2 TB / 10 TB used (42%)).</p>
+                      <p className="pl-2">• Triggers an alert when storage capacity exceeds 85%.</p>
+                    </div>
+                  </div>
+
+                  {/* 5. Network Load & Throughput */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-3.5 space-y-1.5">
+                    <div className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>🌐 5. Network Load & Throughput</span>
+                    </div>
+                    <p><span className="font-semibold text-slate-300">What it is:</span> Real-time incoming and outgoing network traffic, bandwidth usage, and active HTTP requests per minute.</p>
+                    <p><span className="font-semibold text-slate-300">Why it’s needed:</span> Helps diagnose network bottlenecks, sudden traffic spikes, or potential DDoS attacks.</p>
+                    <div className="text-slate-400 space-y-1 pt-1">
+                      <p className="font-semibold text-slate-300">Developer Implementation:</p>
+                      <p className="pl-2 font-semibold text-slate-300">Tracks:</p>
+                      <p className="pl-4">• <span className="font-semibold text-slate-200">Throughput:</span> Current bandwidth (e.g., 450 MB/s)</p>
+                      <p className="pl-4">• <span className="font-semibold text-slate-200">Request Rate:</span> Requests per minute (e.g., 27.8k req/min)</p>
+                      <p className="pl-4">• <span className="font-semibold text-slate-200">Latency:</span> Average response time (e.g., 42 ms)</p>
+                    </div>
+                  </div>
+
+                  {/* 6. Notification Queue */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-3.5 space-y-1.5">
+                    <div className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>📬 6. Notification Queue</span>
+                    </div>
+                    <p><span className="font-semibold text-slate-300">What it is:</span> The status of background message queues (e.g., Redis / BullMQ / AWS SQS / RabbitMQ) responsible for sending emails, SMS alerts, system push notifications, and Webhooks.</p>
+                    <p><span className="font-semibold text-slate-300">Why it’s needed:</span> Ensures operational messages and security alerts are being delivered promptly to users and not getting stuck in a worker queue.</p>
+                    <div className="text-slate-400 space-y-1 pt-1">
+                      <p className="font-semibold text-slate-300">Developer Implementation:</p>
+                      <p className="pl-2 font-semibold text-slate-300">Metrics to Display:</p>
+                      <p className="pl-4">• <span className="font-semibold text-slate-200">Pending in Queue:</span> Count of messages waiting to be sent (e.g., 14 messages).</p>
+                      <p className="pl-4">• <span className="font-semibold text-slate-200">Processing Rate:</span> Messages processed per minute (e.g., 350 msg/min).</p>
+                      <p className="pl-4">• <span className="font-semibold text-slate-200">Failed / Dead Letter Queue (DLQ):</span> Number of failed delivery retries requiring manual review.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               <section>
                 <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Why each section is needed and what it should do</h3>
                 <div className="grid gap-3 md:grid-cols-2">
@@ -454,6 +560,256 @@ export default function PlatformDashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Product Document Modal */}
+      {showProductDoc && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-amber-400">Product Concept Document</p>
+                <h2 className="text-lg font-bold text-white">LawStack — Practice Management Platform for Indian Advocates</h2>
+              </div>
+              <div className="flex items-center gap-3">
+                <a
+                  href="/docs/LawStack_Product_Concept.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Open PDF Document</span>
+                </a>
+                <button
+                  onClick={() => setShowProductDoc(false)}
+                  className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                  aria-label="Close document modal"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Quick Link Notice */}
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <p className="font-bold text-amber-300 text-xs uppercase tracking-wider">Public Asset Path (App Hosted)</p>
+                  <p className="text-xs text-slate-300 font-mono">/docs/LawStack_Product_Concept.pdf</p>
+                </div>
+                <a
+                  href="/docs/LawStack_Product_Concept.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors shrink-0"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Open Full PDF</span>
+                </a>
+              </div>
+
+              {/* 1. Core Idea & Audience */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">1. Executive Summary & Target Audience</h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2 text-xs leading-relaxed">
+                  <p className="text-slate-200">
+                    <strong className="text-white">Core Vision:</strong> Indian advocates and small law firms currently rely on WhatsApp groups, paper diaries, and Excel sheets. LawStack replaces them with a single secure workspace for cases, hearings, documents, clients, billing, and team management built specifically around Indian legal practice.
+                  </p>
+                  <p className="text-slate-400">
+                    <strong className="text-slate-300">The Trust Promise:</strong> Built around the fundamental promise that <span className="text-amber-300 font-semibold">no one — not even the platform owner — can casually look into a firm's case files</span>.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
+                    <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
+                      <p className="font-bold text-white">1st Priority: Solo Advocates</p>
+                      <p className="text-[10px] text-slate-400 mt-0.5">Independent lawyers — biggest user segment needing simplicity.</p>
+                    </div>
+                    <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
+                      <p className="font-bold text-white">1st Priority: Small/Mid Law Firms</p>
+                      <p className="text-[10px] text-slate-400 mt-0.5">Multi-lawyer teams needing role & permission management.</p>
+                    </div>
+                    <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
+                      <p className="font-bold text-white">2nd Priority: Judges Module</p>
+                      <p className="text-[10px] text-slate-400 mt-0.5">Separate government track for court docket management.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* 2. Access & Encryption Architecture */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">2. Security & Encryption Architecture (Core Foundation)</h3>
+                <div className="space-y-3 text-xs">
+                  <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white">Downward Access Flow (No Public Sign-Up)</p>
+                    <p className="text-slate-400 font-mono text-[11px] bg-slate-900 p-2 rounded border border-slate-800 text-blue-300">
+                      Public Website ➔ Login ➔ Platform Control Plane (Owner) ➔ Tenant Provisioning ➔ Tenant Workspace (Owner) ➔ Firm Team Invites
+                    </p>
+                    <p className="text-slate-400">There is no public sign-up link. Access flows strictly downward from authorized owners.</p>
+                  </div>
+
+                  <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white">Per-Firm Encryption (Option 2 Recommended)</p>
+                    <ul className="space-y-1.5 text-slate-400">
+                      <li>• Every firm receives a <strong className="text-slate-200">unique encryption key</strong> created upon setup and stored wrapped.</li>
+                      <li>• Platform owner has <strong className="text-slate-200">no standing access</strong> to tenant case files.</li>
+                      <li>• <strong className="text-amber-300">Break-Glass Protocol:</strong> Emergency access requires dual approval (CTO + Compliance Lead), triggers automatic firm notification, and writes to an uneditable audit log.</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white">Internal Firm Conflict Walls & Role Scoping</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div className="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <p className="font-bold text-slate-200">Firm Owner</p>
+                        <p className="text-[10px] text-slate-400">Full firm control, staff invites, case visibility rules, billing.</p>
+                      </div>
+                      <div className="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <p className="font-bold text-slate-200">Partner / Senior Advocate</p>
+                        <p className="text-[10px] text-slate-400">Broad visibility across assigned and firm-wide matters.</p>
+                      </div>
+                      <div className="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <p className="font-bold text-slate-200">Associate / Junior Lawyer</p>
+                        <p className="text-[10px] text-slate-400">Default visibility restricted strictly to assigned cases.</p>
+                      </div>
+                      <div className="p-2.5 bg-slate-900 rounded border border-slate-800">
+                        <p className="font-bold text-slate-200">Clerk / Admin Staff</p>
+                        <p className="text-[10px] text-slate-400">Narrowest access: calendar, tasks, and document filing only.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* 3. Core Feature Matrix */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">3. Product Feature Matrix</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white">Case & Matter Management</p>
+                    <p className="text-slate-400">CNR tracking, court, case type, laws/sections, filing date, and status pipeline:</p>
+                    <p className="font-mono text-[10px] text-emerald-400 bg-slate-900 p-1.5 rounded">
+                      Filed ➔ Admitted ➔ Hearing ➔ Reserved ➔ Judgment ➔ Disposed ➔ Appeal
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white">Calendar & Cause-List Reminders</p>
+                    <p className="text-slate-400">Master cause-list calendar, automatic clash detection, WhatsApp/SMS/Email notifications, and Google/Outlook calendar sync.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white">Document Management & OCR</p>
+                    <p className="text-slate-400">Per-case document uploads with searchable OCR text extraction, Vakalatnama templates, and expiring share links.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white">Client Portal & BCI Rule 36</p>
+                    <p className="text-slate-400">Strictly invite-only client access. No public directory or ratings to strictly comply with Bar Council of India Rule 36.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white">GST Billing & Payments</p>
+                    <p className="text-slate-400">Fixed, hourly, per-hearing, or retainer fee structures with GST-compliant invoicing and UPI / Razorpay integration.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white">eCourts & NJDG Data Sync</p>
+                    <p className="text-slate-400">Automated case status sync via CNR lookup starting with MP, Delhi, and Bombay High Courts.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* 4. Special Indian Legal Features */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">4. Key Differentiating Features for India (2026)</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-4 bg-slate-950/60 rounded-xl border border-blue-500/30 space-y-2">
+                    <p className="font-bold text-blue-300">IPC/CrPC/IEA ➔ BNS/BNSS/BSA Lookup Tool</p>
+                    <p className="text-slate-400 leading-relaxed">
+                      As advocates draft filings, the system automatically suggests corresponding modern sections under the 2024 criminal codes, flags multi-provision ambiguities, and formats High Court footnotes.
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-slate-950/60 rounded-xl border border-blue-500/30 space-y-2">
+                    <p className="font-bold text-blue-300">Automatic Filing Defect Checker</p>
+                    <p className="text-slate-400 leading-relaxed">
+                      Pre-submission scanner checking draft petitions against specific High Court filing manuals (missing signatures, page indexing, margin formatting) to eliminate registry rejections.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* 5. Indian Legal & Regulatory Compliance */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">5. Regulatory & Compliance Safeguards</h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2 text-xs">
+                  <p className="text-slate-300">
+                    <strong className="text-white">Digital Personal Data Protection (DPDP) Act 2023:</strong> Full compliance workflow ahead of May 2027 enforcement. Includes explicit client consent capture, breach reporting protocols, and <strong className="text-amber-300">Mumbai AWS/GCP data residency</strong> so data never leaves India.
+                  </p>
+                  <p className="text-slate-300">
+                    <strong className="text-white">BCI Rule 36 & P.N. Vignesh Precedent:</strong> Avoids directory-style solicitation bans by completely omitting public lawyer listings, search, or rating systems.
+                  </p>
+                  <p className="text-slate-300">
+                    <strong className="text-white">Attorney-Client Privilege:</strong> Protected by cryptographic per-firm keys and zero platform-owner standing access.
+                  </p>
+                </div>
+              </section>
+
+              {/* 6. Phased Roadmap & Decisions */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">6. Phased Build Roadmap & Governance Decisions</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 text-xs">
+                  <div className="p-3 bg-slate-950 border border-slate-800 rounded-lg">
+                    <p className="font-bold text-amber-400">Phase 1: MVP</p>
+                    <p className="text-[10px] text-slate-400 mt-1">Security foundation, firm encryption, cases, calendar, basic law lookup.</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 border border-slate-800 rounded-lg">
+                    <p className="font-bold text-amber-400">Phase 2: Firm-Grade</p>
+                    <p className="text-[10px] text-slate-400 mt-1">Restricted cases, GST billing, DPDP consent workflows, precedent lookup.</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 border border-slate-800 rounded-lg">
+                    <p className="font-bold text-amber-400">Phase 3: Automation</p>
+                    <p className="text-[10px] text-slate-400 mt-1">eCourts auto-sync, filing defect checker pilot, dedicated DB option.</p>
+                  </div>
+                  <div className="p-3 bg-slate-950 border border-slate-800 rounded-lg">
+                    <p className="font-bold text-amber-400">Phase 4: Ecosystem</p>
+                    <p className="text-[10px] text-slate-400 mt-1">Client mobile app, regional languages, AI context drafting.</p>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 space-y-2 text-xs">
+                  <p className="font-bold text-white">Key Product Governance Decisions:</p>
+                  <ul className="space-y-1 text-slate-400">
+                    <li>• <strong className="text-slate-200">Mandatory TOTP MFA:</strong> Required for all roles accessing case or billing data.</li>
+                    <li>• <strong className="text-slate-200">Account Recovery:</strong> Firm owner lockout recovery requires identity re-verification + 72-hour cooling-off period.</li>
+                    <li>• <strong className="text-slate-200">Target Launch Courts:</strong> Initial court sync pilot targeting MP High Court, Delhi High Court, and Bombay High Court.</li>
+                  </ul>
+                </div>
+              </section>
+
+              {/* Bottom PDF Link Button */}
+              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
+                <div>
+                  <p className="font-bold text-white text-xs">Need to review the full 11-page original concept document?</p>
+                  <p className="text-[11px] text-slate-400">Hosted in your web app for instant viewing and downloading in any browser.</p>
+                </div>
+                <a
+                  href="/docs/LawStack_Product_Concept.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  <span>Open Product Concept PDF</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
