@@ -155,6 +155,27 @@ export default function CasesListPage() {
             ),
           },
           {
+            header: "Next Hearing & Alerts",
+            accessor: (c) => (
+              <div>
+                {c.nextHearingDate ? (
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-mono text-xs text-slate-200">{c.nextHearingDate}</span>
+                    {c.urgencyLevel === "Critical" ? (
+                      <Badge label="Tomorrow / Critical" variant="error" size="sm" />
+                    ) : c.urgencyLevel === "Urgent" ? (
+                      <Badge label="Urgent" variant="warning" size="sm" />
+                    ) : (
+                      <Badge label="Normal" variant="neutral" size="sm" />
+                    )}
+                  </div>
+                ) : (
+                  <span className="text-slate-500 text-xs">Not Scheduled</span>
+                )}
+              </div>
+            ),
+          },
+          {
             header: "Action",
             accessor: (c) => (
               <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>

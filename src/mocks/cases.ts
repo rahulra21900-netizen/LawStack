@@ -2,6 +2,27 @@ import { Case } from "@/types";
 
 export const MOCK_CASES: Case[] = [
   {
+    id: "case-ram-sharma",
+    tenantId: "oakwood-llp",
+    clientId: "client-sharma",
+    title: "State v. Sharma (Anticipatory Bail & Homicide)",
+    caseNumber: "CRM-2026-0438",
+    practiceArea: "Criminal Defense",
+    stage: "Trial",
+    status: "Active",
+    leadCounsel: "Harvey Specter",
+    openDate: "2026-01-15",
+    nextHearingDate: "2026-07-21",
+    hearingPurpose: "Arguments on Bail Reduction & Section 438 Order",
+    urgencyLevel: "Critical",
+    scheduleAlert: "⚠️ COURT URGENT NOTICE: Hearing date advanced to tomorrow! Verification required.",
+    hasClash: true,
+    clashingCounsel: "Mike Ross (High Court Bench 3)",
+    appliedSection: "IPC Section 437",
+    suggestedSection: "BNSS Section 482 / IPC Section 438 (Anticipatory Bail Correction)",
+    officialVersion: "v2.1 Filed Draft"
+  },
+  {
     id: "case-acme",
     tenantId: "oakwood-llp",
     clientId: "client-stark",
@@ -11,7 +32,13 @@ export const MOCK_CASES: Case[] = [
     stage: "Discovery",
     status: "Active",
     leadCounsel: "Harvey Specter",
-    openDate: "2026-01-10"
+    openDate: "2026-01-10",
+    nextHearingDate: "2026-07-25",
+    hearingPurpose: "Patent Claim Construction & Evidence Examination",
+    urgencyLevel: "Urgent",
+    appliedSection: "Contract Act Sec 38",
+    suggestedSection: "Contract Act Sec 12-13 (Specific Performance)",
+    officialVersion: "v3.0 Final Official"
   },
   {
     id: "case-wayne-tax",
@@ -23,7 +50,11 @@ export const MOCK_CASES: Case[] = [
     stage: "Pleadings",
     status: "Active",
     leadCounsel: "Mike Ross",
-    openDate: "2026-03-22"
+    openDate: "2026-03-22",
+    nextHearingDate: "2026-07-30",
+    hearingPurpose: "Compliance Audit Review & Financial Submissions",
+    urgencyLevel: "Normal",
+    officialVersion: "v1.0 Initial Draft"
   },
   {
     id: "case-lexcorp-merger",
@@ -35,6 +66,10 @@ export const MOCK_CASES: Case[] = [
     stage: "Pre-Trial",
     status: "Active",
     leadCounsel: "Louis Litt",
-    openDate: "2025-11-15"
+    openDate: "2025-11-15",
+    nextHearingDate: "2026-08-05",
+    hearingPurpose: "Regulatory Clearance Approval Hearing",
+    urgencyLevel: "Normal",
+    officialVersion: "v2.0 Approved"
   }
 ];

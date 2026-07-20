@@ -127,6 +127,13 @@ export default function ClientsListPage() {
             accessor: (c) => (
               <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                 <button
+                  onClick={() => addToast("WhatsApp Dispatched", `Automated hearing update sent via WhatsApp to ${c.name} (${c.phone}).`, "success")}
+                  className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 text-[10px] font-bold flex items-center gap-1 transition-colors"
+                  title="Send Automated Hearing Notice over WhatsApp"
+                >
+                  <span>WhatsApp Notice</span>
+                </button>
+                <button
                   onClick={() => setInspectClient(c)}
                   className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                   title="Inspect Profile"

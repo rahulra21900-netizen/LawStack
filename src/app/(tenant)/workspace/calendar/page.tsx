@@ -34,12 +34,51 @@ export default function MasterCalendarPage() {
         </Button>
       </div>
 
+      {/* Urgent AI Escalation Alert Banner (Ram's Case Study Scenario) */}
+      <div className="p-4 bg-red-950/40 border border-red-500/40 rounded-xl space-y-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-start gap-3">
+            <div className="p-2 rounded-lg bg-red-500/20 text-red-400 mt-0.5">
+              <AlertTriangle className="w-5 h-5 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-white text-sm">CRITICAL HEARING ESCALATION: State v. Sharma</span>
+                <Badge label="24-Hour Urgent Alert" variant="error" size="sm" />
+              </div>
+              <p className="text-xs text-red-200 mt-0.5">
+                Court notice issued: Hearing date advanced to <strong>Tomorrow (8:30 AM)</strong>. Opposing counsel requested bail reduction hearing.
+              </p>
+              <p className="text-[11px] text-red-300 font-mono mt-1">
+                ⚠️ Schedule Clash Detected: Harvey Specter (High Court Bench 3) clashes with Mike Ross (Sessions Court).
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => addToast("Escalation Dispatched", "WhatsApp, SMS & Email alerts sent to Harvey Specter, 3 Junior Advocates, and 10 Interns.", "success")}
+            >
+              Dispatch Multi-Channel Alerts
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => addToast("Clash Resolved", "Reassigned High Court Bench 3 appearance to Senior Associate Louis Litt.", "info")}
+            >
+              Resolve Clash
+            </Button>
+          </div>
+        </div>
+      </div>
+
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Events (30d)" value={MOCK_CALENDAR_EVENTS.length} info="Scheduled" trend="up" />
-        <MetricCard title="Hearings" value="3" info="Court appearances" trend="neutral" />
-        <MetricCard title="Deadlines" value="2" info="Filing due" trend="down" change="Approaching" />
-        <MetricCard title="Consults" value="4" info="Client meetings" trend="up" />
+        <MetricCard title="Critical Hearings" value="1 Urgent" info="Next 24 Hours" trend="down" change="Requires Action" />
+        <MetricCard title="Deadlines Due" value="2" info="Filing due" trend="neutral" change="Approaching" />
+        <MetricCard title="Schedule Clashes" value="1 Clash" info="Needs Reassignment" trend="down" />
       </div>
 
       {/* Switcher & Calendar Frame */}

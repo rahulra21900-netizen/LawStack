@@ -67,6 +67,36 @@ export function DetailDrawer({
 
           {/* Drawer Body */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            {/* Urgent Hearing Escalation Banner if present in inspect data */}
+            {data && data.scheduleAlert && (
+              <div className="p-3.5 bg-red-950/40 border border-red-500/50 rounded-xl space-y-1 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-red-400 flex items-center gap-1.5">
+                    <Scale className="w-4 h-4 animate-pulse" />
+                    <span>AI Escalation Alert</span>
+                  </span>
+                  <Badge label={data.urgencyLevel || "Critical"} variant="error" size="sm" />
+                </div>
+                <p className="text-slate-200 leading-relaxed font-semibold pt-1">{data.scheduleAlert}</p>
+                {data.hasClash && (
+                  <p className="text-[11px] text-amber-300 font-mono pt-1">
+                    ⚠️ Hearing Clash: {data.clashingCounsel}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* AI Section Validation Notice if present in inspect data */}
+            {data && data.appliedSection && data.suggestedSection && (
+              <div className="p-3.5 bg-amber-950/30 border border-amber-500/40 rounded-xl space-y-1 text-xs">
+                <p className="font-bold text-amber-400">AI Section Validator</p>
+                <div className="space-y-1 text-[11px]">
+                  <p className="text-slate-300"><span className="text-slate-400">Cited in Draft:</span> <span className="font-mono text-red-300">{data.appliedSection}</span></p>
+                  <p className="text-slate-300"><span className="text-slate-400">Recommended Code:</span> <span className="font-mono text-emerald-400 font-bold">{data.suggestedSection}</span></p>
+                </div>
+              </div>
+            )}
+
             {customBody ? (
               customBody
             ) : data ? (

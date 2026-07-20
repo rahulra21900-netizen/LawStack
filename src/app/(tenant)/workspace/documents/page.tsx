@@ -116,7 +116,29 @@ export default function DocumentsListPage() {
             ),
           },
           { header: "Type", accessor: (d) => <span className="font-semibold text-slate-300">{d.type}</span> },
-          { header: "Version", accessor: (d) => <span className="font-mono text-[10px] text-slate-400">v{d.version}</span> },
+          {
+            header: "Version & Status",
+            accessor: (d) => (
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-xs text-amber-400 font-bold">v{d.version}</span>
+                {d.status === "Approved" ? (
+                  <Badge label="Official Filed Version" variant="success" size="sm" />
+                ) : d.status === "Draft" ? (
+                  <Badge label="Draft (In Review)" variant="warning" size="sm" />
+                ) : (
+                  <Badge label="Client Shared" variant="info" size="sm" />
+                )}
+              </div>
+            ),
+          },
+          {
+            header: "OCR Indexing",
+            accessor: (d) => (
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5 rounded">
+                ✓ OCR Searchable PDF
+              </span>
+            ),
+          },
           {
             header: "Size",
             accessor: (d) => (

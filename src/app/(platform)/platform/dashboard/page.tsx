@@ -501,6 +501,94 @@ export default function PlatformDashboardPage() {
                 </ul>
               </section>
 
+              {/* Indian Legal & Compliance Pre-Development Blueprint */}
+              <section className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-4">
+                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-400 flex items-center gap-2">
+                  <span>Indian Legal Compliance Pre-Development Guide (What, Why, Where & How)</span>
+                </h3>
+                <div className="space-y-4 text-xs">
+                  {/* Law 1: DPDP Act 2023 */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 space-y-2">
+                    <p className="font-bold text-amber-300 text-sm">1. 🛡️ Digital Personal Data Protection (DPDP) Act, 2023</p>
+                    <p><strong className="text-slate-200">WHAT:</strong> India's law regulating how personal client data must be collected, processed, stored, and protected.</p>
+                    <p><strong className="text-slate-200">WHY:</strong> Legal compliance mandate. Violations carry severe penalties of up to ₹250 crore by the Data Protection Board.</p>
+                    <p><strong className="text-slate-200">WHERE in Codebase:</strong> Infrastructure config (<code className="text-blue-400">ap-south-1 Mumbai</code>), <code className="text-blue-400">src/components/forms/</code>, <code className="text-blue-400">src/services/data-privacy.service.ts</code>.</p>
+                    <div className="text-slate-400 space-y-1 pl-2 border-l-2 border-amber-500/40">
+                      <p className="font-semibold text-white">HOW to Implement:</p>
+                      <p>• Host all databases & file storage strictly in India (<code className="text-blue-400">AWS/GCP Mumbai region</code>).</p>
+                      <p>• Build affirmative client consent dialogs (no pre-checked boxes) before storing client contact info.</p>
+                      <p>• Implement data deletion/archival workflows for closed cases and breach notification logging.</p>
+                    </div>
+                  </div>
+
+                  {/* Law 2: BCI Rule 36 & Advocates Act 1961 */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 space-y-2">
+                    <p className="font-bold text-amber-300 text-sm">2. ⚖️ Bar Council of India (BCI) Rule 36 & Advocates Act, 1961</p>
+                    <p><strong className="text-slate-200">WHAT:</strong> BCI Rule 36 strictly bans advocates from advertising, soliciting clients, or being listed on public directories.</p>
+                    <p><strong className="text-slate-200">WHY:</strong> Court precedent (<code className="text-blue-400">P.N. Vignesh case</code>). Directory platforms face legal action and advocates risk disbarment if soliciting is allowed.</p>
+                    <p><strong className="text-slate-200">WHERE in Codebase:</strong> <code className="text-blue-400">src/app/(public)/</code>, <code className="text-blue-400">src/layouts/PublicLayout.tsx</code>, <code className="text-blue-400">src/app/(client)/</code>.</p>
+                    <div className="text-slate-400 space-y-1 pl-2 border-l-2 border-amber-500/40">
+                      <p className="font-semibold text-white">HOW to Implement:</p>
+                      <p>• DO NOT build public lawyer search, directory, rating, or client-matching features.</p>
+                      <p>• Make ALL client access strictly <strong className="text-amber-300">Invite-Only</strong> via direct links sent by their representing advocate.</p>
+                    </div>
+                  </div>
+
+                  {/* Law 3: Attorney-Client Privilege */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 space-y-2">
+                    <p className="font-bold text-amber-300 text-sm">3. 🔐 Attorney-Client Privilege (BSA 2023 Sec 132 / IEA Sec 126)</p>
+                    <p><strong className="text-slate-200">WHAT:</strong> Indian law protecting confidential advocate-client communications and case documents from disclosure.</p>
+                    <p><strong className="text-slate-200">WHY:</strong> Lawyers will not adopt a cloud platform if system engineers can inspect their confidential case files.</p>
+                    <p><strong className="text-slate-200">WHERE in Codebase:</strong> <code className="text-blue-400">src/lib/encryption.ts</code>, <code className="text-blue-400">src/middleware.ts</code>, <code className="text-blue-400">src/app/(platform)/platform/audit/</code>.</p>
+                    <div className="text-slate-400 space-y-1 pl-2 border-l-2 border-amber-500/40">
+                      <p className="font-semibold text-white">HOW to Implement:</p>
+                      <p>• Build <strong className="text-amber-300">Per-Firm Encryption (Option 2)</strong>: Unique encryption key generated per tenant workspace.</p>
+                      <p>• Ensure platform owners have <strong className="text-white">zero standing access</strong> to tenant case files.</p>
+                      <p>• Build a 2-person approval break-glass protocol (CTO + Security) for emergency maintenance.</p>
+                    </div>
+                  </div>
+
+                  {/* Law 4: BNS, BNSS & BSA 2023 */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 space-y-2">
+                    <p className="font-bold text-amber-300 text-sm">4. 📚 New Criminal Laws (BNS, BNSS & BSA 2023 Concordance Tool)</p>
+                    <p><strong className="text-slate-200">WHAT:</strong> India replaced IPC, CrPC, and IEA with BNS, BNSS, and BSA. Courts run cases under both old & new codes.</p>
+                    <p><strong className="text-slate-200">WHY:</strong> Advocates make frequent errors mapping legacy sections to new codes in court filings, causing rejection defects.</p>
+                    <p><strong className="text-slate-200">WHERE in Codebase:</strong> <code className="text-blue-400">src/features/legal-lookup/</code>, <code className="text-blue-400">src/constants/concordance-table.json</code>.</p>
+                    <div className="text-slate-400 space-y-1 pl-2 border-l-2 border-amber-500/40">
+                      <p className="font-semibold text-white">HOW to Implement:</p>
+                      <p>• Create a JSON concordance lookup table matching legacy IPC/CrPC sections to BNS/BNSS provisions.</p>
+                      <p>• Show instant section translation suggestions and High Court footnote formatting as advocates type drafts.</p>
+                    </div>
+                  </div>
+
+                  {/* Law 5: IT Act 2000 & CERT-In */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 space-y-2">
+                    <p className="font-bold text-amber-300 text-sm">5. 💻 IT Act, 2000 & CERT-In Guidelines (Authentication & Audit)</p>
+                    <p><strong className="text-slate-200">WHAT:</strong> Information technology regulations governing digital access controls, MFA, and system incident logging.</p>
+                    <p><strong className="text-slate-200">WHY:</strong> Protects law firms against account hijacking, credential theft, and SIM-swap fraud.</p>
+                    <p><strong className="text-slate-200">WHERE in Codebase:</strong> <code className="text-blue-400">src/app/(platform)/platform/mfa/</code>, <code className="text-blue-400">src/providers/AuthProvider.tsx</code>.</p>
+                    <div className="text-slate-400 space-y-1 pl-2 border-l-2 border-amber-500/40">
+                      <p className="font-semibold text-white">HOW to Implement:</p>
+                      <p>• Force mandatory <strong className="text-amber-300">App-Based TOTP MFA</strong> for all users accessing case or billing data.</p>
+                      <p>• Maintain immutable, time-stamped system logs of all login and document access events for 1+ years.</p>
+                    </div>
+                  </div>
+
+                  {/* Law 6: GST Act 2017 */}
+                  <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 space-y-2">
+                    <p className="font-bold text-amber-300 text-sm">6. 💳 GST Act, 2017 & Payment Gateway Regulations</p>
+                    <p><strong className="text-slate-200">WHAT:</strong> Indian tax laws governing legal service billing, SAC codes, and digital payment collections.</p>
+                    <p><strong className="text-slate-200">WHY:</strong> Ensures law firms generate compliant tax invoices and collect client retainers legally.</p>
+                    <p><strong className="text-slate-200">WHERE in Codebase:</strong> <code className="text-blue-400">src/app/(tenant)/workspace/billing/</code>, <code className="text-blue-400">src/components/tables/InvoicesTable.tsx</code>.</p>
+                    <div className="text-slate-400 space-y-1 pl-2 border-l-2 border-amber-500/40">
+                      <p className="font-semibold text-white">HOW to Implement:</p>
+                      <p>• Add support for SAC Code <strong className="text-white">9982</strong> (Legal Services) and Reverse Charge Mechanism (RCM) flags on invoices.</p>
+                      <p>• Integrate RBI-approved payment gateways (Razorpay, UPI QR) for retainer billing.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               <section>
                 <h3 className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">Simple glossary for developers</h3>
                 <div className="grid gap-3 md:grid-cols-2">
@@ -571,19 +659,28 @@ export default function PlatformDashboardPage() {
                 <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-amber-400">Product Concept Document</p>
                 <h2 className="text-lg font-bold text-white">LawStack — Practice Management Platform for Indian Advocates</h2>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2">
                 <a
-                  href="/docs/LawStack_Product_Concept.pdf"
+                  href="/docs/LawStack_Product_Concept_English.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20 transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Open PDF Document</span>
+                  <span>English PDF</span>
+                </a>
+                <a
+                  href="/docs/LawStack_Product_Concept_Hindi.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>हिंदी PDF (Hindi)</span>
                 </a>
                 <button
                   onClick={() => setShowProductDoc(false)}
-                  className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                  className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white ml-1"
                   aria-label="Close document modal"
                 >
                   <X className="h-4 w-4" />
@@ -593,21 +690,35 @@ export default function PlatformDashboardPage() {
 
             {/* Modal Body */}
             <div className="space-y-6 p-6 text-sm text-slate-300">
-              {/* Quick Link Notice */}
-              <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              {/* Dual Language Quick Link Notice */}
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <p className="font-bold text-amber-300 text-xs uppercase tracking-wider">Public Asset Path (App Hosted)</p>
-                  <p className="text-xs text-slate-300 font-mono">/docs/LawStack_Product_Concept.pdf</p>
+                  <p className="font-bold text-amber-300 text-xs uppercase tracking-wider">Product Concept Documents (Dual Language Available)</p>
+                  <p className="text-xs text-slate-300">
+                    <span className="font-mono text-amber-400">/docs/LawStack_Product_Concept_English.pdf</span><br />
+                    <span className="font-mono text-emerald-400">/docs/LawStack_Product_Concept_Hindi.pdf</span>
+                  </p>
                 </div>
-                <a
-                  href="/docs/LawStack_Product_Concept.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors shrink-0"
-                >
-                  <FileText className="w-4 h-4" />
-                  <span>Open Full PDF</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <a
+                    href="/docs/LawStack_Product_Concept_English.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>Open English PDF</span>
+                  </a>
+                  <a
+                    href="/docs/LawStack_Product_Concept_Hindi.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>हिंदी PDF खोलें (Hindi)</span>
+                  </a>
+                </div>
               </div>
 
               {/* 1. Core Idea & Audience */}
@@ -789,21 +900,32 @@ export default function PlatformDashboardPage() {
                 </div>
               </section>
 
-              {/* Bottom PDF Link Button */}
-              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 pt-4">
+              {/* Bottom PDF Link Buttons */}
+              <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-4">
                 <div>
                   <p className="font-bold text-white text-xs">Need to review the full 11-page original concept document?</p>
-                  <p className="text-[11px] text-slate-400">Hosted in your web app for instant viewing and downloading in any browser.</p>
+                  <p className="text-[11px] text-slate-400">Hosted in your web app in English and Hindi for instant viewing or downloading.</p>
                 </div>
-                <a
-                  href="/docs/LawStack_Product_Concept.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  <span>Open Product Concept PDF</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <a
+                    href="/docs/LawStack_Product_Concept_English.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>English PDF</span>
+                  </a>
+                  <a
+                    href="/docs/LawStack_Product_Concept_Hindi.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 hover:bg-emerald-400 transition-colors"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>हिंदी PDF (Hindi)</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

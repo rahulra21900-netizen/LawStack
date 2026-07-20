@@ -10,4 +10,13 @@ export interface Case {
   leadCounsel: string;
   openDate: string;
   closeDate?: string;
+  nextHearingDate?: string;
+  hearingPurpose?: string;
+  urgencyLevel?: "Normal" | "Urgent" | "Critical";
+  scheduleAlert?: string;
+  hasClash?: boolean;
+  clashingCounsel?: string;
+  appliedSection?: string;
+  suggestedSection?: string;
+  officialVersion?: string;
 }

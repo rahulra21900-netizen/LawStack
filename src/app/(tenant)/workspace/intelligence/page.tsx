@@ -70,6 +70,36 @@ const BNS_CONCORDANCE_DB: Record<
     mpHcFootnote: "See Sec. 64 & 70, Bharatiya Nyaya Sanhita, 2023 (corresponding to legacy Sec. 376, Indian Penal Code, 1860).",
     delhiHcFootnote: "1. Sec. 64 / 70, Bharatiya Nyaya Sanhita, 2023 [formerly Sec. 376, IPC].",
   },
+  "ipc 437": {
+    bnsSection: "BNSS Section 480",
+    bnsTitle: "Bail in non-bailable offences (Magistrate discretion)",
+    ambiguityFlag: true,
+    ambiguityReason: "🚨 CITATION ERROR WARNING (Ram Case Study): Section 437 applies to non-bailable bail before a Magistrate. If seeking anticipatory bail prior to arrest, cite Section 438 (BNSS 482) instead!",
+    mpHcFootnote: "See Sec. 480, Bharatiya Nagarik Suraksha Sanhita, 2023.",
+    delhiHcFootnote: "1. Sec. 480, BNSS 2023 [formerly Sec. 437, CrPC].",
+  },
+  "ipc 438": {
+    bnsSection: "BNSS Section 482",
+    bnsTitle: "Direction for grant of bail to person apprehending arrest (Anticipatory Bail)",
+    ambiguityFlag: false,
+    mpHcFootnote: "See Sec. 482, Bharatiya Nagarik Suraksha Sanhita, 2023 (Anticipatory Bail).",
+    delhiHcFootnote: "1. Sec. 482, BNSS 2023 [formerly Sec. 438, CrPC].",
+  },
+  "contract 38": {
+    bnsSection: "Indian Contract Act Sec 38",
+    bnsTitle: "Effect of refusal to accept offer of performance",
+    ambiguityFlag: true,
+    ambiguityReason: "🚨 CITATION WARNING (Priya Case Study): Section 38 applies to undisclosed principals/refusal of performance. For specific performance of contract disputes, cite Sections 12 & 13 instead!",
+    mpHcFootnote: "See Sec. 38, Indian Contract Act, 1872.",
+    delhiHcFootnote: "1. Sec. 38, Contract Act.",
+  },
+  "contract 12": {
+    bnsSection: "Indian Contract Act Sec 12 & 13",
+    bnsTitle: "Specific Performance & Mutual Consent",
+    ambiguityFlag: false,
+    mpHcFootnote: "See Sec. 12 & 13, Indian Contract Act, 1872.",
+    delhiHcFootnote: "1. Sec. 12-13, Contract Act.",
+  },
 };
 
 const courtSyncItems = [
@@ -224,6 +254,55 @@ export default function IntelligencePage() {
                 Type an old code section like <strong>IPC 302</strong>, <strong>IPC 420</strong>, or <strong>CrPC 154</strong> to search the concordance index.
               </div>
             )}
+          </div>
+        </Card>
+
+        {/* Module 3: AI Landmark Precedent & Judgment Assistant (Priya Case Study Feature) */}
+        <Card
+          header={
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Scale className="w-4 h-4 text-emerald-400" />
+                <span className="text-xs font-bold text-white">AI Landmark Precedent & Judgment Assistant</span>
+              </div>
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono font-semibold">
+                Case Law Auto-Finder
+              </span>
+            </div>
+          }
+        >
+          <div className="space-y-4 text-xs">
+            <p className="text-slate-400">
+              Automated Supreme Court & High Court judgment retriever. Prevents missed precedents during litigation (e.g. Contract Specific Performance or Anticipatory Bail).
+            </p>
+
+            <div className="space-y-2">
+              <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-white">Rajesh Masrani v. Tech Corp (2018 SC 412)</span>
+                  <Badge label="Landmark Precedent" variant="success" size="sm" />
+                </div>
+                <p className="text-slate-400 text-[11px]">
+                  <strong>Subject:</strong> Specific Performance & Injunction Under Indian Contract Act Sec 12-13.
+                </p>
+                <p className="text-emerald-400 font-mono text-[10px] bg-emerald-950/30 p-1.5 rounded border border-emerald-500/20">
+                  Ratio: Held that interim relief and damages can be claimed simultaneously without waiving specific performance rights.
+                </p>
+              </div>
+
+              <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-white">Gurbaksh Singh Sibbia v. State of Punjab (1980 SC 1632)</span>
+                  <Badge label="Constitutional Bench" variant="info" size="sm" />
+                </div>
+                <p className="text-slate-400 text-[11px]">
+                  <strong>Subject:</strong> Anticipatory Bail Guidelines under CrPC 438 / BNSS 482.
+                </p>
+                <p className="text-blue-400 font-mono text-[10px] bg-blue-950/30 p-1.5 rounded border border-blue-500/20">
+                  Ratio: Anticipatory bail cannot be limited by time duration unless special circumstances exist.
+                </p>
+              </div>
+            </div>
           </div>
         </Card>
 

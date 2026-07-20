@@ -34,6 +34,38 @@ export default function BillingPage() {
         </Button>
       </div>
 
+      {/* Module 6: Live 1-Click Active Billable Hours Timer Widget */}
+      <div className="p-4 bg-emerald-950/40 border border-emerald-500/40 rounded-xl space-y-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-emerald-500/20 text-emerald-400">
+              <Clock className="w-5 h-5 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-white text-sm">Active Billable Hours Tracker</span>
+                <Badge label="Timer Running: 01:42:18" variant="success" size="sm" />
+              </div>
+              <p className="text-xs text-emerald-200 mt-0.5">
+                Active Matter: <strong>State v. Sharma (Anticipatory Bail Brief)</strong> · Lead: Harvey Specter
+              </p>
+              <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+                Rate: ₹4,500/hr · Unbilled Time Accrued: ₹7,650
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => addToast("Time Entry Logged", "Logged 1 hr 42 mins (₹7,650) to State v. Sharma ledger & generated draft invoice.", "success")}
+            >
+              Stop & Auto-Generate Invoice
+            </Button>
+          </div>
+        </div>
+      </div>
+
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Outstanding" value="$42,180" trend="up" change="6 invoices" info="Awaiting payment" />
