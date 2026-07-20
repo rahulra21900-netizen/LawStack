@@ -56,6 +56,7 @@ export function Sidebar({ layoutType, isOpen, onClose }: SidebarProps) {
   const platformItems: MenuItem[] = [
     { name: "Dashboard", href: "/platform/dashboard", icon: LayoutDashboard },
     { name: "Tenant Administration", href: "/platform/tenant-administration", icon: Building2, badge: "5" },
+    { name: "Break-Glass Access", href: "/platform/break-glass", icon: Gavel, badge: "1" },
     { name: "Audit Center", href: "/platform/audit", icon: ShieldAlert },
     { name: "Platform Settings", href: "/platform/settings", icon: Settings },
   ];
