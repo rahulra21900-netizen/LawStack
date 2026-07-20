@@ -82,7 +82,7 @@ export function AuthShell({
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+      <div className={`relative z-10 w-full ${sidePanel ? "max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch" : "max-w-[400px] mx-auto"}`}>
         {/* Form panel */}
         <div className="rounded-2xl border border-slate-800 bg-slate-900/70 backdrop-blur p-6 sm:p-8 shadow-2xl shadow-slate-950/50">
           <Link href="/" className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 hover:text-white transition-colors mb-6">

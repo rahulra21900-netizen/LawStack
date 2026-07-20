@@ -46,15 +46,6 @@ export default function PlatformMfaPage() {
         title="Verify your identity"
         subtitle="Enter the 6-digit code from your authenticator app to complete this admin session."
         footer={<span className="text-slate-500">Code expires in 04:58</span>}
-        sidePanel={{
-          heading: "Why we enforce MFA",
-          points: [
-            "Platform admin sessions can provision, suspend, and audit tenant namespaces",
-            "MFA blocks credential reuse even if a password is compromised",
-            "All MFA challenges are logged to the immutable audit trail",
-            "Security keys (FIDO2) can be enrolled from platform settings",
-          ],
-        }}
       >
       <form onSubmit={handleVerify} className="space-y-5">
         <div className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/40 p-3">

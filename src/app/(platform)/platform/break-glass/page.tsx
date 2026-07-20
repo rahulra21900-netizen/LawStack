@@ -18,7 +18,11 @@ import {
   ScrollText,
   AlertTriangle,
   Search,
+  BookOpen,
+  X,
 } from "lucide-react";
+
+import { MOCK_TENANTS } from "@/mocks/tenants";
 
 interface BreakGlassRequest {
   id: string;
@@ -131,8 +135,15 @@ export default function BreakGlassPage() {
   const [requests, setRequests] = useState<BreakGlassRequest[]>(seedRequests);
   const [selectedId, setSelectedId] = useState<string>(seedRequests[0].id);
   const [showNewSheet, setShowNewSheet] = useState(false);
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "denied">("all");
   const [query, setQuery] = useState("");
+
+  // New Request Form State
+  const [newTenantId, setNewTenantId] = useState("chandra-associates");
+  const [newScope, setNewScope] = useState<"Read-only" | "Read + Write" | "Full Admin">("Read-only");
+  const [newTtlHours, setNewTtlHours] = useState(6);
+  const [newJustification, setNewJustification] = useState("Emergency override requested for compliance review.");
 
   const selected = requests.find((r) => r.id === selectedId) || requests[0];
 
@@ -181,16 +192,19 @@ export default function BreakGlassPage() {
   };
 
   const submitNew = () => {
+    const selectedTenant = MOCK_TENANTS.find((t) => t.id === newTenantId);
+    const tenantName = selectedTenant ? selectedTenant.name : "Chandra & Associates";
+
     const newReq: BreakGlassRequest = {
       id: `bg-2026-${String(Math.floor(Math.random() * 900) + 100)}`,
-      tenantId: "chandra-associates",
-      tenantName: "Chandra & Associates",
+      tenantId: newTenantId,
+      tenantName,
       requestedBy: "Aditya Menon",
       requestedByRole: "Platform Owner",
       requestedAt: new Date().toISOString(),
-      reason: "Newly raised incident — awaiting co-approval.",
-      scope: "Read-only",
-      ttlHours: 6,
+      reason: newJustification || "Emergency override requested.",
+      scope: newScope,
+      ttlHours: newTtlHours,
       status: "Pending",
       requiredApprovers: 2,
       approvals: [{ name: "Aditya Menon", role: "Platform Owner", at: new Date().toISOString(), decision: "approve" }],
@@ -224,6 +238,14 @@ export default function BreakGlassPage() {
         </div>
         <div className="flex items-center gap-2">
           <Badge label="Dual-approval enforced" variant="success" />
+          <Button
+            variant="outline"
+            leftIcon={<BookOpen className="w-4 h-4" />}
+            onClick={() => setShowDeveloperGuide(true)}
+            data-testid="bg-dev-guide-btn"
+          >
+            Developer Guide
+          </Button>
           <Button
             variant="destructive"
             leftIcon={<KeyRound className="w-4 h-4" />}
@@ -504,26 +526,65 @@ export default function BreakGlassPage() {
 
             <div className="space-y-3 text-xs">
               <div>
-                <div className="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Tenant</div>
-                <div className="rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2 text-white">Chandra &amp; Associates</div>
+                <label className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">
+                  Tenant
+                </label>
+                <select
+                  value={newTenantId}
+                  onChange={(e) => setNewTenantId(e.target.value)}
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-white focus:ring-2 focus:ring-red-500/40 outline-none"
+                  data-testid="bg-new-tenant-select"
+                >
+                  {MOCK_TENANTS.map((t) => (
+                    <option key={t.id} value={t.id} className="bg-slate-950 text-white">
+                      {t.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Scope</div>
-                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2 text-white">Read-only</div>
+                  <label className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">
+                    Scope
+                  </label>
+                  <select
+                    value={newScope}
+                    onChange={(e) => setNewScope(e.target.value as "Read-only" | "Read + Write" | "Full Admin")}
+                    className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-white focus:ring-2 focus:ring-red-500/40 outline-none"
+                    data-testid="bg-new-scope-select"
+                  >
+                    <option value="Read-only" className="bg-slate-950 text-white">Read-only</option>
+                    <option value="Read + Write" className="bg-slate-950 text-white">Read + Write</option>
+                    <option value="Full Admin" className="bg-slate-950 text-white">Full Admin</option>
+                  </select>
                 </div>
                 <div>
-                  <div className="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">TTL</div>
-                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-2 text-white">6 hours</div>
+                  <label className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">
+                    TTL Duration
+                  </label>
+                  <select
+                    value={newTtlHours}
+                    onChange={(e) => setNewTtlHours(Number(e.target.value))}
+                    className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-3 py-2 text-white focus:ring-2 focus:ring-red-500/40 outline-none"
+                    data-testid="bg-new-ttl-select"
+                  >
+                    <option value={2} className="bg-slate-950 text-white">2 hours</option>
+                    <option value={6} className="bg-slate-950 text-white">6 hours</option>
+                    <option value={12} className="bg-slate-950 text-white">12 hours</option>
+                    <option value={24} className="bg-slate-950 text-white">24 hours</option>
+                  </select>
                 </div>
               </div>
               <div>
-                <div className="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Justification</div>
+                <label className="block text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">
+                  Justification / Incident Ticket
+                </label>
                 <textarea
                   rows={4}
-                  className="w-full rounded-lg border border-slate-800 bg-slate-900/60 p-3 text-slate-200 focus:ring-2 focus:ring-red-500/40"
+                  value={newJustification}
+                  onChange={(e) => setNewJustification(e.target.value)}
+                  className="w-full rounded-lg border border-slate-800 bg-slate-900/80 p-3 text-slate-200 focus:ring-2 focus:ring-red-500/40 outline-none"
                   placeholder="Describe the incident, ticket ID, and why standing access is insufficient…"
-                  defaultValue="Awaiting incident narrative from firm."
                   data-testid="bg-new-justification"
                 />
               </div>
@@ -533,6 +594,190 @@ export default function BreakGlassPage() {
               <Button variant="secondary" onClick={() => setShowNewSheet(false)}>Cancel</Button>
               <Button variant="destructive" onClick={submitNew} data-testid="bg-new-submit">
                 File for co-approval
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Developer Implementation Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+          <div
+            className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950 shadow-2xl"
+            data-testid="bg-dev-guide-modal"
+          >
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-800 bg-slate-950/90 px-6 py-4 backdrop-blur-md">
+              <div>
+                <p className="text-[10px] uppercase font-bold tracking-[0.25em] text-red-400">Developer Handoff Guide</p>
+                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-red-400" />
+                  Break-Glass Emergency Access Architecture &amp; Implementation Specs
+                </h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-800 p-2 text-slate-400 transition-colors hover:bg-slate-900 hover:text-white"
+                aria-label="Close developer guide"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-6 p-6 text-xs text-slate-300">
+              {/* Section 1: Overview */}
+              <section>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <ShieldAlert className="w-3.5 h-3.5" /> 1. Core Security Architecture (Zero Standing Privileges)
+                </h3>
+                <p className="leading-relaxed text-slate-400">
+                  Break-Glass emergency access implements a <strong className="text-white">Zero Standing Privilege (ZSP)</strong> model for SaaS platform operators.
+                  Platform support staff and platform owners carry <em>no standing administrative read or write permissions</em> into isolated tenant databases or document vaults.
+                  When an emergency occurs (e.g. firm owner MFA lockout, Bar Council compliance inspection, or DPDP regulatory audit), access can only be granted via a dual-sign-off time-bound workflow.
+                </p>
+              </section>
+
+              {/* Section 2: Data Model Schema */}
+              <section>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <ScrollText className="w-3.5 h-3.5" /> 2. Data Model Schema (`BreakGlassRequest`)
+                </h3>
+                <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 font-mono text-[11px] leading-relaxed text-slate-300 space-y-1">
+                  <div><span className="text-purple-400">interface</span> <span className="text-yellow-300">BreakGlassRequest</span> &#123;</div>
+                  <div className="pl-4"><span className="text-blue-300">id</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// e.g. "bg-2026-041"</span></div>
+                  <div className="pl-4"><span className="text-blue-300">tenantId</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// Target tenant namespace</span></div>
+                  <div className="pl-4"><span className="text-blue-300">tenantName</span>: <span className="text-emerald-300">string</span>;</div>
+                  <div className="pl-4"><span className="text-blue-300">requestedBy</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// Initiator Platform Officer</span></div>
+                  <div className="pl-4"><span className="text-blue-300">requestedByRole</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// "Platform Owner" | "Platform Admin"</span></div>
+                  <div className="pl-4"><span className="text-blue-300">requestedAt</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// ISO 8601 UTC timestamp</span></div>
+                  <div className="pl-4"><span className="text-blue-300">reason</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// Mandatory legal justification</span></div>
+                  <div className="pl-4"><span className="text-blue-300">scope</span>: <span className="text-emerald-300">&quot;Read-only&quot; | &quot;Read + Write&quot; | &quot;Full Admin&quot;</span>;</div>
+                  <div className="pl-4"><span className="text-blue-300">ttlHours</span>: <span className="text-emerald-300">number</span>; <span className="text-slate-500">// 2, 4, 6, 12, or 24 hours</span></div>
+                  <div className="pl-4"><span className="text-blue-300">status</span>: <span className="text-emerald-300">&quot;Pending&quot; | &quot;Approved&quot; | &quot;Denied&quot; | &quot;Revoked&quot; | &quot;Expired&quot;</span>;</div>
+                  <div className="pl-4"><span className="text-blue-300">approvals</span>: &#123; <span className="text-blue-300">name</span>: <span className="text-emerald-300">string</span>; <span className="text-blue-300">role</span>: <span className="text-emerald-300">string</span>; <span className="text-blue-300">at</span>?: <span className="text-emerald-300">string</span>; <span className="text-blue-300">decision</span>?: <span className="text-emerald-300">&quot;approve&quot; | &quot;deny&quot;</span> &#125;[];</div>
+                  <div className="pl-4"><span className="text-blue-300">requiredApprovers</span>: <span className="text-emerald-300">number</span>; <span className="text-slate-500">// Enforced strictly at 2</span></div>
+                  <div className="pl-4"><span className="text-blue-300">ticket</span>: <span className="text-emerald-300">string</span>; <span className="text-slate-500">// Linked support / incident ticket</span></div>
+                  <div>&#125;</div>
+                </div>
+              </section>
+
+              {/* Section 3: Execution Workflow & State Machine */}
+              <section>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <Clock3 className="w-3.5 h-3.5" /> 3. State Machine &amp; Dual-Approval Workflow
+                </h3>
+                <div className="grid gap-3 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                    <p className="font-semibold text-white mb-1">Step 1: Request filing (`Pending` state)</p>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      Officer 1 files request with tenant ID, scope, TTL, and ticket justification.
+                      System records approval 1/2 from Officer 1 automatically and sets status to <span className="text-amber-400 font-semibold">Pending</span>.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                    <p className="font-semibold text-white mb-1">Step 2: Dual sign-off (`Approved` state)</p>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      Officer 2 (must be distinct named Platform Officer) reviews narrative.
+                      If Officer 2 clicks <span className="text-emerald-400 font-semibold">Approve</span>, status updates to <span className="text-emerald-400 font-semibold">Approved</span>, TTL countdown starts, and vault KMS grants un-seal.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                    <p className="font-semibold text-white mb-1">Step 3: Rejection (`Denied` state)</p>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      If Officer 2 rejects the request, status immediately transitions to <span className="text-red-400 font-semibold">Denied</span>.
+                      No encryption keys are unsealed, and denial is logged permanently in the Audit Center.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                    <p className="font-semibold text-white mb-1">Step 4: Expiry &amp; Revocation (`Expired` / `Revoked` state)</p>
+                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                      Session auto-expires at `requestedAt + ttlHours` boundary.
+                      Clicking <span className="text-slate-300 font-semibold">Revoke now</span> instantly invalidates JWT session token and re-seals vault keys.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 4: Legal & Regulatory Compliance */}
+              <section>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <FileWarning className="w-3.5 h-3.5" /> 4. Regulatory &amp; Statutory Compliance Rules
+                </h3>
+                <ul className="space-y-2 text-slate-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400 font-bold">•</span>
+                    <div>
+                      <strong className="text-white">DPDP Act 2023 (Digital Personal Data Protection):</strong>
+                      <span className="text-slate-400 font-normal ml-1">
+                        Mandatory compliance audit requests require forensic Read-only scope limited to 12 hours. Tenant Data Fiduciary receives automated notification within 60 seconds.
+                      </span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400 font-bold">•</span>
+                    <div>
+                      <strong className="text-white">Bar Council of India &amp; NCLT Deadlines:</strong>
+                      <span className="text-slate-400 font-normal ml-1">
+                        In cases of sole advocate hospitalization or firm owner MFA lockout, Read + Write scope allows emergency vakalatnama filing submission with mandatory incident ticket reference.
+                      </span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400 font-bold">•</span>
+                    <div>
+                      <strong className="text-white">Section 3.4 Data Isolation Policy:</strong>
+                      <span className="text-slate-400 font-normal ml-1">
+                        Tenant KMS data keys are wrapped with envelope encryption. Break-glass grants temporary AWS KMS / GCP KMS decryption permissions scoped strictly to the approved TTL session token.
+                      </span>
+                    </div>
+                  </li>
+                </ul>
+              </section>
+
+              {/* Section 5: API Endpoint Contracts */}
+              <section>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <KeyRound className="w-3.5 h-3.5" /> 5. Backend API Endpoints &amp; Integration Handlers
+                </h3>
+                <div className="space-y-2">
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5 font-mono text-[11px]">
+                    <span className="text-emerald-400 font-bold">POST</span> <span className="text-white">/api/v1/platform/break-glass/request</span>
+                    <p className="text-[10px] text-slate-500 font-sans mt-0.5">Payload: &#123; tenantId, scope, ttlHours, reason, ticket &#125; — Initiates request &amp; records 1st approval.</p>
+                  </div>
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5 font-mono text-[11px]">
+                    <span className="text-blue-400 font-bold">POST</span> <span className="text-white">/api/v1/platform/break-glass/:id/decision</span>
+                    <p className="text-[10px] text-slate-500 font-sans mt-0.5">Payload: &#123; decision: &quot;approve&quot; | &quot;deny&quot; &#125; — Records 2nd approval, issues short-lived JWT, writes audit log.</p>
+                  </div>
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5 font-mono text-[11px]">
+                    <span className="text-red-400 font-bold">POST</span> <span className="text-white">/api/v1/platform/break-glass/:id/revoke</span>
+                    <p className="text-[10px] text-slate-500 font-sans mt-0.5">Payload: &#123;&#125; — Immediate kill switch terminating active break-glass session token.</p>
+                  </div>
+                  <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5 font-mono text-[11px]">
+                    <span className="text-purple-400 font-bold">GET</span> <span className="text-white">/api/v1/platform/break-glass/audit-stream</span>
+                    <p className="text-[10px] text-slate-500 font-sans mt-0.5">Returns immutable audit stream connected directly to <Link href="/platform/audit" className="text-blue-400 underline">Audit Center</Link>.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 6: Testing & Test IDs */}
+              <section>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <UserCheck className="w-3.5 h-3.5" /> 6. QA Automation &amp; Test Identifiers
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 font-mono text-[10px]">
+                  <div className="rounded bg-slate-900 border border-slate-800 p-2 text-slate-300">`bg-dev-guide-btn`</div>
+                  <div className="rounded bg-slate-900 border border-slate-800 p-2 text-slate-300">`bg-dev-guide-modal`</div>
+                  <div className="rounded bg-slate-900 border border-slate-800 p-2 text-slate-300">`bg-new-request-btn`</div>
+                  <div className="rounded bg-slate-900 border border-slate-800 p-2 text-slate-300">`bg-approve-btn`</div>
+                  <div className="rounded bg-slate-900 border border-slate-800 p-2 text-slate-300">`bg-deny-btn`</div>
+                  <div className="rounded bg-slate-900 border border-slate-800 p-2 text-slate-300">`bg-revoke-btn`</div>
+                </div>
+              </section>
+            </div>
+
+            <div className="sticky bottom-0 border-t border-slate-800 bg-slate-950/90 px-6 py-3 backdrop-blur-md flex justify-end">
+              <Button variant="secondary" onClick={() => setShowDeveloperGuide(false)}>
+                Close Handoff Guide
               </Button>
             </div>
           </div>

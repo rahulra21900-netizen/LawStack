@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Shield, Menu, X, Globe, ArrowRight, Scale } from "lucide-react";
+import { useTheme } from "@/providers/ThemeProvider";
+import { Shield, Menu, X, Globe, ArrowRight, Scale, Sun, Moon } from "lucide-react";
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isHomePage = pathname === "/";
 
@@ -84,6 +86,16 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Invite-Only Enterprise Platform
               </span>
+
+              {/* Theme Switcher */}
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="p-2 rounded-lg hover:bg-slate-900 text-slate-400 hover:text-white transition-colors focus:ring-2 focus:ring-blue-500"
+                aria-label="Toggle color theme"
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-blue-400" />}
+              </button>
+
               <Link
                 href="/platform/login"
                 className="group inline-flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-0.5"

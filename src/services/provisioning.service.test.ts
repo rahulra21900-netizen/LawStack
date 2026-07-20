@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { ProvisioningService } from "./provisioning.service.ts";
+import { ProvisioningService } from "./provisioning.service";
 
 test("verifies valid PAN, GSTIN, and bar council credentials", async () => {
   const result = await ProvisioningService.verifyCredentials({

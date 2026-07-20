@@ -36,6 +36,7 @@ body {
   background: var(--lawstack-bg);
   color: var(--lawstack-fg);
   font-family: var(--font-family-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Document-Heavy & Heading Serif Pairing Classes */
@@ -58,3 +59,172 @@ body {
   background: rgba(37, 99, 235, 0.35);
   color: #f8fafc;
 }
+
+/* ==========================================================================
+   LIGHT THEME UTILITY OVERRIDES & REPAINT ENGINE
+   ========================================================================== */
+
+html[data-theme="light"],
+[data-theme="light"] {
+  /* Surfaces & Card Backgrounds */
+  .bg-slate-950,
+  .bg-slate-900 {
+    background-color: #ffffff !important;
+  }
+
+  .bg-slate-950\/40,
+  .bg-slate-950\/50,
+  .bg-slate-950\/60,
+  .bg-slate-950\/80,
+  .bg-slate-950\/90,
+  .bg-slate-900\/40,
+  .bg-slate-900\/50,
+  .bg-slate-900\/60,
+  .bg-slate-900\/80,
+  .bg-slate-900\/90 {
+    background-color: #ffffff !important;
+  }
+
+  .bg-slate-900\/20,
+  .bg-slate-900\/30,
+  .bg-slate-950\/20,
+  .bg-slate-950\/30 {
+    background-color: #f1f5f9 !important;
+  }
+
+  .bg-slate-800,
+  .bg-slate-800\/40,
+  .bg-slate-800\/50,
+  .bg-slate-800\/60,
+  .bg-slate-800\/80 {
+    background-color: #f1f5f9 !important;
+  }
+
+  /* Borders & Dividers */
+  .border-slate-800,
+  .border-slate-800\/80,
+  .border-slate-800\/50,
+  .border-slate-900 {
+    border-color: #e2e8f0 !important;
+  }
+
+  .border-slate-700 {
+    border-color: #cbd5e1 !important;
+  }
+
+  .divide-slate-800 > * + * {
+    border-color: #e2e8f0 !important;
+  }
+
+  .divide-slate-900 > * + * {
+    border-color: #f1f5f9 !important;
+  }
+
+  /* Text Colors & Typography */
+  .text-white {
+    color: #0f172a !important;
+  }
+
+  .text-slate-100,
+  .text-slate-200,
+  .text-slate-300 {
+    color: #1e293b !important;
+  }
+
+  .text-slate-400 {
+    color: #475569 !important;
+  }
+
+  .text-slate-500 {
+    color: #64748b !important;
+  }
+
+  .text-slate-600 {
+    color: #475569 !important;
+  }
+
+  .placeholder-slate-500,
+  .placeholder-slate-600 {
+    color: #94a3b8 !important;
+  }
+
+  /* Hovers & Interactive States */
+  .hover\:bg-slate-900:hover,
+  .hover\:bg-slate-800:hover,
+  .hover\:bg-slate-900\/60:hover,
+  .hover\:bg-slate-900\/50:hover,
+  .hover\:bg-slate-800\/80:hover,
+  .hover\:bg-slate-800\/50:hover {
+    background-color: #e2e8f0 !important;
+  }
+
+  .hover\:text-white:hover {
+    color: #0f172a !important;
+  }
+
+  .hover\:border-slate-700:hover,
+  .hover\:border-slate-600:hover {
+    border-color: #cbd5e1 !important;
+  }
+
+  /* Accessible Accent Colors in Light Mode */
+  .text-emerald-400 {
+    color: #059669 !important;
+  }
+  .text-amber-400 {
+    color: #d97706 !important;
+  }
+  .text-blue-400 {
+    color: #2563eb !important;
+  }
+  .text-indigo-400 {
+    color: #4f46e5 !important;
+  }
+  .text-red-400 {
+    color: #dc2626 !important;
+  }
+
+  /* Solid Filled Buttons & Badges Protection (Must Keep White/Contrast Text) */
+  .bg-blue-600,
+  .bg-blue-500,
+  .bg-indigo-600,
+  .bg-emerald-600,
+  .bg-emerald-500,
+  .bg-red-600,
+  .bg-amber-600,
+  .bg-slate-900.text-white.btn,
+  button.bg-blue-600,
+  button.bg-indigo-600,
+  button.bg-emerald-600,
+  button.bg-red-600 {
+    color: #ffffff !important;
+  }
+
+  .bg-blue-600 .text-white,
+  .bg-blue-500 .text-white,
+  .bg-indigo-600 .text-white,
+  .bg-emerald-600 .text-white,
+  .bg-red-600 .text-white,
+  .bg-amber-500 .text-slate-950 {
+    color: inherit !important;
+  }
+
+  /* Header & Navigation Fixes */
+  header {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+  }
+
+  aside {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #1e293b !important;
+  }
+
+  /* Modals & Command Palette Backdrop */
+  .fixed.inset-0.bg-slate-950\/80 {
+    background-color: rgba(15, 23, 42, 0.4) !important;
+  }
+}
+
