@@ -1,22 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Merriweather, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/providers";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  weight: ["300", "400", "700", "900"],
+  subsets: ["latin"],
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "LawStack V2 - Enterprise Legal Platform Prototype",
-  description: "Enterprise multi-tenant legal operations platform prototype with dynamic simulators.",
+  description: "Enterprise multi-tenant legal operations platform prototype for Indian Advocates & Law Firms.",
 };
 
 export default function RootLayout({
@@ -27,9 +33,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${merriweather.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-white">
+      <body className="min-h-full flex flex-col bg-slate-950 text-white font-sans">
         <Providers>
           <ProtectedRoute>{children}</ProtectedRoute>
         </Providers>
