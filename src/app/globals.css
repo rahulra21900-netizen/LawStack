@@ -1,29 +1,40 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "../styles/design-tokens.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* --- Theme tokens driven by data-theme on <html> --- */
+:root,
+:root[data-theme="dark"] {
+  --lawstack-bg: #020617;        /* slate-950 */
+  --lawstack-surface: #0f172a;   /* slate-900 */
+  --lawstack-surface-2: #1e293b; /* slate-800 */
+  --lawstack-border: #1e293b;
+  --lawstack-fg: #f8fafc;        /* slate-50 */
+  --lawstack-muted: #94a3b8;     /* slate-400 */
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --lawstack-bg: #f8fafc;
+  --lawstack-surface: #ffffff;
+  --lawstack-surface-2: #f1f5f9;
+  --lawstack-border: #e2e8f0;
+  --lawstack-fg: #0f172a;
+  --lawstack-muted: #475569;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-merriweather);
-  --font-mono: var(--font-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020617;
-    --foreground: #ededed;
-  }
+  --color-background: var(--lawstack-bg);
+  --color-foreground: var(--lawstack-fg);
+  --font-sans: var(--font-plex-sans);
+  --font-serif: var(--font-source-serif);
+  --font-mono: var(--font-plex-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--lawstack-bg);
+  color: var(--lawstack-fg);
   font-family: var(--font-family-sans);
 }
 
@@ -40,4 +51,10 @@ body {
 
 .font-mono {
   font-family: var(--font-family-mono);
+}
+
+/* Selection color for on-brand highlight */
+::selection {
+  background: rgba(37, 99, 235, 0.35);
+  color: #f8fafc;
 }

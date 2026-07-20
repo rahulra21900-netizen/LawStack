@@ -27,24 +27,24 @@
   --neutral-950: #020617;
 
   /* Semantic HSL Coordinates */
-  --color-success: Hsl(142, 70%, 45%);
-  --color-warning: Hsl(38, 92%, 50%);
-  --color-error: Hsl(0, 84%, 60%);
-  --color-info: Hsl(212, 100%, 50%);
+  --color-success: hsl(142, 70%, 45%);
+  --color-warning: hsl(38, 92%, 50%);
+  --color-error: hsl(0, 84%, 60%);
+  --color-info: hsl(212, 100%, 50%);
 
-  /* 2. Typography Scale */
-  --font-family-sans: var(--font-inter), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family-serif: var(--font-merriweather), "Merriweather", Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-family-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* 2. Typography Scale — IBM Plex Sans (primary) + Source Serif 4 (heading/legal) + Plex Mono */
+  --font-family-sans: var(--font-plex-sans), "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-serif: var(--font-source-serif), "Source Serif 4", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-family-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
-  --font-size-xs: 0.75rem;     /* 12px */
-  --font-size-sm: 0.875rem;    /* 14px */
-  --font-size-base: 1rem;      /* 16px */
-  --font-size-lg: 1.125rem;    /* 18px */
-  --font-size-xl: 1.25rem;     /* 20px */
-  --font-size-2xl: 1.5rem;     /* 24px */
-  --font-size-3xl: 1.875rem;   /* 30px */
-  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
 
   --font-weight-light: 300;
   --font-weight-regular: 400;
