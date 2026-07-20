@@ -29,7 +29,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     setTheme(theme);
-  }, []);
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

@@ -61,7 +61,7 @@ export interface DataTableProps<T> {
   selectable?: boolean;
   selectedIds?: string[];
   onSelectionChange?: (selectedIds: string[]) => void;
-  getRowId?: (item: T) => string;
+  getRowId?: (item: T, index: number) => string;
   density?: "comfortable" | "compact";
   rowsPerPage?: number;
 }
@@ -74,7 +74,7 @@ export function DataTable<T>({
   selectable = false,
   selectedIds = [],
   onSelectionChange,
-  getRowId = (item: any) => item.id || String(Math.random()),
+  getRowId = (item: any, index: number) => item?.id || item?._id || `row-${index}`,
   density = "comfortable",
   rowsPerPage = 8,
 }: DataTableProps<T>) {
@@ -83,7 +83,7 @@ export function DataTable<T>({
   const totalPages = Math.max(Math.ceil(data.length / rowsPerPage), 1);
   const paginatedData = data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
-  const allPageIds = paginatedData.map(getRowId);
+  const allPageIds = paginatedData.map((item, index) => getRowId(item, index));
   const isAllPageSelected = allPageIds.length > 0 && allPageIds.every((id) => selectedIds.includes(id));
 
   const toggleSelectAll = () => {
@@ -147,7 +147,7 @@ export function DataTable<T>({
               </tr>
             ) : (
               paginatedData.map((item, rowIdx) => {
-                const rowId = getRowId(item);
+                const rowId = getRowId(item, rowIdx);
                 const isSelected = selectedIds.includes(rowId);
 
                 return (

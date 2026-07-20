@@ -33,9 +33,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${merriweather.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-white font-sans">
+      <body suppressHydrationWarning className="min-h-full flex flex-col bg-slate-950 text-white font-sans">
         <Providers>
           <ProtectedRoute>{children}</ProtectedRoute>
         </Providers>

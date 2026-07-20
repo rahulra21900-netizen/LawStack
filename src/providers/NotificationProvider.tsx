@@ -30,7 +30,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const addToast = (title: string, message: string, type: Toast["type"] = "info") => {
-    const id = Math.random().toString(36).substring(7);
+    const id = `toast-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     setToasts(prev => [...prev, { id, title, message, type }]);
     // Auto-remove after 4 seconds
     setTimeout(() => removeToast(id), 4000);

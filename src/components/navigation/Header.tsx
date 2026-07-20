@@ -142,7 +142,13 @@ export function Header({ onToggleSidebar, layoutType }: HeaderProps) {
                         )}
                       </div>
                       <p className="text-[10px] text-slate-400 mt-0.5">{n.message}</p>
-                      <span className="text-[8px] text-slate-500 block mt-1">{new Date(n.createdAt).toLocaleTimeString()}</span>
+                      <span className="text-[8px] text-slate-500 block mt-1">
+                        {new Intl.DateTimeFormat("en-US", {
+                          hour: "numeric",
+                          minute: "2-digit",
+                          timeZone: "UTC",
+                        }).format(new Date(n.createdAt))}
+                      </span>
                     </div>
                   ))
                 )}

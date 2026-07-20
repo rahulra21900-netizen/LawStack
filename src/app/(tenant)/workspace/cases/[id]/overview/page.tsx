@@ -6,6 +6,7 @@ import { Card, MetricCard } from "@/components/cards";
 import { Badge, Button, Avatar } from "@/components/ui";
 import { MOCK_CASES } from "@/mocks/cases";
 import { Scale, Users, FileText, Calendar, DollarSign, CircleCheck as CheckCircle2, Clock, TriangleAlert as AlertTriangle, Sparkles, ChevronRight, Activity, SquareCheck as CheckSquare } from "lucide-react";
+import { formatDate } from "@/utils/formatDate";
 
 export default function OverviewTab({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params) as { id: string };
@@ -13,8 +14,8 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
 
   if (!caseData) return null;
 
-  const stages = ["Intake", "Pleadings", "Discovery", "Pre-Trial", "Trial"];
-  const currentStageIdx = stages.indexOf(caseData.stage);
+  const stages = ["Filing", "Pleadings", "Evidence", "Arguments", "Judgment"];
+  const currentStageIdx = stages.indexOf(caseData.stage) !== -1 ? stages.indexOf(caseData.stage) : 1;
 
   return (
     <div className="space-y-6">
@@ -22,7 +23,7 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Active Stage" value={caseData.stage} info="Proceedings phase" trend="up" />
         <MetricCard title="Case Status" value={caseData.status} info="Docket state" trend="up" />
-        <MetricCard title="Open Date" value={new Date(caseData.openDate).toLocaleDateString()} info="Filing date" trend="neutral" />
+        <MetricCard title="Open Date" value={formatDate(caseData.openDate)} info="Filing date" trend="neutral" />
         <MetricCard title="Health Score" value="98%" info="No overdue filings" trend="up" />
       </div>
 

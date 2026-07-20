@@ -11,6 +11,7 @@ import { MOCK_DOCUMENTS } from "@/mocks/documents";
 import { Document } from "@/types";
 import { FileText, Eye, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { formatDate } from "@/utils/formatDate";
 
 export default function DocumentsListPage() {
   const { addToast } = useNotifications();
@@ -124,7 +125,7 @@ export default function DocumentsListPage() {
               </span>
             ),
           },
-          { header: "Last Modified", accessor: (d) => <span className="text-slate-400">{new Date(d.updatedAt).toLocaleDateString()}</span> },
+          { header: "Last Modified", accessor: (d) => <span className="text-slate-400">{formatDate(d.updatedAt)}</span> },
           {
             header: "Status",
             accessor: (d) => (
@@ -176,8 +177,8 @@ export default function DocumentsListPage() {
             fileSizeBytes: `${(inspectDoc.fileSizeBytes / 1024 / 1024).toFixed(2)} MB`,
             status: inspectDoc.status,
             caseId: inspectDoc.caseId || "N/A",
-            createdAt: new Date(inspectDoc.createdAt).toLocaleDateString(),
-            updatedAt: new Date(inspectDoc.updatedAt).toLocaleDateString(),
+            createdAt: formatDate(inspectDoc.createdAt),
+            updatedAt: formatDate(inspectDoc.updatedAt),
           }}
         />
       )}

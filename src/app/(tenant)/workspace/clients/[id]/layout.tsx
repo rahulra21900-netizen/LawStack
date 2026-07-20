@@ -23,6 +23,7 @@ export default function ClientDetailsLayout({ children, params }: { children: Re
 
   const tabs = [
     { name: "Overview", path: "overview" },
+    { name: "Direct Client Messaging", path: "messages" },
     { name: "Matters", path: "matters" },
     { name: "Documents", path: "documents" },
     { name: "Billing", path: "billing" },

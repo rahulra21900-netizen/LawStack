@@ -16,7 +16,10 @@ import {
   ChevronRight,
   TrendingUp,
   FileText,
+  MessageSquare,
 } from "lucide-react";
+
+import { formatDate } from "@/utils/formatDate";
 
 export default function OverviewTab({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params) as { id: string };
@@ -66,7 +69,7 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
               { icon: Mail, label: "Email", value: clientData.email, mono: true },
               { icon: Phone, label: "Phone", value: clientData.phone },
               { icon: Building2, label: "Entity", value: clientData.companyName || "Individual" },
-              { icon: FileText, label: "Onboarded", value: new Date(clientData.onboardingDate).toLocaleDateString() },
+              { icon: FileText, label: "Onboarded", value: formatDate(clientData.onboardingDate) },
             ].map((r) => {
               const Icon = r.icon;
               return (
@@ -114,6 +117,62 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
           </div>
         </Card>
       </div>
+
+      {/* Client Direct Communication & Portal Control Hub */}
+      <Card
+        header={
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-emerald-400" />
+              <span className="font-bold text-white text-xs">Direct Attorney-Client Communication & Portal Hub</span>
+            </div>
+            <Link href={`/workspace/clients/${id}/messages`}>
+              <Badge variant="success">Open Messenger Console →</Badge>
+            </Link>
+          </div>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link
+            href={`/workspace/clients/${id}/messages`}
+            className="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl hover:border-emerald-500/40 transition-colors group flex flex-col justify-between"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <MessageSquare className="w-4 h-4 text-emerald-400" />
+              <span className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">Direct Messaging Channel</span>
+            </div>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              Send live messages, hearing updates, and document requests directly to {clientData.name}'s closed portal.
+            </p>
+          </Link>
+
+          <div className="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-white">Closed Portal Invite</span>
+              <Badge variant="info">BCI Rule 36</Badge>
+            </div>
+            <p className="text-[11px] text-slate-400 leading-relaxed mb-2">
+              Send single-use encrypted invite link for private portal access.
+            </p>
+            <Link href={`/workspace/clients/${id}/messages`} className="text-[10px] text-blue-400 font-mono hover:underline">
+              Manage Portal Invites →
+            </Link>
+          </div>
+
+          <div className="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-white">UPI / Razorpay Billing</span>
+              <Badge variant="success">Active</Badge>
+            </div>
+            <p className="text-[11px] text-slate-400 leading-relaxed mb-2">
+              Dispatch retainer top-up requests directly to client's portal dashboard.
+            </p>
+            <Link href={`/workspace/clients/${id}/billing`} className="text-[10px] text-emerald-400 font-mono hover:underline">
+              Issue Fee Invoice →
+            </Link>
+          </div>
+        </div>
+      </Card>
 
       {/* Matters list */}
       <Card

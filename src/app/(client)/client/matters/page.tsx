@@ -6,6 +6,7 @@ import { DataTable } from "@/components/tables";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_CASES } from "@/mocks/cases";
 import { Briefcase, Scale, Calendar, TrendingUp } from "lucide-react";
+import { formatDate } from "@/utils/formatDate";
 
 export default function ClientMattersPage() {
   const matters = MOCK_CASES.slice(0, 2);
@@ -62,7 +63,7 @@ export default function ClientMattersPage() {
                     style={{ width: `${((currentIdx + 1) / stages.length) * 100}%` }}
                   />
                 </div>
-                <p className="mt-1.5 text-[10px] text-slate-500">Currently in <span className="text-indigo-400 font-bold">{c.stage}</span> · Opened {new Date(c.openDate).toLocaleDateString()}</p>
+                <p className="mt-1.5 text-[10px] text-slate-500">Currently in <span className="text-indigo-400 font-bold">{c.stage}</span> · Opened {formatDate(c.openDate)}</p>
               </div>
             </Card>
           );
