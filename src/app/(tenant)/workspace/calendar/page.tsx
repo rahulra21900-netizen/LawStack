@@ -50,7 +50,7 @@ export default function MasterCalendarPage() {
                 Court notice issued: Hearing date advanced to <strong>Tomorrow (8:30 AM)</strong>. Opposing counsel requested bail reduction hearing.
               </p>
               <p className="text-[11px] text-red-300 font-mono mt-1">
-                ⚠️ Schedule Clash Detected: Harvey Specter (High Court Bench 3) clashes with Mike Ross (Sessions Court).
+                ⚠️ Schedule Clash Detected: Priya Chandra (High Court Bench 3) clashes with Arjun Mehta (Sessions Court).
               </p>
             </div>
           </div>
@@ -58,14 +58,14 @@ export default function MasterCalendarPage() {
             <Button
               variant="destructive"
               size="sm"
-              onClick={() => addToast("Escalation Dispatched", "WhatsApp, SMS & Email alerts sent to Harvey Specter, 3 Junior Advocates, and 10 Interns.", "success")}
+              onClick={() => addToast("Escalation Dispatched", "WhatsApp, SMS & Email alerts sent to Priya Chandra, 3 Junior Advocates, and 10 Interns.", "success")}
             >
               Dispatch Multi-Channel Alerts
             </Button>
             <Button
               variant="outline"
               size="sm"
-              onClick={() => addToast("Clash Resolved", "Reassigned High Court Bench 3 appearance to Senior Associate Louis Litt.", "info")}
+              onClick={() => addToast("Clash Resolved", "Reassigned High Court Bench 3 appearance to Senior Associate Rohan Deshpande.", "info")}
             >
               Resolve Clash
             </Button>

@@ -6,11 +6,11 @@ import { Card, MetricCard } from "@/components/cards";
 import { Bell, FileText, DollarSign, Scale, CircleCheck as CheckCircle2, TriangleAlert as AlertTriangle } from "lucide-react";
 
 const notifications = [
-  { id: "n1", title: "Motion for Summary Judgment filed", desc: "Stark Industries vs. Advanced Tech Corp", time: "2 days ago", type: "filing", read: false },
-  { id: "n2", title: "Invoice INV-2026-014 is due", desc: "Amount: $2,450.00 · Due Aug 1, 2026", time: "3 days ago", type: "billing", read: false },
-  { id: "n3", title: "Discovery documents shared with you", desc: "4 files uploaded by Harvey Specter", time: "5 days ago", type: "document", read: true },
-  { id: "n4", title: "Hearing scheduled for next month", desc: "Superior Court · Room 4B · Sep 12, 2026", time: "1 week ago", type: "hearing", read: true },
-  { id: "n5", title: "Invoice INV-2026-012 paid successfully", desc: "Amount: $3,200.00 · Thank you", time: "2 weeks ago", type: "billing", read: true },
+  { id: "n1", title: "Anticipatory Bail Application filed", desc: "Reliance Retail v. QuickCart Technologies", time: "2 days ago", type: "filing", read: false },
+  { id: "n2", title: "Invoice INV-2026-014 is due", desc: "Amount: ₹2,450.00 · Due Aug 1, 2026", time: "3 days ago", type: "billing", read: false },
+  { id: "n3", title: "Discovery documents shared with you", desc: "4 files uploaded by Priya Chandra", time: "5 days ago", type: "document", read: true },
+  { id: "n4", title: "Hearing scheduled for next month", desc: "Delhi High Court · Room 4B · Sep 12, 2026", time: "1 week ago", type: "hearing", read: true },
+  { id: "n5", title: "Invoice INV-2026-012 paid successfully", desc: "Amount: ₹3,200.00 · Thank you", time: "2 weeks ago", type: "billing", read: true },
 ];
 
 const typeMeta: Record<string, { color: string; icon: React.ComponentType<{ className?: string }> }> = {

@@ -21,7 +21,7 @@ export default function AiTab() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-900/20 to-transparent border border-blue-500/20 rounded-xl">
-        <Sparkles className="w-5 h-5 text-blue-450 animate-pulse" />
+        <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
         <div>
           <h2 className="text-xs font-bold text-white">AI Task Assistant</h2>
           <p className="text-[10px] text-slate-400">Break down tasks, generate checklists, or estimate billable hours durations. (Simulated)</p>

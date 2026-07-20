@@ -28,8 +28,8 @@ export default function TenantLoginPage() {
         scope: "tenant",
         role: "Tenant Owner",
         email,
-        tenantId: "oakwood-llp",
-        tenantName: "Oakwood LLP",
+        tenantId: "chandra-associates",
+        tenantName: "Chandra & Associates",
       });
       addToast("Tenant Authorized", "Invite-only access confirmed. MFA is required before entering the workspace.", "success");
       router.push("/tenant/mfa");
@@ -53,10 +53,10 @@ export default function TenantLoginPage() {
       sidePanel={{
         heading: "What's inside your practice room",
         points: [
-          "Matter dockets with stage pipelines, hearings, and team assignments",
+          "Matter dockets with CNR sync, hearing pipelines, and BNS concordance",
           "Document management with versioning, approvals, and retention locks",
-          "Billing ledgers — time entries, expenses, invoices, and write-offs",
-          "AI legal copilot for drafting, clause extraction, and brief summaries",
+          "GST-compliant billing — UPI, Razorpay, time entries, and write-offs",
+          "AI legal copilot for drafting, section verification, and defect scanning",
         ],
       }}
     >
@@ -70,7 +70,7 @@ export default function TenantLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="attorney@oakwood.com"
+              placeholder="attorney@chandra.legal"
               className="block w-full pl-9 pr-3 py-2.5 bg-slate-950/50 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-slate-700 transition-all"
             />
           </div>

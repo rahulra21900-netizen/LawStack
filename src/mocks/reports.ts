@@ -13,7 +13,7 @@ export const MOCK_REPORTS: MockReport[] = [
     tenantId: "oakwood-llp",
     title: "Q2 Financial Billing Summary & Realized Income",
     type: "Billing",
-    generatedBy: "Donna Paulsen",
+    generatedBy: "Kabir Singh",
     createdAt: "2026-06-30T17:00:00Z"
   }
 ];

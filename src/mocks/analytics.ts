@@ -14,8 +14,8 @@ export const MOCK_ANALYTICS: Record<string, AnalyticsSnapshot> = {
     activeMattersCount: 34,
     unbilledHours: 124.8
   },
-  "lexbridge-partners": {
-    tenantId: "lexbridge-partners",
+  "verma-partners": {
+    tenantId: "verma-partners",
     billableHoursThisMonth: 189.0,
     totalIncomeYearToDate: 490200.00,
     activeMattersCount: 12,

@@ -11,29 +11,29 @@ const clientMatters = MOCK_CASES.slice(0, 2);
 
 const recentUpdates = [
   {
-    title: "Motion for Summary Judgment filed",
-    matter: "Stark Industries vs. Advanced Tech Corp",
+    title: "Anticipatory Bail Application filed",
+    matter: "Reliance Retail v. QuickCart Technologies",
     time: "2 days ago",
     type: "filing",
   },
   {
     title: "Discovery documents shared with your team",
-    matter: "IRS Auditing vs. Wayne Enterprises",
+    matter: "Krishna Textiles v. CIT",
     time: "5 days ago",
     type: "document",
   },
   {
     title: "Hearing scheduled for next month",
-    matter: "Stark Industries vs. Advanced Tech Corp",
+    matter: "Reliance Retail v. QuickCart Technologies",
     time: "1 week ago",
     type: "hearing",
   },
 ];
 
 const invoices = [
-  { id: "INV-2026-014", amount: "$2,450.00", status: "Due", due: "Aug 1, 2026" },
-  { id: "INV-2026-013", amount: "$1,500.00", status: "Due", due: "Jul 25, 2026" },
-  { id: "INV-2026-012", amount: "$3,200.00", status: "Paid", due: "Jul 1, 2026" },
+  { id: "INV-2026-014", amount: "₹2,450.00", status: "Due", due: "Aug 1, 2026" },
+  { id: "INV-2026-013", amount: "₹1,500.00", status: "Due", due: "Jul 25, 2026" },
+  { id: "INV-2026-012", amount: "₹3,200.00", status: "Paid", due: "Jul 1, 2026" },
 ];
 
 const sharedDocuments = [
@@ -89,7 +89,7 @@ export default function ClientDashboardPage() {
       {/* Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Active Matters" value={clientMatters.length} info="With assigned counsel" trend="neutral" />
-        <MetricCard title="Outstanding Balance" value="$3,950" trend="up" change="2 invoices due" info="Total payable" />
+        <MetricCard title="Outstanding Balance" value="₹3,950" trend="up" change="2 invoices due" info="Total payable" />
         <MetricCard title="Shared Documents" value={sharedDocuments.length} info="Available to view" trend="neutral" />
         <MetricCard title="Unread Messages" value="2" info="From your counsel" trend="neutral" />
       </div>

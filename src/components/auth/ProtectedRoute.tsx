@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { getAuthSession, isProtectedRoute } from "@/lib/auth";
+import { getAuthSession, isProtectedRoute, type AuthSession } from "@/lib/auth";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const session = useMemo(() => getAuthSession(), [pathname]);
+  const [session, setSession] = useState<AuthSession | null>(null);
+
+  // Read session on every pathname change (client-only, avoids SSR hydration flicker)
+  useEffect(() => {
+    setSession(getAuthSession());
+  }, [pathname]);
 
   useEffect(() => {
-    if (!isProtectedRoute(pathname)) {
-      return;
-    }
+    if (session === null) return; // Not yet resolved on client
+    if (!isProtectedRoute(pathname)) return;
 
     if (!session.authenticated) {
       router.replace("/tenant/login");

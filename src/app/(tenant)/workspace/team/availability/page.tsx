@@ -6,7 +6,7 @@ import { DataTable } from "@/components/tables";
 
 export default function TeamAvailabilityPage() {
   const leaves = [
-    { name: "Donna Paulsen", leave: "Upcoming Vacation", dates: "July 24 - July 28" }
+    { name: "Kabir Singh", leave: "Upcoming Vacation", dates: "July 24 - July 28" }
   ];
 
   return (

@@ -39,7 +39,7 @@ export default function ClientSupportPage() {
         <div>
           <p className="font-bold text-white">Closed-Network Confidential Support</p>
           <p className="text-[11px] text-slate-300 mt-0.5 leading-relaxed">
-            All support requests are encrypted and routed exclusively to your assigned legal team at <strong>Oakwood Law LLP</strong>.
+            All support requests are encrypted and routed exclusively to your assigned legal team at <strong>Chandra & Associates</strong>.
           </p>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function ClientSupportPage() {
               <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
               <h3 className="text-base font-bold text-white">Inquiry Dispatched</h3>
               <p className="text-xs text-slate-300 max-w-md mx-auto">
-                Your support request has been logged. Senior Counsel Harvey Specter's desk will review your note shortly.
+                Your support request has been logged. Senior Counsel Priya Chandra's desk will review your note shortly.
               </p>
               <Button variant="secondary" size="sm" onClick={() => setSubmitted(false)}>
                 Submit Another Request
@@ -110,7 +110,7 @@ export default function ClientSupportPage() {
             <div className="space-y-3 text-xs">
               <div className="p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
                 <p className="text-[10px] text-slate-500 font-bold uppercase">Law Firm Desk</p>
-                <p className="font-bold text-white text-sm mt-0.5">Oakwood Law LLP</p>
+                <p className="font-bold text-white text-sm mt-0.5">Chandra & Associates</p>
                 <p className="text-[11px] text-slate-400">High Court Bench Division</p>
               </div>
 

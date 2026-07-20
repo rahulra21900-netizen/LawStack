@@ -15,7 +15,7 @@ export default function AcceptInvitationPage() {
 
   const handleAccept = () => {
     setAccepted(true);
-    addToast("Invitation Accepted", "You've joined Oakwood LLP as Associate.", "success");
+    addToast("Invitation Accepted", "You've joined Chandra & Associates as Associate.", "success");
     setTimeout(() => router.push("/workspace/dashboard"), 1200);
   };
 
@@ -58,14 +58,14 @@ export default function AcceptInvitationPage() {
                 <Building2 className="w-5 h-5 text-emerald-400" />
               </div>
               <div>
-                <div className="text-xs font-bold text-white">Oakwood LLP</div>
+                <div className="text-xs font-bold text-white">Chandra & Associates</div>
                 <div className="text-[10px] text-slate-500">oakwood.lawstack.com</div>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 text-[11px]">
               <div>
                 <div className="text-slate-500">Invited by</div>
-                <div className="text-white font-semibold">Eleanor Vance</div>
+                <div className="text-white font-semibold">Meera Verma</div>
               </div>
               <div>
                 <div className="text-slate-500">Role</div>

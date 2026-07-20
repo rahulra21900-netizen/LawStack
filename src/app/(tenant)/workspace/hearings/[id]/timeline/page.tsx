@@ -20,7 +20,7 @@ export default function TimelineTab() {
                 <span className="font-bold text-white">{item.event}</span>
                 <Badge label={item.time} variant="info" />
               </div>
-              <p className="text-slate-450 leading-relaxed">{item.details}</p>
+              <p className="text-slate-400 leading-relaxed">{item.details}</p>
             </div>
           </div>
         ))}

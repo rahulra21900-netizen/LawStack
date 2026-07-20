@@ -11,7 +11,7 @@ export default function SharingTab() {
         <Card header={<div className="font-bold text-white text-[11px]">Internal sharing clearances</div>}>
           <div className="space-y-2 text-xs text-slate-400">
             <div className="flex justify-between pb-1.5 border-b border-slate-800">
-              <span className="text-white font-semibold">Harvey Specter (Lead Counsel)</span>
+              <span className="text-white font-semibold">Priya Chandra (Lead Counsel)</span>
               <Badge label="Full Owner" variant="success" />
             </div>
             <div className="flex justify-between">

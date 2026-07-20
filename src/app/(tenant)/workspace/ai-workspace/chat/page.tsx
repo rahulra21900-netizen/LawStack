@@ -22,7 +22,7 @@ export default function AiChatPage() {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", text: "I have scanned the referenced dockets files. Based on Delaware Chancery court precedents, the limitation timeline triggers within 14 business days of initial filings." }
+        { role: "assistant", text: "I have scanned the referenced dockets files. Based on NCLT Mumbai court precedents, the limitation timeline triggers within 14 business days of initial filings." }
       ]);
       addToast("Analysis Complete", "Response compiled with citations.", "success");
     }, 2000);
@@ -33,7 +33,7 @@ export default function AiChatPage() {
       <div className="space-y-1">
         <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "AI Workspace", href: "/workspace/ai-workspace/dashboard" }, { name: "Chat" }]} />
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-blue-450 animate-pulse" />
+          <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
           <span>AI Legal Copilot Chat</span>
         </h1>
         <p className="text-xs text-slate-400">Conversational interface referencing case matters and documents.</p>
@@ -44,7 +44,7 @@ export default function AiChatPage() {
         <div className="md:col-span-1 bg-slate-950/40 border border-slate-850 p-4 rounded-xl space-y-3 text-xs">
           <h3 className="font-bold text-white uppercase tracking-wider text-[10px]">Session Logs</h3>
           <div className="space-y-2 text-slate-400">
-            <div className="p-2 hover:bg-slate-900 rounded cursor-pointer font-semibold text-white bg-slate-900/50">Delaware filings outline</div>
+            <div className="p-2 hover:bg-slate-900 rounded cursor-pointer font-semibold text-white bg-slate-900/50">High Court filings outline</div>
             <div className="p-2 hover:bg-slate-900 rounded cursor-pointer">Sublicense Indemnity extraction</div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function AiChatPage() {
             </button>
             <input
               type="text"
-              placeholder="Ask AI assistant about Delaware code, case timelines, or draft contract terms..."
+              placeholder="Ask AI assistant about Indian statute, case timelines, or draft contract terms..."
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}

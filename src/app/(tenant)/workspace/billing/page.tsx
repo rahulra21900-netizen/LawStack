@@ -47,7 +47,7 @@ export default function BillingPage() {
                 <Badge label="Timer Running: 01:42:18" variant="success" size="sm" />
               </div>
               <p className="text-xs text-emerald-200 mt-0.5">
-                Active Matter: <strong>State v. Sharma (Anticipatory Bail Brief)</strong> · Lead: Harvey Specter
+                Active Matter: <strong>State v. Sharma (Anticipatory Bail Brief)</strong> · Lead: Priya Chandra
               </p>
               <p className="text-[11px] text-slate-400 font-mono mt-0.5">
                 Rate: ₹4,500/hr · Unbilled Time Accrued: ₹7,650
@@ -68,8 +68,8 @@ export default function BillingPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard title="Outstanding" value="$42,180" trend="up" change="6 invoices" info="Awaiting payment" />
-        <MetricCard title="Collected (MTD)" value="$128.4k" trend="up" change="+12.4%" info="This month" />
+        <MetricCard title="Outstanding" value="₹42,180" trend="up" change="6 invoices" info="Awaiting payment" />
+        <MetricCard title="Collected (MTD)" value="₹128.4k" trend="up" change="+12.4%" info="This month" />
         <MetricCard title="Overdue" value="2" trend="down" change="Past due" info="Requires follow-up" />
         <MetricCard title="Billable Hours" value="1,284" trend="up" change="+86 this week" info="Logged" />
       </div>

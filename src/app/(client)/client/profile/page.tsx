@@ -35,8 +35,8 @@ export default function ClientProfilePage() {
               TS
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Tony Stark</h3>
-              <p className="text-xs text-slate-400">Stark Industries · Enterprise client</p>
+              <h3 className="text-base font-bold text-white">Suresh Krishnan</h3>
+              <p className="text-xs text-slate-400">Reliance Retail · Enterprise client</p>
               <div className="mt-2 flex items-center gap-2">
                 <Badge label="Active" variant="success" />
                 <Badge label="KYC Verified" variant="info" />
@@ -46,7 +46,7 @@ export default function ClientProfilePage() {
           <div className="space-y-3">
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold"><Mail className="w-3 h-3" /> Email</div>
-              <div className="mt-1 text-xs font-mono text-white">tony@starkindustries.com</div>
+              <div className="mt-1 text-xs font-mono text-white">tony@ril.com</div>
             </div>
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold"><Phone className="w-3 h-3" /> Phone</div>
@@ -54,7 +54,7 @@ export default function ClientProfilePage() {
             </div>
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold"><Building2 className="w-3 h-3" /> Entity</div>
-              <div className="mt-1 text-xs text-white">Stark Industries</div>
+              <div className="mt-1 text-xs text-white">Reliance Retail</div>
             </div>
           </div>
         </Card>

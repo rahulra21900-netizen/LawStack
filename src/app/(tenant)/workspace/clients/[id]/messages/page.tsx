@@ -30,7 +30,7 @@ export default function ClientDirectMessagingPage({ params }: { params: Promise<
   const [messages, setMessages] = useState([
     {
       id: "m1",
-      sender: "Harvey Specter (Lead Attorney)",
+      sender: "Priya Chandra (Lead Attorney)",
       text: "Hello, we have received the updated counter-affidavit from opposing counsel. Please review the attached draft.",
       time: "Yesterday · 04:30 PM",
       channel: "Client Portal & Email",
@@ -56,7 +56,7 @@ export default function ClientDirectMessagingPage({ params }: { params: Promise<
 
     const newMsg = {
       id: `m-${Date.now()}`,
-      sender: "Harvey Specter (Lead Attorney)",
+      sender: "Priya Chandra (Lead Attorney)",
       text: messageInput,
       time: "Just now",
       channel: "Client Portal & WhatsApp",

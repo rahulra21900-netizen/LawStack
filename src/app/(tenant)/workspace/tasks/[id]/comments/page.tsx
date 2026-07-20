@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 export default function CommentsTab() {
   const { addToast } = useNotifications();
   const [comments, setComments] = useState([
-    { id: 1, author: "Harvey Specter", content: "Ensure client signing dockets are cleared before trial.", time: "1h ago" }
+    { id: 1, author: "Priya Chandra", content: "Ensure client signing dockets are cleared before trial.", time: "1h ago" }
   ]);
   const [newComment, setNewComment] = useState("");
 

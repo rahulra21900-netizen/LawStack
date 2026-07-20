@@ -13,7 +13,7 @@ const recentAudits = [
   {
     actor: "Platform Admin",
     action: "Updated namespace retention policy",
-    target: "oakwood-llp",
+    target: "chandra-associates",
     time: "Just now",
     type: "config",
   },
@@ -304,7 +304,7 @@ export default function PlatformDashboardPage() {
 
       {/* Platform-wide metrics row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <MetricCard title="Platform MRR" value="$184,200" trend="up" change="+12.4% MoM" info="Across all tenants" />
+        <MetricCard title="Platform MRR" value="₹184,200" trend="up" change="+12.4% MoM" info="Across all tenants" />
         <MetricCard title="Total Seats" value="1,840" trend="up" change="+86 this week" info="Licensed users" />
         <MetricCard title="API Requests (24h)" value="2.4M" trend="up" change="+8.1%" info="Avg 27.8k/min" />
       </div>

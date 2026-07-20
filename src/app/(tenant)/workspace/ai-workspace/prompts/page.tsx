@@ -10,8 +10,8 @@ export default function PromptsPage() {
   const { addToast } = useNotifications();
 
   const promptsList = [
-    { title: "Draft NDA Agreement", category: "Contract Drafting", desc: "Generate standard mutual non-disclosure contract agreement with Governing Delaware laws." },
-    { title: "Delaware Precedent Search", category: "Legal Research", desc: "Lookup relevant corporate cases matching trade secret disputes." }
+    { title: "Draft NDA Agreement", category: "Contract Drafting", desc: "Generate standard mutual non-disclosure contract agreement with Governing Delhi HC laws." },
+    { title: "Supreme Court Precedent Search", category: "Legal Research", desc: "Lookup relevant corporate cases matching trade secret disputes." }
   ];
 
   return (

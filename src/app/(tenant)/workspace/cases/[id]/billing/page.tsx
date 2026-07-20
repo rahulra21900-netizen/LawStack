@@ -18,7 +18,7 @@ export default function BillingTab({ params }: { params: Promise<{ id: string }>
           <div className="space-y-2 text-xs">
             <div className="flex justify-between border-b border-slate-800 pb-1.5 text-slate-400">
               <span>Retainer Balance</span>
-              <span className="font-bold text-white">$15,000.00</span>
+              <span className="font-bold text-white">₹15,000.00</span>
             </div>
             <div className="flex justify-between text-slate-400">
               <span>Hours Billed YTD</span>

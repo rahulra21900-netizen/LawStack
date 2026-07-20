@@ -20,9 +20,9 @@ export default function KnowledgeDashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MetricCard title="Total Precedents Articles" value="12 Guides" info="Oakwood LLP precedents library" />
+        <MetricCard title="Total Precedents Articles" value="12 Guides" info="Chandra & Associates precedents library" />
         <MetricCard title="Pinned Articles" value="3 Saved" info="Quick references" />
-        <MetricCard title="Recent Searches" value="Delaware Rule 210" info="Filing timelines details" />
+        <MetricCard title="Recent Searches" value="Delhi HC Original Side Rules" info="Filing timelines details" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

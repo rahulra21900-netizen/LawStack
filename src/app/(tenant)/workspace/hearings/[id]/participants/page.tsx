@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui";
 
 export default function ParticipantsTab() {
   const participants = [
-    { name: "Hon. Sarah Vance", role: "Presiding Judge", status: "Present" },
-    { name: "Harvey Specter", role: "Lead Case Counsel", status: "Present" },
+    { name: "Hon. Justice Anil Kumar", role: "Presiding Judge", status: "Present" },
+    { name: "Priya Chandra", role: "Lead Case Counsel", status: "Present" },
     { name: "Robert Zane", role: "Opposing Lead Counsel", status: "Present" }
   ];
 

@@ -60,7 +60,7 @@ export default function NewDocumentPage() {
       <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
         {step === 1 && (
           <div className="space-y-3">
-            <Input label="Document Title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Oakwood Acquisition Retainer Contract" />
+            <Input label="Document Title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Oakwood Estates Amalgamation Retainer Contract" />
             <Select
               label="Document Type"
               options={[

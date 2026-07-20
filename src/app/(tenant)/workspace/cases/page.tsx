@@ -133,11 +133,17 @@ export default function CasesListPage() {
                   {c.title}
                 </span>
                 <span className="font-mono text-[10px] text-slate-400">{c.caseNumber}</span>
+                {c.cnr && (
+                  <span className="font-mono text-[10px] text-slate-500 block">
+                    CNR: {c.cnr}
+                  </span>
+                )}
               </div>
             ),
           },
+          { header: "Court", accessor: (c) => <span className="text-slate-300 text-[11px]">{c.court || "—"}</span> },
           { header: "Practice Area", accessor: (c) => <span className="text-slate-300">{c.practiceArea}</span> },
-          { header: "Lead Attorney", accessor: (c) => <span className="font-semibold text-slate-200">{c.leadCounsel}</span> },
+          { header: "Lead Counsel", accessor: (c) => <span className="font-semibold text-slate-200">{c.leadCounsel}</span> },
           {
             header: "Stage",
             accessor: (c) => (

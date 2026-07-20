@@ -4,6 +4,8 @@ export interface Case {
   clientId: string;
   title: string;
   caseNumber: string;
+  cnr?: string;
+  court?: string;
   practiceArea: string;
   stage: "Pleadings" | "Discovery" | "Pre-Trial" | "Trial" | "Appeal" | "Closed";
   status: "Active" | "Archived" | "Pending";

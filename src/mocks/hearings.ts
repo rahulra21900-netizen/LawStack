@@ -2,23 +2,33 @@ import { Hearing } from "@/types";
 
 export const MOCK_HEARINGS: Hearing[] = [
   {
-    id: "hearing-stark-patent",
-    tenantId: "oakwood-llp",
-    caseId: "case-acme",
-    judgeName: "Hon. Sarah Vance",
-    courtroom: "Courtroom 3C",
-    location: "Federal Building, New York",
-    dateTime: "2026-07-24T10:00:00Z",
-    status: "Scheduled"
+    id: "hearing-sharma-bail",
+    tenantId: "chandra-associates",
+    caseId: "case-sharma-bail",
+    judgeName: "Hon. Justice Anil Kumar",
+    courtroom: "Court No. 24",
+    location: "Delhi High Court, Sher Shah Road, New Delhi",
+    dateTime: "2026-07-21T10:30:00Z",
+    status: "Scheduled",
   },
   {
-    id: "hearing-lexcorp-motion",
-    tenantId: "lexbridge-partners",
-    caseId: "case-lexcorp-merger",
-    judgeName: "Hon. William Miller",
-    courtroom: "Delaware Chancery Room 12",
-    location: "Chancery Court, Wilmington",
-    dateTime: "2026-07-28T09:30:00Z",
-    status: "Scheduled"
-  }
+    id: "hearing-reliance-ip",
+    tenantId: "chandra-associates",
+    caseId: "case-reliance-ip",
+    judgeName: "Hon. Justice Prathiba M. Singh",
+    courtroom: "Court No. 8 (IP Division)",
+    location: "Delhi High Court",
+    dateTime: "2026-07-25T11:00:00Z",
+    status: "Scheduled",
+  },
+  {
+    id: "hearing-oakwood-nclt",
+    tenantId: "verma-partners",
+    caseId: "case-oakwood-merger",
+    judgeName: "Hon. Member (Judicial) R. Sudhakar",
+    courtroom: "Court Hall 2",
+    location: "NCLT Mumbai, Prabhadevi",
+    dateTime: "2026-08-05T10:00:00Z",
+    status: "Scheduled",
+  },
 ];

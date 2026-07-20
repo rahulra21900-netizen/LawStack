@@ -29,7 +29,7 @@ export default function ClientBillingPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Outstanding" value={formatCurrency(outstanding)} trend="up" change="2 invoices" info="Payable" />
-        <MetricCard title="Paid (YTD)" value="$8,640" trend="up" change="+$1,500" info="Collected" />
+        <MetricCard title="Paid (YTD)" value="₹8,640" trend="up" change="+₹1,500" info="Collected" />
         <MetricCard title="Next Due" value="Aug 1" info="In 14 days" trend="neutral" />
         <MetricCard title="Auto-Pay" value="Off" info="Not enrolled" trend="neutral" />
       </div>

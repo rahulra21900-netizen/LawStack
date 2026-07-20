@@ -79,8 +79,8 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
         >
           <div className="space-y-3 text-xs">
             {[
-              { label: "Court Venue", value: "Federal District Court, Room 3C" },
-              { label: "Presiding Judge", value: "Hon. Sarah Vance" },
+              { label: "Court Venue", value: "Delhi High Court, Room 3C" },
+              { label: "Presiding Judge", value: "Hon. Justice Anil Kumar" },
               { label: "Opposing Counsel", value: "Robert Zane" },
               { label: "Jurisdiction", value: "Federal · Civil" },
             ].map((r) => (
@@ -108,8 +108,8 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
           <div className="space-y-2.5">
             {[
               { name: caseData.leadCounsel, role: "Lead Counsel", initials: "HS" },
-              { name: "Mike Ross", role: "Associate", initials: "MR" },
-              { name: "Donna Paulsen", role: "Paralegal", initials: "DP" },
+              { name: "Arjun Mehta", role: "Associate", initials: "MR" },
+              { name: "Kabir Singh", role: "Paralegal", initials: "DP" },
             ].map((m) => (
               <div key={m.name} className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-950/40 px-3 py-2.5">
                 <Avatar name={m.name} size="sm" />
@@ -156,7 +156,7 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
               </div>
               <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-500"><DollarSign className="w-3 h-3" /> Billed</div>
-                <div className="mt-1 text-lg font-bold text-white">$24k</div>
+                <div className="mt-1 text-lg font-bold text-white">₹24k</div>
               </div>
             </div>
           </div>

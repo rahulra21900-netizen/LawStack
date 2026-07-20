@@ -14,8 +14,8 @@ export default function ClientInsightsPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <MetricCard title="Stark Industries" value="$156,000.00" change="Primary Account" trend="up" />
-        <MetricCard title="Wayne Enterprises" value="$124,000.00" change="Secondary Account" trend="up" />
+        <MetricCard title="Reliance Retail" value="₹156,000.00" change="Primary Account" trend="up" />
+        <MetricCard title="Krishna Textiles Pvt. Ltd." value="₹124,000.00" change="Secondary Account" trend="up" />
       </div>
     </div>
   );

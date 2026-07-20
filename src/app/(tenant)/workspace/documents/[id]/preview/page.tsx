@@ -34,7 +34,7 @@ export default function PreviewTab({ params }: { params: Promise<{ id: string }>
             <p className="text-center text-[10px] text-slate-500">Draft version: v{docData.version} • Author owner: {docData.author}</p>
             
             <p className="pt-8 leading-relaxed max-w-lg mx-auto">
-              This sub-licensing agreement (the "Contract") is entered into this date by and between Oakwood LLP associates and key primary corporate clients, establishing rules of litigation discovery filings and patents retention periods.
+              This sub-licensing agreement (the "Contract") is entered into this date by and between Chandra & Associates associates and key primary corporate clients, establishing rules of litigation discovery filings and patents retention periods.
             </p>
           </div>
           <div className="border-t border-slate-900 pt-3 text-center text-[10px] text-slate-500">

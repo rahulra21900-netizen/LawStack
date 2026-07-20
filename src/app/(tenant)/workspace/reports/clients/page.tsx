@@ -20,7 +20,7 @@ export default function ClientsReportsPage() {
         columns={[
           { header: "Client Profile", accessor: (c) => <span className="font-bold text-white">{c.name}</span> },
           { header: "Company Entity", accessor: (c) => <span>{c.companyName || "Personal Case"}</span> },
-          { header: "Default Retainers", accessor: (c) => <span className="text-emerald-450 font-semibold">$10,000.00</span> }
+          { header: "Default Retainers", accessor: (c) => <span className="text-emerald-400 font-semibold">₹10,000.00</span> }
         ]}
       />
     </div>

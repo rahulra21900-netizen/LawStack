@@ -36,7 +36,7 @@ export default function TeamDashboardPage() {
 
       {/* Team KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard title="Active Attorneys" value="8" info="Oakwood LLP roster" trend="up" />
+        <MetricCard title="Active Attorneys" value="8" info="Chandra & Associates roster" trend="up" />
         <MetricCard title="Capacity" value="84%" info="Matter distribution" trend="up" change="Utilized" />
         <MetricCard title="Upcoming Leave" value="1" info="Roster clear" trend="neutral" />
         <MetricCard title="Avg Hours/Wk" value="26h" info="Billable per attorney" trend="up" change="+2.4h" />
@@ -48,10 +48,10 @@ export default function TeamDashboardPage() {
       >
         <div className="space-y-3">
           {[
-            { name: "Harvey Specter", hours: 32, color: "from-blue-500 to-cyan-500" },
-            { name: "Mike Ross", hours: 28, color: "from-emerald-500 to-teal-500" },
-            { name: "Eleanor Vance", hours: 24, color: "from-amber-500 to-orange-500" },
-            { name: "Louis Litt", hours: 19, color: "from-indigo-500 to-blue-500" },
+            { name: "Priya Chandra", hours: 32, color: "from-blue-500 to-cyan-500" },
+            { name: "Arjun Mehta", hours: 28, color: "from-emerald-500 to-teal-500" },
+            { name: "Meera Verma", hours: 24, color: "from-amber-500 to-orange-500" },
+            { name: "Rohan Deshpande", hours: 19, color: "from-indigo-500 to-blue-500" },
           ].map((m) => (
             <div key={m.name} className="flex items-center gap-3">
               <span className="text-xs font-semibold text-white w-28 truncate shrink-0">{m.name}</span>

@@ -6,7 +6,7 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
     userId: "user-4",
     tenantId: "oakwood-llp",
     title: "Court Filing Confirmed",
-    message: "Delaware Chancery Court statement filed successfully for LexCorp Merger.",
+    message: "NCLT Mumbai Bench statement filed successfully for LexCorp Merger.",
     type: "Case_Update",
     read: false,
     createdAt: "2026-07-18T14:40:00Z"

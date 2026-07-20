@@ -32,15 +32,15 @@ export default function JoinWorkspacePage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <input
             type="text"
-            placeholder="Search firms, e.g. Oakwood LLP or oakwood.lawstack.com"
+            placeholder="Search firms, e.g. Chandra & Associates or oakwood.lawstack.com"
             className="block w-full pl-10 pr-3 py-2.5 bg-slate-950/50 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-slate-700 transition-all"
           />
         </div>
 
         <div className="space-y-2">
           {[
-            { name: "Oakwood LLP", url: "oakwood.lawstack.com", tier: "Enterprise" },
-            { name: "LexBridge Partners", url: "lexbridge.lawstack.com", tier: "Enterprise" },
+            { name: "Chandra & Associates", url: "oakwood.lawstack.com", tier: "Enterprise" },
+            { name: "Verma & Partners LLP", url: "vermapartners.lawstack.com", tier: "Enterprise" },
             { name: "ABC Legal", url: "abc-legal.lawstack.com", tier: "Standard" },
           ].map((f) => (
             <Link

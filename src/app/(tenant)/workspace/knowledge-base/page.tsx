@@ -22,7 +22,7 @@ export default function KnowledgeBasePage() {
             </span>
             <span>Firm Knowledge Base</span>
           </h1>
-          <p className="text-xs text-slate-400">Access research, Delaware chancery rules summaries, and precedents libraries.</p>
+          <p className="text-xs text-slate-400">Access research, Supreme Court rules summaries, and precedents libraries.</p>
         </div>
         <Button
           variant="primary"

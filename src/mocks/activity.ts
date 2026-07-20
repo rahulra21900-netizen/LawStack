@@ -4,8 +4,8 @@ export const MOCK_ACTIVITIES: Activity[] = [
   {
     id: "act-1",
     tenantId: "oakwood-llp",
-    userId: "user-4", // Harvey Specter
-    userName: "Harvey Specter",
+    userId: "user-4", // Priya Chandra Specter
+    userName: "Priya Chandra Specter",
     action: "Approved draft version 1.4",
     entityType: "Document",
     entityId: "doc-stark-patent",
@@ -15,8 +15,8 @@ export const MOCK_ACTIVITIES: Activity[] = [
   {
     id: "act-2",
     tenantId: "oakwood-llp",
-    userId: "user-5", // Mike Ross
-    userName: "Mike Ross",
+    userId: "user-5", // Arjun Mehta
+    userName: "Arjun Mehta",
     action: "Edited brief notes",
     entityType: "Document",
     entityId: "doc-wayne-ledger",

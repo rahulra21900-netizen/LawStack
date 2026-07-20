@@ -24,9 +24,9 @@ const accentMap = {
     text: "text-blue-400",
     glow: "from-blue-600/20",
     dot: "bg-blue-500",
-    panelBorder: "border-blue-500/20",
-    panelGlow: "from-blue-900/30",
-    panelTitle: "text-blue-300",
+    panelBorder: "border-blue-500/25",
+    panelGlow: "from-blue-950/60",
+    panelTitle: "text-white",
     panelDivider: "border-blue-500/20",
     badge: "bg-blue-600/15 text-blue-300 border-blue-500/30",
   },
@@ -36,9 +36,9 @@ const accentMap = {
     text: "text-emerald-400",
     glow: "from-emerald-600/20",
     dot: "bg-emerald-500",
-    panelBorder: "border-emerald-500/20",
-    panelGlow: "from-emerald-900/30",
-    panelTitle: "text-emerald-300",
+    panelBorder: "border-emerald-500/25",
+    panelGlow: "from-emerald-950/60",
+    panelTitle: "text-white",
     panelDivider: "border-emerald-500/20",
     badge: "bg-emerald-600/15 text-emerald-300 border-emerald-500/30",
   },
@@ -48,9 +48,9 @@ const accentMap = {
     text: "text-indigo-400",
     glow: "from-indigo-600/20",
     dot: "bg-indigo-500",
-    panelBorder: "border-indigo-500/20",
-    panelGlow: "from-indigo-900/30",
-    panelTitle: "text-indigo-300",
+    panelBorder: "border-indigo-500/25",
+    panelGlow: "from-indigo-950/60",
+    panelTitle: "text-white",
     panelDivider: "border-indigo-500/20",
     badge: "bg-indigo-600/15 text-indigo-300 border-indigo-500/30",
   },
@@ -109,9 +109,9 @@ export function AuthShell({
 
         {/* Side panel (hidden on mobile) */}
         {sidePanel && (
-          <div className={`hidden lg:flex flex-col justify-between rounded-2xl border ${a.panelBorder} bg-gradient-to-br ${a.panelGlow} via-slate-900/60 to-slate-950/80 p-8`}>
+          <div className={`hidden lg:flex flex-col justify-between rounded-2xl border ${a.panelBorder} bg-gradient-to-br ${a.panelGlow} via-slate-950/90 to-slate-950 p-8 shadow-2xl shadow-slate-950/60`}>
             <div>
-              <h2 className={`text-lg font-bold ${a.panelTitle}`}>{sidePanel.heading}</h2>
+              <h2 className={`text-lg font-bold ${a.panelTitle} tracking-tight`}>{sidePanel.heading}</h2>
               <ul className="mt-6 space-y-4">
                 {sidePanel.points.map((p, i) => (
                   <li key={i} className="flex items-start gap-3">

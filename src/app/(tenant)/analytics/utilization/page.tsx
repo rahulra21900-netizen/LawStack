@@ -14,9 +14,9 @@ export default function UtilizationAnalyticsPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MetricCard title="Harvey Specter" value="84% utilization" info="caseload: 6 matters" />
-        <MetricCard title="Mike Ross" value="62% utilization" info="caseload: 4 matters" />
-        <MetricCard title="Louis Litt" value="92% utilization" info="caseload: 8 matters" />
+        <MetricCard title="Priya Chandra" value="84% utilization" info="caseload: 6 matters" />
+        <MetricCard title="Arjun Mehta" value="62% utilization" info="caseload: 4 matters" />
+        <MetricCard title="Rohan Deshpande" value="92% utilization" info="caseload: 8 matters" />
       </div>
     </div>
   );

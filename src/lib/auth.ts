@@ -56,18 +56,17 @@ export function clearAuthSession() {
 }
 
 export function isProtectedRoute(pathname: string) {
-  const publicPaths = [
-    "/platform/login",
-    "/platform/signup",
-    "/platform/forgot-password",
-    "/platform/mfa",
-    "/tenant/login",
-    "/tenant/signup",
-    "/tenant/join-workspace",
-    "/tenant/accept-invitation",
-    "/tenant/mfa",
-    "/",
+  // Whitelist model: only these prefixes actually require auth.
+  // Any other path (public pages, 404, marketing routes) renders freely.
+  const protectedPrefixes = [
+    "/workspace",
+    "/client",
+    "/platform/dashboard",
+    "/platform/audit",
+    "/platform/settings",
+    "/platform/tenant-administration",
+    "/platform/tenant-provisioning",
   ];
 
-  return !publicPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+  return protectedPrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }

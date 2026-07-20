@@ -254,7 +254,7 @@ function DeveloperSimulatorContent() {
                         </div>
                         <div className="text-right">
                           <span className={`text-[9px] px-2 py-0.5 rounded font-bold uppercase block ${
-                            tenant.status === "Active" ? "bg-emerald-500/10 text-emerald-450" : "bg-red-500/10 text-red-400"
+                            tenant.status === "Active" ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"
                           }`}>
                             {tenant.status}
                           </span>
@@ -402,7 +402,7 @@ function DeveloperSimulatorContent() {
                   label="Practice Jurisdiction"
                   options={[
                     { label: "New York Federal", value: "ny" },
-                    { label: "Delaware Chancery", value: "de" },
+                    { label: "NCLT Mumbai", value: "de" },
                     { label: "California Superior", value: "ca" }
                   ]}
                   onChange={(e) => addToast("Jurisdiction Selected", `Scope updated to ${e.target.value}.`, "info")}
@@ -431,7 +431,7 @@ function DeveloperSimulatorContent() {
               <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">5. Cards & Metrics</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <MetricCard title="Billable Hours YTD" value="1,842.5" change="+12% from Q1" trend="up" />
-                <MetricCard title="Outstanding Balances" value="$12,450.00" change="-4% paid down" trend="down" />
+                <MetricCard title="Outstanding Balances" value="₹12,450.00" change="-4% paid down" trend="down" />
                 <Card header={<div className="font-bold text-white text-xs">Simulated Case Card</div>}>
                   <p className="text-[11px] text-slate-400 leading-relaxed">
                     Arc Reactor Patents file is in active discovery stage with pending tasks assignees.
@@ -448,7 +448,7 @@ function DeveloperSimulatorContent() {
                 columns={[
                   { header: "Client Name", accessor: (c) => <span className="font-bold text-white">{c.name}</span> },
                   { header: "Company", accessor: (c) => <span>{c.companyName || "Individual"}</span> },
-                  { header: "Email", accessor: (c) => <span className="font-mono text-slate-450">{c.email}</span> },
+                  { header: "Email", accessor: (c) => <span className="font-mono text-slate-400">{c.email}</span> },
                   { header: "Status", accessor: (c) => <Badge label={c.status} variant={c.status === "Active" ? "success" : "neutral"} /> }
                 ]}
               />
@@ -483,7 +483,7 @@ function DeveloperSimulatorContent() {
                   </p>
                   <div className="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-1">
                     <p className="font-bold text-white">Event Log #9042</p>
-                    <p className="text-[10px] text-slate-500">Harvey Specter edited brief documents.</p>
+                    <p className="text-[10px] text-slate-500">Priya Chandra edited brief documents.</p>
                   </div>
                   <Button variant="secondary" className="w-full mt-4" onClick={() => setDrawerOpen(false)}>Close Panel</Button>
                 </div>
@@ -517,7 +517,7 @@ function DeveloperSimulatorContent() {
                     }}
                     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                       flag.enabled
-                        ? "bg-emerald-500/10 text-emerald-450 border border-emerald-500/25"
+                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/25"
                         : "bg-red-500/10 text-red-400 border border-red-500/25"
                     }`}
                   >

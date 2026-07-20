@@ -21,7 +21,7 @@ export default function AiTab() {
   const aiActions = [
     { key: "sum", title: "Summarize Case Matters", desc: "Extract legal claims, dockets, and milestones.", success: "matter brief summary generated successfully." },
     { key: "draft", title: "Draft Mock Filing Motion", desc: "Synthesize draft affidavit of service.", success: "Affidavit draft saved to local document cache." },
-    { key: "laws", title: "Research Precedent Laws", desc: "Lookup standard Delaware chancery cases.", success: "3 Delaware chancery case precedents cited." }
+    { key: "laws", title: "Research Precedent Laws", desc: "Lookup standard Supreme Court cases.", success: "3 Supreme Court case precedents cited." }
   ];
 
   return (

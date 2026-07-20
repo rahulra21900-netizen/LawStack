@@ -6,7 +6,7 @@ import { DataTable } from "@/components/tables";
 
 export default function WriteOffsPage() {
   const writeOffs = [
-    { number: "WO-2026-001", client: "Stark Industries", amount: 1500, reason: "Courtesy fee adjustment" }
+    { number: "WO-2026-001", client: "Reliance Retail", amount: 1500, reason: "Courtesy fee adjustment" }
   ];
 
   return (

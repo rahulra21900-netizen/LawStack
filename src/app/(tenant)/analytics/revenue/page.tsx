@@ -14,8 +14,8 @@ export default function RevenueAnalyticsPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <MetricCard title="Total Billed Revenue YTD" value="$256,450.00" change="+12.4% from Q1" trend="up" />
-        <MetricCard title="Collected Payments" value="$242,000.00" change="94.3% collection rate" trend="up" />
+        <MetricCard title="Total Billed Revenue YTD" value="₹256,450.00" change="+12.4% from Q1" trend="up" />
+        <MetricCard title="Collected Payments" value="₹242,000.00" change="94.3% collection rate" trend="up" />
       </div>
     </div>
   );

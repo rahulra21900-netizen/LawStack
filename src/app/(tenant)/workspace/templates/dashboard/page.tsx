@@ -20,7 +20,7 @@ export default function TemplatesDashboardPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MetricCard title="Total Templates" value="6 Schemas" info="Oakwood LLP approved catalog" />
+        <MetricCard title="Total Templates" value="6 Schemas" info="Chandra & Associates approved catalog" />
         <MetricCard title="Contract Templates" value="2 Active" info="NDA / Sublicensing schemas" />
         <MetricCard title="Court Filings" value="2 Active" info="Briefs outline schemas" />
       </div>

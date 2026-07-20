@@ -77,7 +77,7 @@ export default function InvoicesListPage() {
             )
           },
           { header: "Total Amount", accessor: (i) => <span className="font-semibold text-white">{formatCurrency(i.amount)}</span> },
-          { header: "Due Date", accessor: (i) => <span className="text-slate-450">{i.dueDate}</span> },
+          { header: "Due Date", accessor: (i) => <span className="text-slate-400">{i.dueDate}</span> },
           { header: "Status", accessor: (i) => <Badge label={i.status} variant={i.status === "Paid" ? "success" : i.status === "Overdue" ? "error" : "warning"} /> }
         ]}
       />

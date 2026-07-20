@@ -94,14 +94,14 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
               <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Current Plan</div>
               <div className="mt-1 text-lg font-bold text-white">{tenantData.tier}</div>
               <div className="mt-0.5 text-[10px] text-slate-500">
-                {tenantData.tier === "Enterprise" ? "$499/mo" : tenantData.tier === "Professional" ? "$149/mo" : "$49/mo"}
+                {tenantData.tier === "Enterprise" ? "₹499/mo" : tenantData.tier === "Professional" ? "₹149/mo" : "₹49/mo"}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
                 <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">MRR</div>
                 <div className="mt-1 text-sm font-bold text-emerald-400">
-                  {tenantData.tier === "Enterprise" ? "$499" : tenantData.tier === "Professional" ? "$149" : "$49"}
+                  {tenantData.tier === "Enterprise" ? "₹499" : tenantData.tier === "Professional" ? "₹149" : "₹49"}
                 </div>
               </div>
               <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
@@ -130,9 +130,9 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
       >
         <ol className="relative border-l border-slate-800 ml-2 space-y-3 pl-6">
           {[
-            { who: "Harvey Specter", what: "created new matter", target: "C-218", time: "2h ago" },
+            { who: "Priya Chandra", what: "created new matter", target: "C-218", time: "2h ago" },
             { who: "System", what: "rotated tenant API keys", target: "auth-service", time: "1d ago" },
-            { who: "Eleanor Vance", what: "invited a new associate", target: "mike@oakwood.com", time: "2d ago" },
+            { who: "Meera Verma", what: "invited a new associate", target: "mike@chandra.legal", time: "2d ago" },
             { who: "Platform Admin", what: "upgraded subscription to", target: tenantData.tier, time: "1w ago" },
           ].map((a, idx) => (
             <li key={idx} className="relative">

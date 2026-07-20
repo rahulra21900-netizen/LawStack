@@ -6,7 +6,7 @@ import { DataTable } from "@/components/tables";
 
 export default function CategoriesPage() {
   const categoriesList = [
-    { title: "Court Filing Rules Delaware", count: "6 Articles", lead: "Harvey Specter" }
+    { title: "Court Filing Rules Delhi HC", count: "6 Articles", lead: "Priya Chandra" }
   ];
 
   return (

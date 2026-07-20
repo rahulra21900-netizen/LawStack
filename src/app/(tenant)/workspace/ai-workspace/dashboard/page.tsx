@@ -42,7 +42,7 @@ export default function AiDashboardPage() {
               <Badge label="Complete" variant="success" />
             </div>
             <div className="p-2.5 bg-slate-950/30 rounded border border-slate-850 flex justify-between items-center">
-              <span>Extract Delaware filing limitation dates</span>
+              <span>Extract Delhi HC filing limitation dates</span>
               <Badge label="Complete" variant="success" />
             </div>
           </div>

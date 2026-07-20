@@ -14,9 +14,9 @@ export default function TeamWorkloadPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <MetricCard title="Harvey Specter" value="6 Active Matters" info="85% capacity allocation" />
-        <MetricCard title="Mike Ross" value="4 Active Matters" info="60% capacity allocation" />
-        <MetricCard title="Louis Litt" value="8 Active Matters" info="95% capacity allocation" />
+        <MetricCard title="Priya Chandra" value="6 Active Matters" info="85% capacity allocation" />
+        <MetricCard title="Arjun Mehta" value="4 Active Matters" info="60% capacity allocation" />
+        <MetricCard title="Rohan Deshpande" value="8 Active Matters" info="95% capacity allocation" />
       </div>
     </div>
   );

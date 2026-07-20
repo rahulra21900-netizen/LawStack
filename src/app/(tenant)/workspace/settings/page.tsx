@@ -8,7 +8,7 @@ import { Settings, Save } from "lucide-react";
 
 export default function WorkspaceSettingsPage() {
   const { addToast } = useNotifications();
-  const [firmName, setFirmName] = useState("Oakwood LLP");
+  const [firmName, setFirmName] = useState("Chandra & Associates");
   const [allowAI, setAllowAI] = useState(true);
 
   return (

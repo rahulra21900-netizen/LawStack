@@ -17,7 +17,7 @@ export default function NewCasePage() {
   const [caseNumber, setCaseNumber] = useState("");
   const [practice, setPractice] = useState("Intellectual Property");
   const [client, setClient] = useState("client-wayne");
-  const [attorney, setAttorney] = useState("Harvey Specter");
+  const [attorney, setAttorney] = useState("Priya Chandra");
   const [judge, setJudge] = useState("");
   const [court, setCourt] = useState("");
   const [opposing, setOpposing] = useState("");
@@ -61,7 +61,7 @@ export default function NewCasePage() {
       <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
         {step === 1 && (
           <div className="space-y-3">
-            <Input label="Matter Name" value={caseName} onChange={(e) => setCaseName(e.target.value)} placeholder="e.g. Acme Corp Trade Secret Breach" />
+            <Input label="Matter Name" value={caseName} onChange={(e) => setCaseName(e.target.value)} placeholder="e.g. Reliance Retail Trade Secret Breach" />
             <Input label="Matter Number" value={caseNumber} onChange={(e) => setCaseNumber(e.target.value)} placeholder="e.g. CV-2026-9001" />
             <Select
               label="Practice Area"
@@ -81,9 +81,9 @@ export default function NewCasePage() {
             <Select
               label="Primary Client"
               options={[
-                { label: "Bruce Wayne (Wayne Enterprises)", value: "client-wayne" },
-                { label: "Tony Stark (Stark Industries)", value: "client-stark" },
-                { label: "Lex Luthor (LexCorp)", value: "client-luthor" }
+                { label: "Rakesh Sharma (Krishna Textiles Pvt. Ltd.)", value: "client-wayne" },
+                { label: "Suresh Krishnan (Reliance Retail)", value: "client-stark" },
+                { label: "Rohit Malhotra (Oakwood Estates)", value: "client-oakwood" }
               ]}
               value={client}
               onChange={(e) => setClient(e.target.value)}
@@ -91,9 +91,9 @@ export default function NewCasePage() {
             <Select
               label="Lead Counsel"
               options={[
-                { label: "Harvey Specter", value: "Harvey Specter" },
-                { label: "Mike Ross", value: "Mike Ross" },
-                { label: "Louis Litt", value: "Louis Litt" }
+                { label: "Priya Chandra", value: "Priya Chandra" },
+                { label: "Arjun Mehta", value: "Arjun Mehta" },
+                { label: "Rohan Deshpande", value: "Rohan Deshpande" }
               ]}
               value={attorney}
               onChange={(e) => setAttorney(e.target.value)}
@@ -104,7 +104,7 @@ export default function NewCasePage() {
         {step === 3 && (
           <div className="space-y-3">
             <Input label="Court Name" value={court} onChange={(e) => setCourt(e.target.value)} placeholder="e.g. NY Federal Court" />
-            <Input label="Judge" value={judge} onChange={(e) => setJudge(e.target.value)} placeholder="e.g. Hon. Sarah Vance" />
+            <Input label="Judge" value={judge} onChange={(e) => setJudge(e.target.value)} placeholder="e.g. Hon. Justice Anil Kumar" />
             <Input label="Opposing Counsel" value={opposing} onChange={(e) => setOpposing(e.target.value)} placeholder="e.g. Robert Zane" />
           </div>
         )}

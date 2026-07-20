@@ -36,7 +36,7 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
         <MetricCard title="Client Status" value={clientData.status} info="Directory state" trend={clientData.status === "Active" ? "up" : "neutral"} />
         <MetricCard title="Client Type" value={clientData.companyName ? "Corporate" : "Individual"} info="Classification" trend="neutral" />
         <MetricCard title="Open Matters" value={clientMatters.length} info="Active cases" trend="up" />
-        <MetricCard title="Outstanding" value="$3,950" info="Receivables" trend="neutral" />
+        <MetricCard title="Outstanding" value="₹3,950" info="Receivables" trend="neutral" />
       </div>
 
       {/* Profile + Risk */}
@@ -104,7 +104,7 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
             </div>
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Retainer Balance</div>
-              <div className="mt-1 text-lg font-bold text-emerald-400">$10,000.00</div>
+              <div className="mt-1 text-lg font-bold text-emerald-400">₹10,000.00</div>
               <div className="text-[10px] text-slate-500">Available for new matters</div>
             </div>
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
@@ -112,7 +112,7 @@ export default function OverviewTab({ params }: { params: Promise<{ id: string }
                 <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Total Billed (YTD)</span>
                 <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
               </div>
-              <div className="mt-1 text-lg font-bold text-white">$48,200</div>
+              <div className="mt-1 text-lg font-bold text-white">₹48,200</div>
             </div>
           </div>
         </Card>

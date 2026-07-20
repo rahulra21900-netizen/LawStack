@@ -270,8 +270,8 @@ export default function NewProvisioningWizardPage() {
               </div>
               <p className="text-xs text-slate-400">Define the tenant name and the public workspace URL that will be used for the new practice.</p>
             </div>
-            <Input label="Firm Practice Name" value={firmName} onChange={(e) => setFirmName(e.target.value)} placeholder="e.g. Oakwood Partners" />
-            <Input label="Workspace Display Title" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="e.g. Oakwood Practice Room" />
+            <Input label="Firm Practice Name" value={firmName} onChange={(e) => setFirmName(e.target.value)} placeholder="e.g. Chandra & Associates" />
+            <Input label="Workspace Display Title" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="e.g. Chandra Practice Room" />
             <div>
               <Input label="Subdomain Namespace" value={subdomain} onChange={(e) => setSubdomain(e.target.value)} placeholder="e.g. oakwood" />
               {subdomain && (
@@ -368,8 +368,8 @@ export default function NewProvisioningWizardPage() {
               </div>
               <p className="text-xs text-slate-400">Create the primary administrative account for the new tenant and prepare MFA enrollment.</p>
             </div>
-            <Input label="Primary Admin Name" value={adminName} onChange={(e) => setAdminName(e.target.value)} placeholder="Harvey Specter" />
-            <Input label="Primary Admin Email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} placeholder="harvey@oakwood.com" />
+            <Input label="Primary Admin Name" value={adminName} onChange={(e) => setAdminName(e.target.value)} placeholder="Priya Chandra" />
+            <Input label="Primary Admin Email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} placeholder="harvey@chandra.legal" />
             <Input label="Primary Admin Mobile" value={adminMobile} onChange={(e) => setAdminMobile(e.target.value)} placeholder="+91 99999 88888" />
             <Input label="Admin Account Password" type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} placeholder="••••••••" />
             <div className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/40 p-3">
@@ -408,8 +408,8 @@ export default function NewProvisioningWizardPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {[
-                { name: "Starter", price: "$49/mo", desc: "1 workspace, 3 seats", features: ["Matters", "Documents"] },
-                { name: "Professional", price: "$149/mo", desc: "Unlimited matters", features: ["All modules", "AI Copilot", "10 seats"] },
+                { name: "Starter", price: "₹49/mo", desc: "1 workspace, 3 seats", features: ["Matters", "Documents"] },
+                { name: "Professional", price: "₹149/mo", desc: "Unlimited matters", features: ["All modules", "AI Copilot", "10 seats"] },
                 { name: "Enterprise", price: "Custom", desc: "Custom seats & SSO", features: ["SSO/SAML", "Audit exports", "Dedicated support"] },
               ].map((p) => {
                 const active = plan === p.name;

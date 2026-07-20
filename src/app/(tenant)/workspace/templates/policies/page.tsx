@@ -6,7 +6,7 @@ import { DataTable } from "@/components/tables";
 
 export default function PoliciesPage() {
   const policies = [
-    { name: "Oakwood LLP File Retention Policy Schema", version: "3.0" }
+    { name: "Chandra & Associates File Retention Policy Schema", version: "3.0" }
   ];
 
   return (

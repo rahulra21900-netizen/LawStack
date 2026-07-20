@@ -10,18 +10,18 @@ export interface Tenant {
 
 export const MOCK_TENANTS: Tenant[] = [
   {
-    id: "oakwood-llp",
-    name: "Oakwood LLP",
-    subdomain: "oakwood",
+    id: "chandra-associates",
+    name: "Chandra & Associates",
+    subdomain: "chandra",
     status: "Active",
     tier: "Enterprise",
     joinedDate: "2024-01-15",
     primaryColor: "#0f172a", // slate-900
   },
   {
-    id: "abc-legal",
-    name: "ABC Legal",
-    subdomain: "abc-legal",
+    id: "iyer-legal",
+    name: "Iyer Legal Chambers",
+    subdomain: "iyerlegal",
     status: "Active",
     tier: "Standard",
     joinedDate: "2024-03-22",
@@ -29,24 +29,24 @@ export const MOCK_TENANTS: Tenant[] = [
   },
   {
     id: "rahul-advocate",
-    name: "Rahul Advocate (Solo Practice)",
-    subdomain: "rahul-advocate",
+    name: "Rahul Bansal — Advocate (Solo Practice)",
+    subdomain: "rbansal",
     status: "Active",
     tier: "Standard",
     joinedDate: "2024-05-10",
     primaryColor: "#d97706", // amber-600
   },
   {
-    id: "lexbridge-partners",
-    name: "LexBridge Partners",
-    subdomain: "lexbridge",
+    id: "verma-partners",
+    name: "Verma & Partners LLP",
+    subdomain: "vermapartners",
     status: "Active",
     tier: "Enterprise",
     joinedDate: "2023-11-01",
     primaryColor: "#059669", // emerald-600
   },
   {
-    id: "nova-law-group",
+    id: "nova-law",
     name: "Nova Law Group",
     subdomain: "novalaw",
     status: "Suspended",
@@ -56,7 +56,7 @@ export const MOCK_TENANTS: Tenant[] = [
   },
   {
     id: "justice-associates",
-    name: "Justice Associates",
+    name: "Justice Associates (Bengaluru)",
     subdomain: "justice",
     status: "Pending",
     tier: "Standard",

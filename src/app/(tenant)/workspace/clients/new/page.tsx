@@ -62,7 +62,7 @@ export default function NewClientPage() {
       <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
         {step === 1 && (
           <div className="space-y-3">
-            <Input label="Client / Corporate Entity Name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Stark Industries" />
+            <Input label="Client / Corporate Entity Name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Reliance Retail" />
             <Input label="DBA / Subsidiary Name (Optional)" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="e.g. Stark Labs" />
             <Select
               label="Industry Scope"

@@ -42,7 +42,7 @@ export default function AnalyticsPage() {
         <Button
           variant="secondary"
           leftIcon={<RefreshCw className="w-4 h-4" />}
-          onClick={() => addToast("Sync Analytics", "Re-indexed data indicators from Delaware namespaces.", "success")}
+          onClick={() => addToast("Sync Analytics", "Re-indexed data indicators from Delhi HC namespaces.", "success")}
         >
           Recalculate Yields
         </Button>
@@ -52,7 +52,7 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Billable Hours Yield" value="342.5 hrs" change="+14% this month" trend="up" info="Logged" />
         <MetricCard title="Task Closure Rate" value="94.2%" change="No modifications" trend="neutral" info="On time" />
-        <MetricCard title="Retainer Values" value="$156,000" change="+8.9% YoY" trend="up" info="Held" />
+        <MetricCard title="Retainer Values" value="₹156,000" change="+8.9% YoY" trend="up" info="Held" />
         <MetricCard title="Realization Rate" value="78%" change="+4.2%" trend="up" info="Collected" />
       </div>
 
@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
           { icon: Clock, label: "Avg Matter Duration", value: "4.2 months", trend: "down", change: "-0.3 mo" },
-          { icon: DollarSign, label: "Avg Invoice Value", value: "$3,240", trend: "up", change: "+$180" },
+          { icon: DollarSign, label: "Avg Invoice Value", value: "₹3,240", trend: "up", change: "+₹180" },
           { icon: CheckCircle2, label: "Client Satisfaction", value: "4.8/5.0", trend: "up", change: "+0.2" },
         ].map((m) => {
           const Icon = m.icon;

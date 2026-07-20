@@ -15,7 +15,7 @@ export default function TeamMembersPage() {
           <Users className="w-5 h-5 text-emerald-500" />
           <span>Members Directory</span>
         </h1>
-        <p className="text-xs text-slate-400">View Oakwood LLP associate clearances and permissions.</p>
+        <p className="text-xs text-slate-400">View Chandra & Associates associate clearances and permissions.</p>
       </div>
 
       <DataTable

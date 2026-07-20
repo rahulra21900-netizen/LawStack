@@ -6,7 +6,7 @@ import { DataTable } from "@/components/tables";
 
 export default function RecentArticlesPage() {
   const recents = [
-    { title: "Delaware Rule 210 filings", date: "Viewed 5m ago" }
+    { title: "Delhi HC Original Side Rules filings", date: "Viewed 5m ago" }
   ];
 
   return (

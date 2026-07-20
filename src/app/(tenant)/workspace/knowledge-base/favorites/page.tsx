@@ -6,7 +6,7 @@ import { DataTable } from "@/components/tables";
 
 export default function FavoritesPage() {
   const favorites = [
-    { title: "Docket Rule 210 Filing Schedule", author: "Harvey Specter" }
+    { title: "Docket Rule 210 Filing Schedule", author: "Priya Chandra" }
   ];
 
   return (

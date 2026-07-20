@@ -16,7 +16,7 @@ export default function ApprovalsTab() {
             </div>
             <div className="flex justify-between items-center text-slate-400">
               <span>Assigned Reviewer</span>
-              <span className="text-white font-semibold">Harvey Specter</span>
+              <span className="text-white font-semibold">Priya Chandra</span>
             </div>
           </div>
         </Card>

@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui";
 
 export default function TeamTab({ params }: { params: Promise<{ id: string }> }) {
   // Case assigned legal staff
-  const assignedTeam = MOCK_USERS.slice(3, 7); // Harvey, Mike, Rachel, Donna
+  const assignedTeam = MOCK_USERS.slice(3, 7); // Priya, Arjun, Neha, Kabir
 
   return (
     <div className="space-y-6">

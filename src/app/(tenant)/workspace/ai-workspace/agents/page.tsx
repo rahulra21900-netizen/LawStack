@@ -8,7 +8,7 @@ import { Sparkles } from "lucide-react";
 export default function AgentsPage() {
   const agents = [
     { title: "Contract Review Agent", desc: "Reviews indemnity, liability, and dispute jurisdictions.", capabilities: "Governing laws check, clause comparisons." },
-    { title: "Delaware Precedent Researcher", desc: "Lookup chancery court proceedings summaries.", capabilities: "Precedent cases mapping, filing deadlines audits." }
+    { title: "Supreme Court Precedent Researcher", desc: "Lookup chancery court proceedings summaries.", capabilities: "Precedent cases mapping, filing deadlines audits." }
   ];
 
   return (
@@ -16,7 +16,7 @@ export default function AgentsPage() {
       <div className="space-y-1">
         <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "AI Workspace", href: "/workspace/ai-workspace/dashboard" }, { name: "Agents" }]} />
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-blue-450 animate-pulse" />
+          <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
           <span>Specialized AI legal Agents</span>
         </h1>
         <p className="text-xs text-slate-400">Deploy context-aware agents for billing audits, document review, or deposition checks.</p>

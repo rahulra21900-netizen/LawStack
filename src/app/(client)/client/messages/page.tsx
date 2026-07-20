@@ -10,9 +10,9 @@ const initialMessages = [
   {
     id: "m1",
     from: "counsel",
-    author: "Harvey Specter",
+    author: "Priya Chandra",
     role: "Lead Counsel",
-    body: "Good afternoon. We've filed the sublicense briefs in Delaware. Let's arrange a prep session before the hearing next week.",
+    body: "Good afternoon. We've filed the sublicense briefs in Delhi HC. Let's arrange a prep session before the hearing next week.",
     time: "10:42 AM",
   },
   {
@@ -20,13 +20,13 @@ const initialMessages = [
     from: "client",
     author: "You",
     role: "Client",
-    body: "Thanks Harvey. Does Thursday 2pm work? I'll have the discovery bundle ready by then.",
+    body: "Thanks Priya Chandra. Does Thursday 2pm work? I'll have the discovery bundle ready by then.",
     time: "11:08 AM",
   },
   {
     id: "m3",
     from: "counsel",
-    author: "Harvey Specter",
+    author: "Priya Chandra",
     role: "Lead Counsel",
     body: "Thursday 2pm works. I'll send a calendar invite. Please review the attached motion draft before we meet.",
     time: "11:15 AM",
@@ -68,9 +68,9 @@ export default function ClientMessagesPage() {
         >
           <div className="space-y-2">
             {[
-              { name: "Harvey Specter", role: "Lead Counsel", preview: "Thursday 2pm works. I'll send...", time: "11:15 AM", unread: 0, active: true },
-              { name: "Eleanor Vance", role: "Billing Partner", preview: "Invoice INV-2026-014 is ready...", time: "Yesterday", unread: 2, active: false },
-              { name: "Donna Paulsen", role: "Paralegal", preview: "Discovery bundle uploaded.", time: "2d ago", unread: 0, active: false },
+              { name: "Priya Chandra", role: "Lead Counsel", preview: "Thursday 2pm works. I'll send...", time: "11:15 AM", unread: 0, active: true },
+              { name: "Meera Verma", role: "Billing Partner", preview: "Invoice INV-2026-014 is ready...", time: "Yesterday", unread: 2, active: false },
+              { name: "Kabir Singh", role: "Paralegal", preview: "Discovery bundle uploaded.", time: "2d ago", unread: 0, active: false },
             ].map((t) => (
               <div
                 key={t.name}
@@ -103,9 +103,9 @@ export default function ClientMessagesPage() {
           header={
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Avatar name="Harvey Specter" size="sm" isOnline />
+                <Avatar name="Priya Chandra" size="sm" isOnline />
                 <div>
-                  <div className="text-xs font-bold text-white">Harvey Specter</div>
+                  <div className="text-xs font-bold text-white">Priya Chandra</div>
                   <div className="text-[10px] text-emerald-400">Online · Lead Counsel</div>
                 </div>
               </div>

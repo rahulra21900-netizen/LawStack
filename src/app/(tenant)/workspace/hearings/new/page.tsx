@@ -59,13 +59,13 @@ export default function NewHearingPage() {
       <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl space-y-4">
         {step === 1 && (
           <div className="space-y-3">
-            <Input label="Presiding Judge Name" value={judge} onChange={(e) => setJudge(e.target.value)} placeholder="e.g. Hon. Sarah Vance" />
+            <Input label="Presiding Judge Name" value={judge} onChange={(e) => setJudge(e.target.value)} placeholder="e.g. Hon. Justice Anil Kumar" />
             <Input label="Courtroom Room" value={courtroom} onChange={(e) => setCourtroom(e.target.value)} placeholder="e.g. Courtroom 3C" />
             <Select
               label="Jurisdiction Class"
               options={[
-                { label: "Federal District Court", value: "Federal" },
-                { label: "Delaware Chancery Court", value: "Chancery" }
+                { label: "Delhi High Court", value: "Federal" },
+                { label: "NCLT Mumbai Court", value: "Chancery" }
               ]}
               value={jurisdiction}
               onChange={(e) => setJurisdiction(e.target.value)}

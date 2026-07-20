@@ -29,47 +29,47 @@ import {
 
 const upcomingEvents = [
   {
-    title: "Motion for Summary Judgment",
-    matter: "C-206 · Acme Corp vs. Beta Inc.",
-    time: "Today · 10:00 AM",
-    location: "Superior Court · Room 4B",
+    title: "Anticipatory Bail Arguments",
+    matter: "CRLM.A. 4382/2026 · State v. Sharma",
+    time: "Tomorrow · 10:30 AM",
+    location: "Delhi High Court · Court No. 24",
     type: "hearing",
   },
   {
-    title: "Client Consultation — Bruce Wayne",
-    matter: "C-209 · State vs. Wayne Corp.",
+    title: "Client Consultation — Rakesh Sharma",
+    matter: "CRLM.A. 4382/2026",
     time: "Today · 03:30 PM",
-    location: "Main Conference Room",
+    location: "Chandra & Associates · Meeting Room 2",
     type: "meeting",
   },
   {
-    title: "Discovery Deadline Filing",
-    matter: "C-212 · Oakwood Land Dev.",
+    title: "IP Injunction Reply — Filing Deadline",
+    matter: "CS(COMM) 942/2026 · Reliance Retail",
     time: "Tomorrow · 05:00 PM",
-    location: "Electronic filing",
+    location: "eFiling Portal — Delhi HC",
     type: "deadline",
   },
   {
-    title: "Deposition: Dr. Selina Kyle",
-    matter: "C-206 · Acme Corp vs. Beta Inc.",
+    title: "Deposition — Anjali Nair (Reliance Retail)",
+    matter: "CS(COMM) 942/2026",
     time: "Fri · 09:00 AM",
-    location: "Remote · Zoom",
+    location: "Delhi High Court · IP Division",
     type: "deposition",
   },
 ];
 
 const taskList = [
-  { title: "Draft response to motion to dismiss", matter: "C-206", due: "Today", priority: "high" },
-  { title: "Review discovery documents", matter: "C-209", due: "Tomorrow", priority: "medium" },
-  { title: "Prepare retainer agreement", matter: "New client", due: "Fri", priority: "low" },
-  { title: "File status report with court", matter: "C-212", due: "Mon", priority: "medium" },
+  { title: "Draft reply to opposing counsel's affidavit", matter: "CRLM.A. 4382/2026", due: "Today", priority: "high" },
+  { title: "Review discovery documents", matter: "CS(COMM) 942/2026", due: "Tomorrow", priority: "medium" },
+  { title: "Prepare vakalatnama for new matter", matter: "New client", due: "Fri", priority: "low" },
+  { title: "File status report with NCLT", matter: "CP(CAA) 118/2026", due: "Mon", priority: "medium" },
 ];
 
 const teamWorkload = [
-  { name: "Harvey Specter", initials: "HS", matters: 8, hours: 32, color: "from-blue-500 to-cyan-500" },
-  { name: "Mike Ross", initials: "MR", matters: 6, hours: 28, color: "from-emerald-500 to-teal-500" },
-  { name: "Eleanor Vance", initials: "EV", matters: 5, hours: 24, color: "from-amber-500 to-orange-500" },
-  { name: "Louis Litt", initials: "LL", matters: 4, hours: 19, color: "from-indigo-500 to-blue-500" },
+  { name: "Priya Chandra", initials: "PC", matters: 8, hours: 32, color: "from-blue-500 to-cyan-500" },
+  { name: "Arjun Mehta", initials: "AM", matters: 6, hours: 28, color: "from-emerald-500 to-teal-500" },
+  { name: "Meera Verma", initials: "MV", matters: 5, hours: 24, color: "from-amber-500 to-orange-500" },
+  { name: "Rohan Deshpande", initials: "RD", matters: 4, hours: 19, color: "from-indigo-500 to-blue-500" },
 ];
 
 const eventType: Record<string, { color: string; icon: React.ComponentType<{ className?: string }> }> = {
@@ -125,6 +125,25 @@ export default function TenantDashboard() {
           </Link>
         </div>
       )}
+
+      {/* Legal Intelligence Banner (India-specific differentiators) */}
+      <Link
+        href="/workspace/intelligence"
+        className="group relative overflow-hidden rounded-xl border border-amber-500/20 bg-gradient-to-r from-amber-950/40 via-slate-900/40 to-transparent p-4 flex items-center justify-between hover:border-amber-500/40 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <Scale className="w-4 h-4" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-white">Legal Intelligence Suite <span className="ml-1 text-[9px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono">INDIA</span></p>
+            <p className="text-[10px] text-slate-400">IPC → BNS concordance · CNR / eCourts sync · High Court defect scanner · Precedent finder.</p>
+          </div>
+        </div>
+        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-300 group-hover:gap-2 transition-all">
+          Open Intelligence <ArrowRight className="w-3.5 h-3.5" />
+        </span>
+      </Link>
 
       {/* AI banner */}
       {isAiEnabled && (
@@ -346,13 +365,13 @@ export default function TenantDashboard() {
           <div className="space-y-3">
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Outstanding Invoices</div>
-              <div className="mt-1 text-2xl font-extrabold text-white">$42,180</div>
+              <div className="mt-1 text-2xl font-extrabold text-white">₹18,42,500</div>
               <div className="mt-0.5 text-[10px] text-amber-400">6 invoices awaiting payment</div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
                 <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Collected (MTD)</div>
-                <div className="mt-1 text-lg font-bold text-emerald-400">$128.4k</div>
+                <div className="mt-1 text-lg font-bold text-emerald-400">₹12.4L</div>
               </div>
               <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
                 <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Billable Hours</div>
@@ -389,10 +408,10 @@ export default function TenantDashboard() {
       >
         <ol className="relative border-l border-slate-800 ml-2 space-y-3 pl-6">
           {[
-            { who: "Harvey Specter", what: "filed Motion for Summary Judgment", matter: "C-206", time: "12m ago" },
-            { who: "Mike Ross", what: "uploaded 4 discovery documents", matter: "C-209", time: "1h ago" },
-            { who: "Eleanor Vance", what: "scheduled deposition for Friday", matter: "C-206", time: "3h ago" },
-            { who: "Louis Litt", what: "approved retainer agreement", matter: "New client", time: "5h ago" },
+            { who: "Priya Chandra", what: "filed Anticipatory Bail Application", matter: "CRLM.A. 4382/2026", time: "12m ago" },
+            { who: "Arjun Mehta", what: "uploaded 4 discovery documents", matter: "CS(COMM) 942/2026", time: "1h ago" },
+            { who: "Meera Verma", what: "scheduled deposition for Friday", matter: "CS(COMM) 942/2026", time: "3h ago" },
+            { who: "Rohan Deshpande", what: "approved vakalatnama", matter: "New client", time: "5h ago" },
           ].map((a, idx) => (
             <li key={idx} className="relative">
               <span className="absolute -left-[33px] flex h-5 w-5 items-center justify-center rounded-full bg-slate-900 border border-slate-700">

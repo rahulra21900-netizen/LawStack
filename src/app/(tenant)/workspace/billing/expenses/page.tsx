@@ -14,7 +14,7 @@ interface Expense {
 }
 
 const MOCK_EXPENSES: Expense[] = [
-  { id: "exp-1", description: "Delaware filings fee", type: "Court Fees", amount: 450, billable: true },
+  { id: "exp-1", description: "High Court filings fee", type: "Court Fees", amount: 450, billable: true },
   { id: "exp-2", description: "LexisNexis research search query dockets", type: "Research", amount: 120, billable: true }
 ];
 

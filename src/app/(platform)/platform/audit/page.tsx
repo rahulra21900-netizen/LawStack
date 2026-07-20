@@ -21,7 +21,7 @@ export default function AuditCenterPage() {
   const [showBreakGlassModal, setShowBreakGlassModal] = useState(false);
   const [ctoEmail, setCtoEmail] = useState("cto@lawstack.com");
   const [secEmail, setSecEmail] = useState("compliance@lawstack.com");
-  const [targetTenant, setTargetTenant] = useState("oakwood-llp");
+  const [targetTenant, setTargetTenant] = useState("chandra-associates");
   const [reason, setReason] = useState("Critical Security Patch Investigation");
   const [breakGlassTriggered, setBreakGlassTriggered] = useState(false);
 
@@ -315,7 +315,7 @@ export default function AuditCenterPage() {
                     onChange={(e) => setTargetTenant(e.target.value)}
                     className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white outline-none focus:ring-2 focus:ring-red-500"
                   >
-                    <option value="oakwood-llp">Oakwood LLP (oakwood)</option>
+                    <option value="chandra-associates">Chandra & Associates (oakwood)</option>
                     <option value="abc-legal">ABC Legal (abc-legal)</option>
                     <option value="rahul-advocate">Rahul Advocate (rahul-advocate)</option>
                   </select>

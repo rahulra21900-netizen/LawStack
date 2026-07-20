@@ -12,7 +12,7 @@ export default function WorkspacesTab() {
           <div className="space-y-2 text-xs">
             <div className="flex justify-between items-center pb-1.5 border-b border-slate-800 text-slate-400">
               <span>Workspace Name</span>
-              <span className="text-white font-semibold">Oakwood Master Workspace</span>
+              <span className="text-white font-semibold">Chandra & Associates — Master Workspace</span>
             </div>
             <div className="flex justify-between items-center text-slate-400">
               <span>Status</span>

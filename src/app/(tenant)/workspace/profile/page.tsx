@@ -36,8 +36,8 @@ export default function UserProfileCenterPage() {
               HS
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Harvey Specter</h3>
-              <p className="text-xs text-slate-400">Senior Partner · Oakwood LLP</p>
+              <h3 className="text-base font-bold text-white">Priya Chandra</h3>
+              <p className="text-xs text-slate-400">Senior Partner · Chandra & Associates</p>
               <div className="mt-2 flex items-center gap-2">
                 <Badge label="Active" variant="success" />
                 <Badge label="MFA On" variant="info" />
@@ -47,7 +47,7 @@ export default function UserProfileCenterPage() {
           <div className="space-y-3">
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold"><Mail className="w-3 h-3" /> Email</div>
-              <div className="mt-1 text-xs font-mono text-white">harvey@oakwood.com</div>
+              <div className="mt-1 text-xs font-mono text-white">harvey@chandra.legal</div>
             </div>
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold"><Phone className="w-3 h-3" /> Phone</div>
@@ -55,7 +55,7 @@ export default function UserProfileCenterPage() {
             </div>
             <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3">
               <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500 font-bold"><Building2 className="w-3 h-3" /> Firm</div>
-              <div className="mt-1 text-xs text-white">Oakwood LLP · Enterprise</div>
+              <div className="mt-1 text-xs text-white">Chandra & Associates · Enterprise</div>
             </div>
           </div>
         </Card>
