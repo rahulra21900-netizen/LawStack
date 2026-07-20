@@ -125,7 +125,7 @@ export default function PlatformMfaPage() {
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This page verifies that a platform administrator is really who they claim to be before they can enter the protected control plane. It should support the standard authenticator flow while also offering a fallback path for backup codes.
+                  This page verifies that a platform administrator is really who they claim to be before they can enter the protected control plane. It should support the standard authenticator flow while also offering a fallback path for backup codes. The latest implementation should be treated as the second verification step in the auth provisioning stack, with clear logging and a predictable recovery experience for admins.
                 </p>
               </section>
 

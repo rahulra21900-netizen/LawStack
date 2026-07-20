@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
-import { Input, Select } from "@/components/forms";
+import { CommandBar } from "@/components/navigation/CommandBar";
+import { DetailDrawer } from "@/components/dialogs/DetailDrawer";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_CASES } from "@/mocks/cases";
-import { Briefcase, Plus, ListFilter as Filter, Search, Download, Scale, Users, FileText, TrendingUp, ChevronRight } from "lucide-react";
+import { Case } from "@/types";
+import { Briefcase, Plus, Download, Eye, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function CasesListPage() {
@@ -15,16 +17,29 @@ export default function CasesListPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPractice, setSelectedPractice] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [density, setDensity] = useState<"comfortable" | "compact">("comfortable");
+  const [inspectCase, setInspectCase] = useState<Case | null>(null);
+  const [showFilterBar, setShowFilterBar] = useState(false);
 
   const filteredCases = MOCK_CASES.filter((c) => {
-    const matchesSearch = c.title.toLowerCase().includes(searchQuery.toLowerCase()) || c.caseNumber.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.caseNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.leadCounsel.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesPractice = selectedPractice === "all" || c.practiceArea === selectedPractice;
     const matchesStatus = selectedStatus === "all" || c.status === selectedStatus;
     return matchesSearch && matchesPractice && matchesStatus;
   });
 
+  const handleDeleteSelected = () => {
+    addToast("Selected Items", `Simulated removal of ${selectedIds.length} case matters.`, "info");
+    setSelectedIds([]);
+  };
+
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Cases" }]} />
@@ -34,85 +49,159 @@ export default function CasesListPage() {
             </span>
             <span>Matter Management</span>
           </h1>
-          <p className="text-xs text-slate-400">Search, filter, and audit active client case matters.</p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="secondary"
-            leftIcon={<Download className="w-4 h-4" />}
-            onClick={() => addToast("Export Matters", "Matters list CSV export triggered.", "success")}
-          >
-            Export CSV
-          </Button>
-          <Link href="/workspace/cases/new">
-            <Button variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
-              New Matter
-            </Button>
-          </Link>
+          <p className="text-xs text-slate-400">Search, filter, and inspect active legal firm matters.</p>
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Active Matters" value={MOCK_CASES.filter((c) => c.status === "Active").length} info="In docket" trend="up" />
         <MetricCard title="In Discovery" value={MOCK_CASES.filter((c) => c.stage === "Discovery").length} info="Discovery stage" trend="neutral" />
         <MetricCard title="Pre-Trial" value={MOCK_CASES.filter((c) => c.stage === "Pre-Trial").length} info="Approaching trial" trend="neutral" />
-        <MetricCard title="Hearings (30d)" value="3" info="Scheduled" trend="up" change="+1" />
+        <MetricCard title="Hearings Scheduled" value="3" info="Next 30 days" trend="up" change="+1" />
       </div>
 
-      {/* Filter Bar */}
-      <Card>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
-            <input
-              placeholder="Search by name or number..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-9 pr-3 py-2 bg-slate-950/50 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-slate-700 transition-all"
-            />
-          </div>
-          <Select
-            options={[
-              { label: "All Practice Areas", value: "all" },
-              { label: "Intellectual Property", value: "Intellectual Property" },
-              { label: "Tax Law", value: "Tax Law" },
-              { label: "Corporate Law", value: "Corporate Law" },
-            ]}
-            value={selectedPractice}
-            onChange={(e) => setSelectedPractice(e.target.value)}
-          />
-          <Select
-            options={[
-              { label: "All Statuses", value: "all" },
-              { label: "Active", value: "Active" },
-              { label: "Archived", value: "Archived" },
-            ]}
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-          />
-        </div>
-      </Card>
+      {/* Microsoft Fluent Command Bar */}
+      <CommandBar
+        onNew={() => addToast("New Matter", "Navigating to matter creation wizard...", "info")}
+        newLabel="New Matter"
+        onRefresh={() => addToast("Refreshed", "Case docket synchronized.", "success")}
+        onExport={() => addToast("Export", "Case docket exported to CSV.", "success")}
+        selectedCount={selectedIds.length}
+        onDeleteSelected={handleDeleteSelected}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        filterCount={(selectedPractice !== "all" ? 1 : 0) + (selectedStatus !== "all" ? 1 : 0)}
+        onToggleFilter={() => setShowFilterBar(!showFilterBar)}
+        density={density}
+        onDensityChange={setDensity}
+      />
 
-      {/* Cases Data Table */}
-      <DataTable
+      {/* Filter Bar Panel */}
+      {showFilterBar && (
+        <Card className="animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                Practice Area Filter
+              </label>
+              <select
+                value={selectedPractice}
+                onChange={(e) => setSelectedPractice(e.target.value)}
+                className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="all">All Practice Areas</option>
+                <option value="Intellectual Property">Intellectual Property</option>
+                <option value="Tax Law">Tax Law</option>
+                <option value="Corporate Law">Corporate Law</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                Matter Status
+              </label>
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="all">All Statuses</option>
+                <option value="Active">Active</option>
+                <option value="Archived">Archived</option>
+              </select>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* DataTable */}
+      <DataTable<Case>
         data={filteredCases}
+        selectable
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        density={density}
+        onRowClick={(item) => setInspectCase(item)}
+        getRowId={(item) => item.id}
         columns={[
           {
-            header: "Case Title",
+            header: "Case Title & Docket Number",
             accessor: (c) => (
-              <Link href={`/workspace/cases/${c.id}`} className="font-bold text-blue-400 hover:underline">
-                {c.title}
-              </Link>
+              <div>
+                <span className="font-bold text-white block group-hover:text-blue-400 transition-colors">
+                  {c.title}
+                </span>
+                <span className="font-mono text-[10px] text-slate-400">{c.caseNumber}</span>
+              </div>
             ),
           },
-          { header: "Case Number", accessor: (c) => <span className="font-mono text-[10px] text-slate-400">{c.caseNumber}</span> },
-          { header: "Practice Area", accessor: (c) => <span>{c.practiceArea}</span> },
-          { header: "Lead Attorney", accessor: (c) => <span className="font-semibold">{c.leadCounsel}</span> },
-          { header: "Stage", accessor: (c) => <Badge label={c.stage} variant="info" /> },
-          { header: "Status", accessor: (c) => <Badge label={c.status} variant={c.status === "Active" ? "success" : "neutral"} /> },
+          { header: "Practice Area", accessor: (c) => <span className="text-slate-300">{c.practiceArea}</span> },
+          { header: "Lead Attorney", accessor: (c) => <span className="font-semibold text-slate-200">{c.leadCounsel}</span> },
+          {
+            header: "Stage",
+            accessor: (c) => (
+              <Badge variant="info" size="sm">
+                {c.stage}
+              </Badge>
+            ),
+          },
+          {
+            header: "Status",
+            accessor: (c) => (
+              <Badge variant={c.status === "Active" ? "success" : "neutral"} size="sm">
+                {c.status}
+              </Badge>
+            ),
+          },
+          {
+            header: "Action",
+            accessor: (c) => (
+              <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                <button
+                  onClick={() => setInspectCase(c)}
+                  className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  title="Inspect Details"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                </button>
+                <Link
+                  href={`/workspace/cases/${c.id}`}
+                  className="p-1 rounded text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition-colors"
+                  title="Open Matter Overview"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            ),
+          },
         ]}
       />
+
+      {/* Inspect Slide-Over Drawer */}
+      {inspectCase && (
+        <DetailDrawer
+          isOpen={!!inspectCase}
+          onClose={() => setInspectCase(null)}
+          title={inspectCase.title}
+          subtitle={`Case Number: ${inspectCase.caseNumber}`}
+          badgeText={inspectCase.status}
+          badgeVariant={inspectCase.status === "Active" ? "success" : "neutral"}
+          actionUrl={`/workspace/cases/${inspectCase.id}`}
+          actionLabel="Open Case File"
+          data={{
+            id: inspectCase.id,
+            title: inspectCase.title,
+            caseNumber: inspectCase.caseNumber,
+            practiceArea: inspectCase.practiceArea,
+            leadCounsel: inspectCase.leadCounsel,
+            stage: inspectCase.stage,
+            status: inspectCase.status,
+            tenantId: inspectCase.tenantId,
+            openedDate: inspectCase.openDate || "2026-01-15",
+          }}
+        />
+      )}
     </div>
   );
 }

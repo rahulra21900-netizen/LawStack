@@ -166,7 +166,7 @@ export default function PlatformSettingsPage() {
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This page is the control center for platform-wide operational settings. It should let administrators change security posture, maintenance state, notification channels, and region visibility for the SaaS platform.
+                  This page is the control center for platform-wide operational settings. It should let administrators change security posture, maintenance state, notification channels, and region visibility for the SaaS platform. The latest implementation should also reflect auth provisioning policy, self-service restrictions, and the operational defaults used during tenant onboarding.
                 </p>
               </section>
 
@@ -200,6 +200,7 @@ export default function PlatformSettingsPage() {
                 <ul className="space-y-2">
                   <li><span className="font-semibold text-white">State model:</span> keep each toggle in local component state first, then map it to a settings object that can be sent to the backend later.</li>
                   <li><span className="font-semibold text-white">Save action:</span> when the user clicks Save settings, the page should validate the current values and persist them through a settings service.</li>
+                  <li><span className="font-semibold text-white">Auth provisioning:</span> the settings here should control whether onboarding and admin provisioning flows remain restricted or can be reopened for new tenant creation.</li>
                   <li><span className="font-semibold text-white">Toast feedback:</span> show success, error, or warning feedback depending on whether the save succeeds or a dependency fails.</li>
                   <li><span className="font-semibold text-white">Persistence:</span> in production, this page should pull from a platform settings API and write back through a secure admin endpoint.</li>
                 </ul>

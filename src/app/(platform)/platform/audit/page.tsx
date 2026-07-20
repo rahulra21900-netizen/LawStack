@@ -18,6 +18,12 @@ export default function AuditCenterPage() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All");
   const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
+  const [showBreakGlassModal, setShowBreakGlassModal] = useState(false);
+  const [ctoEmail, setCtoEmail] = useState("cto@lawstack.com");
+  const [secEmail, setSecEmail] = useState("compliance@lawstack.com");
+  const [targetTenant, setTargetTenant] = useState("oakwood-llp");
+  const [reason, setReason] = useState("Critical Security Patch Investigation");
+  const [breakGlassTriggered, setBreakGlassTriggered] = useState(false);
 
   const filtered = MOCK_ACTIVITIES.filter((a) => {
     const matchesSearch = a.action.toLowerCase().includes(search.toLowerCase()) || a.userName.toLowerCase().includes(search.toLowerCase());
@@ -39,6 +45,14 @@ export default function AuditCenterPage() {
           <p className="text-xs text-slate-400">Immutable record of every administrative and tenant-scoped action across the platform.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant="destructive"
+            leftIcon={<Lock className="w-4 h-4" />}
+            onClick={() => setShowBreakGlassModal(true)}
+            className="bg-red-600 hover:bg-red-500 text-white font-bold shadow-lg shadow-red-600/20"
+          >
+            Emergency Break-Glass
+          </Button>
           <Button variant="outline" leftIcon={<BookOpen className="w-4 h-4" />} onClick={() => setShowDeveloperGuide(true)}>
             Developer Guide
           </Button>
@@ -181,7 +195,7 @@ export default function AuditCenterPage() {
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This page is the platform-wide audit console. It should show a searchable, filterable history of actions performed by platform admins, tenant admins, and other system actors so security teams can review what happened and when.
+                  This page is the platform-wide audit console. It should show a searchable, filterable history of actions performed by platform admins, tenant admins, and other system actors so security teams can review what happened and when. The latest implementation should treat the audit stream as a service-backed view that can be filtered by tenant, action, and event type during provisioning and auth workflows.
                 </p>
               </section>
 
@@ -221,6 +235,8 @@ export default function AuditCenterPage() {
                   <li><span className="font-semibold text-white">Filtering:</span> keep filter state locally in the component and derive the visible list from the full event set. This makes the page fast and easy to refine.</li>
                   <li><span className="font-semibold text-white">Detail navigation:</span> clicking an audit row should route to /platform/audit/[id] where the developer can show a detailed event view.</li>
                   <li><span className="font-semibold text-white">Export:</span> the Export Trail button should call a service that prepares a CSV or JSON export of the currently filtered audit events.</li>
+                  <li><span className="font-semibold text-white">Break-glass workflow:</span> the Emergency Break-Glass action should open a controlled modal that requires dual approval from the CTO and compliance officer, records the event permanently, and triggers an in-app alert to the target firm.</li>
+                  <li><span className="font-semibold text-white">Simple meaning:</span> this is a special emergency path for urgent cases like a security incident, tenant lockout, or legal emergency. It is not a normal admin action and should always be tightly controlled.</li>
                   <li><span className="font-semibold text-white">Real-time behavior:</span> in a production system, this page should subscribe to a stream or polling endpoint so new events appear without manual refresh.</li>
                 </ul>
               </section>
@@ -261,10 +277,112 @@ export default function AuditCenterPage() {
                   <li><span className="font-semibold text-white">Audit service:</span> create an audit service that reads and writes events to an immutable store or log pipeline.</li>
                   <li><span className="font-semibold text-white">Event ingestion:</span> every create/update/delete operation across the platform should emit an event to the audit stream.</li>
                   <li><span className="font-semibold text-white">Security alerts:</span> flag suspicious patterns such as repeated failed logins or high-risk admin changes.</li>
+                  <li><span className="font-semibold text-white">Break-glass approvals:</span> the backend should enforce dual approval for emergency access, record the full request in an immutable audit trail, and enforce a cooling-period policy after activation.</li>
                   <li><span className="font-semibold text-white">Retention:</span> the backend should enforce audit retention and access control so only authorized users can view sensitive logs.</li>
                 </ul>
               </section>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Break-Glass Emergency Access Modal */}
+      {showBreakGlassModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-xl rounded-2xl border border-red-500/30 bg-slate-900 shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <ShieldAlert className="w-5 h-5 text-red-500 animate-pulse" />
+                <h2 className="text-base font-bold text-white">Emergency "Break-Glass" Access Request</h2>
+              </div>
+              <button
+                onClick={() => setShowBreakGlassModal(false)}
+                className="text-slate-400 hover:text-white p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-300 leading-relaxed">
+              <strong>Section 3.4 & Section 8 Compliance Policy:</strong> Per-firm encryption keys cannot be accessed by standing permission. Triggering emergency access requires <strong>Dual Approval (CTO + Security Officer)</strong>, logs the full event permanently to uneditable audit records, and sends an automated in-app banner alert to the target firm.
+            </div>
+
+            {!breakGlassTriggered ? (
+              <div className="space-y-3 text-xs">
+                <div>
+                  <label className="block font-semibold text-slate-300 mb-1">Target Tenant Namespace</label>
+                  <select
+                    value={targetTenant}
+                    onChange={(e) => setTargetTenant(e.target.value)}
+                    className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white outline-none focus:ring-2 focus:ring-red-500"
+                  >
+                    <option value="oakwood-llp">Oakwood LLP (oakwood)</option>
+                    <option value="abc-legal">ABC Legal (abc-legal)</option>
+                    <option value="rahul-advocate">Rahul Advocate (rahul-advocate)</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1">1st Approver (Platform CTO)</label>
+                    <input
+                      type="email"
+                      value={ctoEmail}
+                      onChange={(e) => setCtoEmail(e.target.value)}
+                      className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white font-mono text-[11px]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-semibold text-slate-300 mb-1">2nd Approver (Compliance Officer)</label>
+                    <input
+                      type="email"
+                      value={secEmail}
+                      onChange={(e) => setSecEmail(e.target.value)}
+                      className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white font-mono text-[11px]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-slate-300 mb-1">Trigger Justification</label>
+                  <select
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    className="w-full bg-slate-950/60 border border-slate-800 rounded-lg p-2 text-white outline-none focus:ring-2 focus:ring-red-500"
+                  >
+                    <option value="Critical Security Patch Investigation">Critical Security Bug / Data Integrity Risk</option>
+                    <option value="Court Order Execution">Valid Court Order / Legal Subpoena</option>
+                    <option value="Tenant Lockout Recovery Request">Firm Owner Lockout Assisted Recovery Request</option>
+                  </select>
+                </div>
+
+                <div className="pt-3 border-t border-slate-800 flex justify-between items-center">
+                  <Button variant="ghost" size="sm" onClick={() => setShowBreakGlassModal(false)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="bg-red-600 hover:bg-red-500"
+                    onClick={() => setBreakGlassTriggered(true)}
+                  >
+                    Authorize & Sign-Off Break-Glass
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 space-y-3 text-xs text-center">
+                <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center font-bold">
+                  ✓
+                </div>
+                <p className="font-bold text-white text-sm">Dual Sign-Off Validated</p>
+                <p className="text-slate-300 text-[11px]">
+                  Break-glass emergency session logged for <strong>{targetTenant}</strong>. Permanent audit record written. 72-hour cooling period countdown initiated.
+                </p>
+                <Button variant="primary" size="sm" onClick={() => { setBreakGlassTriggered(false); setShowBreakGlassModal(false); }}>
+                  Close Audit Console
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}

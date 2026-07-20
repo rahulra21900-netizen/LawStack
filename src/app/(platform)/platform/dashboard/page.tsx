@@ -327,7 +327,7 @@ export default function PlatformDashboardPage() {
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This page is the main control screen for platform staff. It should show the health of the platform, the list of tenants, recent activity, and the main actions a platform admin can take.
+                  This page is the main control screen for platform staff. It should show the health of the platform, the active tenant registry, recent activity, and the primary actions a platform admin can take while onboarding, reviewing, and supporting tenants. The latest implementation should also surface pending provisioning work and link directly into the new auth and provisioning flows.
                 </p>
               </section>
 

@@ -105,7 +105,7 @@ export default function TenantDetailsLayout({ children, params }: { children: Re
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This page is the main firm-level detail experience for a tenant in the platform. It should give a platform admin a quick, structured view of the tenant’s identity, health, subscriptions, activity, and administrative controls.
+                  This page is the main firm-level detail experience for a tenant in the platform. It should give a platform admin a quick, structured view of the tenant’s identity, health, subscriptions, activity, and administrative controls. The latest implementation should stay linked to the tenant administration flow and reflect the new workspace and provisioning context for each firm.
                 </p>
               </section>
 
@@ -155,6 +155,7 @@ export default function TenantDetailsLayout({ children, params }: { children: Re
                   <li><span className="font-semibold text-white">View full:</span> should route the user to the Activity tab for the selected tenant so they can inspect a deeper history.</li>
                   <li><span className="font-semibold text-white">Modify Subscription:</span> should open a subscription management flow or modal instead of being a dead button in a production build.</li>
                   <li><span className="font-semibold text-white">Tabs:</span> should switch content without losing the selected tenant context, so the current tenant ID remains active while navigating between sections.</li>
+                  <li><span className="font-semibold text-white">Provisioning context:</span> when the tenant was created through the provisioning wizard, the detail page should reflect that origin and link back to the onboarding state where relevant.</li>
                 </ul>
               </section>
 

@@ -2,8 +2,17 @@
 
 :root {
   /* 1. Color Palette (HSL coordinates for flexible dynamic opacity changes) */
-  --color-primary-hue: 224;
-  --color-primary-saturation: 71%;
+  --color-primary-hue: 212;
+  --color-primary-saturation: 100%;
+  
+  /* Microsoft Fluent Colors */
+  --fluent-blue-primary: #0078d4;
+  --fluent-blue-hover: #106ebe;
+  --fluent-blue-light: #eff6fc;
+  --fluent-slate-dark: #0f172a;
+  --fluent-surface-card: rgba(15, 23, 42, 0.75);
+  --fluent-border: rgba(255, 255, 255, 0.08);
+  --fluent-border-hover: rgba(255, 255, 255, 0.18);
   
   /* Slate Neutral Grays */
   --neutral-50: #f8fafc;
@@ -21,7 +30,7 @@
   --color-success: Hsl(142, 70%, 45%);
   --color-warning: Hsl(38, 92%, 50%);
   --color-error: Hsl(0, 84%, 60%);
-  --color-info: Hsl(217, 91%, 60%);
+  --color-info: Hsl(212, 100%, 50%);
 
   /* 2. Typography Scale */
   --font-family-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

@@ -2,27 +2,36 @@
 
 import React, { useState } from "react";
 import { useNotifications } from "@/hooks/useNotifications";
-import { Breadcrumb, Button, Badge } from "@/components/ui";
+import { Breadcrumb, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
-import { Input, Select } from "@/components/forms";
+import { CommandBar } from "@/components/navigation/CommandBar";
+import { DetailDrawer } from "@/components/dialogs/DetailDrawer";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_CLIENTS } from "@/mocks/clients";
-import { Users, Plus, Download, Search, TrendingUp, UserCheck, Building2 } from "lucide-react";
+import { Client } from "@/types";
+import { Users, Eye, ExternalLink, ShieldCheck, UserCheck } from "lucide-react";
 import Link from "next/link";
 
 export default function ClientsListPage() {
   const { addToast } = useNotifications();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [density, setDensity] = useState<"comfortable" | "compact">("comfortable");
+  const [inspectClient, setInspectClient] = useState<Client | null>(null);
 
   const filteredClients = MOCK_CLIENTS.filter((c) => {
-    const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase()) || (c.companyName && c.companyName.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesSearch =
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (c.companyName && c.companyName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      c.email.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = selectedStatus === "all" || c.status === selectedStatus;
     return matchesSearch && matchesStatus;
   });
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="space-y-1">
           <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Clients" }]} />
@@ -30,78 +39,136 @@ export default function ClientsListPage() {
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/15 border border-emerald-500/30">
               <Users className="w-4 h-4 text-emerald-400" />
             </span>
-            <span>Client Management</span>
+            <span>Client Profiles & Portal Intakes</span>
           </h1>
-          <p className="text-xs text-slate-400">Search, filter, and audit active corporate and personal client profiles.</p>
+          <p className="text-xs text-slate-400">Manage corporate entities, individual clients, DPDP 2023 consent, and closed-network invites.</p>
         </div>
-        <div className="flex gap-2">
-          <Button
-            variant="secondary"
-            leftIcon={<Download className="w-4 h-4" />}
-            onClick={() => addToast("Export Clients", "Clients directory CSV export triggered.", "success")}
-          >
-            Export CSV
-          </Button>
-          <Link href="/workspace/clients/new">
-            <Button variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
-              Add Client
-            </Button>
-          </Link>
+        <Badge label="BCI Rule 36 Compliant" variant="success" />
+      </div>
+
+      {/* DPDP Act 2023 & BCI Rule 36 Compliance Notice */}
+      <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl flex items-start gap-3 text-xs text-emerald-300">
+        <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+        <div className="space-y-1">
+          <p className="font-bold text-white">DPDP Act 2023 & Bar Council of India (BCI Rule 36) Compliance Active</p>
+          <p className="text-[11px] text-slate-300 leading-relaxed">
+            • <strong>DPDP Act 2023 Data Fiduciary:</strong> Consent captured upon client intake. Clear right to withdraw consent on record closure.<br />
+            • <strong>BCI Rule 36 Closed-Network:</strong> No public directory or soliciting. Clients access portal strictly via direct invite from counsel.
+          </p>
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard title="Total Clients" value={MOCK_CLIENTS.length} info="In roster" trend="up" />
-        <MetricCard title="Active" value={MOCK_CLIENTS.filter((c) => c.status === "Active").length} info="Engaged" trend="up" />
-        <MetricCard title="Prospects" value={MOCK_CLIENTS.filter((c) => c.status === "Prospect").length} info="In pipeline" trend="neutral" />
-        <MetricCard title="Corporate" value={MOCK_CLIENTS.filter((c) => c.companyName).length} info="Entity clients" trend="neutral" />
+        <MetricCard title="Active Engagements" value={MOCK_CLIENTS.filter((c) => c.status === "Active").length} info="DPDP Verified" trend="up" />
+        <MetricCard title="Prospects" value={MOCK_CLIENTS.filter((c) => c.status === "Prospect").length} info="Intake stage" trend="neutral" />
+        <MetricCard title="Corporate Entities" value={MOCK_CLIENTS.filter((c) => c.companyName).length} info="Entity clients" trend="neutral" />
       </div>
 
-      {/* Filter Bar */}
-      <Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
-            <input
-              placeholder="Search by client name or company..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-9 pr-3 py-2 bg-slate-950/50 border border-slate-800 rounded-lg text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-slate-700 transition-all"
-            />
-          </div>
-          <Select
-            options={[
-              { label: "All Statuses", value: "all" },
-              { label: "Active", value: "Active" },
-              { label: "Prospect", value: "Prospect" },
-              { label: "Inactive", value: "Inactive" },
-            ]}
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-          />
-        </div>
-      </Card>
+      {/* CommandBar */}
+      <CommandBar
+        onNew={() => addToast("Client Intake", "Opening digital client intake wizard...", "info")}
+        newLabel="New Client Invite"
+        onRefresh={() => addToast("Refreshed", "Client directory re-synchronized.", "success")}
+        onExport={() => addToast("Export", "Client list exported to CSV.", "success")}
+        selectedCount={selectedIds.length}
+        onDeleteSelected={() => {
+          addToast("Archived", `Archived ${selectedIds.length} client records.`, "info");
+          setSelectedIds([]);
+        }}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        density={density}
+        onDensityChange={setDensity}
+      />
 
       {/* Clients Data Table */}
-      <DataTable
+      <DataTable<Client>
         data={filteredClients}
+        selectable
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        density={density}
+        onRowClick={(item) => setInspectClient(item)}
+        getRowId={(item) => item.id}
         columns={[
           {
-            header: "Client Name",
+            header: "Client Name & Entity",
             accessor: (c) => (
-              <Link href={`/workspace/clients/${c.id}`} className="font-bold text-blue-400 hover:underline">
-                {c.name}
-              </Link>
+              <div>
+                <span className="font-bold text-white block group-hover:text-blue-400 transition-colors">
+                  {c.name}
+                </span>
+                <span className="text-[10px] text-slate-400">{c.companyName || "Individual Client"}</span>
+              </div>
             ),
           },
-          { header: "Company Entity", accessor: (c) => <span>{c.companyName || "Individual Client"}</span> },
           { header: "Email Address", accessor: (c) => <span className="font-mono text-[10px] text-slate-400">{c.email}</span> },
-          { header: "Phone Line", accessor: (c) => <span>{c.phone}</span> },
-          { header: "Onboard Date", accessor: (c) => <span className="text-slate-400">{c.onboardingDate}</span> },
-          { header: "Status", accessor: (c) => <Badge label={c.status} variant={c.status === "Active" ? "success" : c.status === "Prospect" ? "warning" : "neutral"} /> },
+          { header: "Phone Line", accessor: (c) => <span className="text-slate-300">{c.phone}</span> },
+          {
+            header: "DPDP Consent",
+            accessor: (c) => (
+              <Badge variant="success" size="sm">
+                Verified Consent
+              </Badge>
+            ),
+          },
+          {
+            header: "Status",
+            accessor: (c) => (
+              <Badge variant={c.status === "Active" ? "success" : "warning"} size="sm">
+                {c.status}
+              </Badge>
+            ),
+          },
+          {
+            header: "Action",
+            accessor: (c) => (
+              <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                <button
+                  onClick={() => setInspectClient(c)}
+                  className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  title="Inspect Profile"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                </button>
+                <Link
+                  href={`/workspace/clients/${c.id}`}
+                  className="p-1 rounded text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition-colors"
+                  title="View Client Details"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            ),
+          },
         ]}
       />
+
+      {/* Inspect Drawer */}
+      {inspectClient && (
+        <DetailDrawer
+          isOpen={!!inspectClient}
+          onClose={() => setInspectClient(null)}
+          title={inspectClient.name}
+          subtitle={`Company: ${inspectClient.companyName || "Individual"} · Email: ${inspectClient.email}`}
+          badgeText={inspectClient.status}
+          badgeVariant={inspectClient.status === "Active" ? "success" : "warning"}
+          actionUrl={`/workspace/clients/${inspectClient.id}`}
+          actionLabel="Open Client Record"
+          data={{
+            id: inspectClient.id,
+            name: inspectClient.name,
+            companyName: inspectClient.companyName || "Individual",
+            email: inspectClient.email,
+            phone: inspectClient.phone,
+            status: inspectClient.status,
+            dpdpConsentStatus: "Verified Data Fiduciary Consent (DPDP Act 2023)",
+            bciRule36Channel: "Closed Network - Invited by Attorney",
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -577,7 +577,7 @@ export default function NewProvisioningWizardPage() {
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This page is the tenant onboarding wizard for the platform. It should collect enough information to create a new tenant workspace, assign an admin user, define a subscription tier, and prepare the tenant for first use.
+                  This page is the tenant onboarding wizard for the platform. It should collect enough information to create a new tenant workspace, assign an admin user, define a subscription tier, and prepare the tenant for first use. The latest implementation should be paired with the provisioning service so credential verification, form validation, and final tenant creation stay consistent with the platform’s auth and tenant management flows.
                 </p>
               </section>
 
@@ -685,8 +685,8 @@ export default function NewProvisioningWizardPage() {
                 <ul className="space-y-2">
                   <li><span className="font-semibold text-white">Where to find it:</span> the page lives in the tenant provisioning wizard route and should be treated as the onboarding screen for creating a new tenant.</li>
                   <li><span className="font-semibold text-white">How to implement it:</span> build the flow with React state, one step at a time, and keep the values in component state until the final provisioning step is complete.</li>
-                  <li><span className="font-semibold text-white">How to make it production-ready:</span> replace mock validation with API calls to backend services that verify credentials and normalize address and legal identity fields.</li>
-                  <li><span className="font-semibold text-white">How to keep it consistent:</span> use the same visual hierarchy, card layout, and status UI across the dashboard, tenant management, and provisioning flows.</li>
+                  <li><span className="font-semibold text-white">How to make it production-ready:</span> replace mock validation with API calls to backend services that verify credentials, normalize address and legal identity fields, and create the tenant and admin identity together.</li>
+                  <li><span className="font-semibold text-white">How to keep it consistent:</span> use the same visual hierarchy, card layout, and status UI across the dashboard, tenant management, auth flows, and provisioning screens.</li>
                 </ul>
               </section>
 

@@ -32,7 +32,6 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
       title: "Workspaces",
       links: [
         { name: "Platform Login", href: "/platform/login" },
-        { name: "Tenant Login", href: "/tenant/login" },
         { name: "Client Portal", href: "/client/dashboard" },
         { name: "Developer Simulator", href: "/dev" },
       ],
@@ -87,12 +86,6 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
 
           {/* Right side: CTAs */}
           <div className="hidden sm:flex items-center gap-2">
-            <Link
-              href="/tenant/login"
-              className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-1.5 rounded-md transition-colors"
-            >
-              Tenant Login
-            </Link>
             <Link
               href="/platform/login"
               className="group inline-flex items-center gap-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-0.5"

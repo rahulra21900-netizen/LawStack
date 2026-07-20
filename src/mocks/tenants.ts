@@ -28,6 +28,15 @@ export const MOCK_TENANTS: Tenant[] = [
     primaryColor: "#0284c7", // sky-600
   },
   {
+    id: "rahul-advocate",
+    name: "Rahul Advocate (Solo Practice)",
+    subdomain: "rahul-advocate",
+    status: "Active",
+    tier: "Standard",
+    joinedDate: "2024-05-10",
+    primaryColor: "#d97706", // amber-600
+  },
+  {
     id: "lexbridge-partners",
     name: "LexBridge Partners",
     subdomain: "lexbridge",

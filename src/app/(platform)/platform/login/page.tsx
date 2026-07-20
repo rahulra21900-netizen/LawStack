@@ -181,7 +181,7 @@ export default function PlatformLoginPage() {
               <section>
                 <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-200">What this page is for</h3>
                 <p>
-                  This is the platform administrator sign-in experience. It should authenticate the operator, enforce secure access controls, and route them to the MFA flow before they can enter the platform control plane.
+                  This is the platform administrator sign-in experience. It should authenticate the operator, enforce secure access controls, and route them to the MFA flow before they can enter the platform control plane. The latest implementation should align with the auth provisioning modules so the login route, session state, and admin access expectations stay consistent with the rest of the platform.
                 </p>
               </section>
 

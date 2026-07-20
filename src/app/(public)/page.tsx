@@ -6,21 +6,14 @@ import { Shield, Building2, Users, ArrowRight, CircleCheck as CheckCircle2, Spar
 
 const quickAccess = [
   {
-    title: "Platform Administration",
+    title: "Platform Control Plane",
     description: "Provision tenants, manage settings, and monitor audit activity from one secure control plane.",
     href: "/platform/login",
     icon: Shield,
     accent: "from-blue-500 to-cyan-500",
   },
   {
-    title: "Tenant Workspace",
-    description: "Give firm teams a focused workspace for cases, documents, hearings, billing, and collaboration.",
-    href: "/tenant/login",
-    icon: Building2,
-    accent: "from-emerald-500 to-green-500",
-  },
-  {
-    title: "Client Portal",
+    title: "Closed-Network Client Portal",
     description: "Provide clients with secure, invitation-only access to matters, invoices, and progress updates.",
     href: "/client/dashboard",
     icon: Users,
@@ -61,19 +54,6 @@ export default function PublicHomePage() {
             >
               Platform Login
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-            <Link
-              href="/tenant/login"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/60 px-5 py-3 text-sm font-semibold text-white backdrop-blur transition-all hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-900"
-            >
-              Tenant Login
-            </Link>
-            <Link
-              href="/dev"
-              className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-slate-300 transition-colors hover:text-white"
-            >
-              <Sparkles className="h-4 w-4 text-amber-400" />
-              Explore the product
             </Link>
           </div>
 
