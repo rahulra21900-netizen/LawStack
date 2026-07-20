@@ -16,7 +16,7 @@ export interface Invoice {
     tenantId: string;
     invoiceId: string;
     amount: number;
-    paymentMethod: "Credit_Card" | "Bank_Transfer" | "Check";
+    paymentMethod: "UPI" | "Razorpay" | "NEFT" | "RTGS" | "Bank_Transfer" | "Cash" | "Cheque" | "Credit_Card";
     paymentDate: string;
     transactionReference: string;
   }
