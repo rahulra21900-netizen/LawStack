@@ -67,10 +67,9 @@ export function DeveloperGuideModal({
     };
   }, [isOpen, onClose]);
 
-  // Reset scroll & active section every time we open
+  // Reset scroll position every time we open.
   useEffect(() => {
     if (isOpen) {
-      setActive("overview");
       scrollRef.current?.scrollTo({ top: 0 });
     }
   }, [isOpen]);
@@ -368,7 +367,7 @@ export interface Invoice {
        ├ progress bar (amountPaid / amount)
        └ Pay invoice + PDF buttons`}</Code>
 
-      <P className="mt-4"><b>Component APIs (what this page passes):</b></P>
+      <P><b>Component APIs (what this page passes):</b></P>
       <div className="overflow-x-auto my-3">
         <table className="w-full text-[12px] border border-slate-800 rounded-lg overflow-hidden">
           <thead className="bg-slate-950/60 text-slate-300">
@@ -487,7 +486,7 @@ export default async function Page() {
         <li>✅ Breadcrumb has <Inline>aria-label=&quot;Breadcrumb&quot;</Inline>.</li>
         <li>✅ Buttons are real <Inline>&lt;button&gt;</Inline> elements with focus rings.</li>
         <li>⚠️ Progress bar needs <Inline>role=&quot;progressbar&quot; aria-valuenow …</Inline>.</li>
-        <li>⚠️ PDF icon-only button needs <Inline>aria-label={`{`Download PDF for ${'${inv.invoiceNumber}'}`}`}</Inline>.</li>
+        <li>⚠️ PDF icon-only button needs <Inline>{"aria-label={`Download PDF for ${inv.invoiceNumber}`}"}</Inline>.</li>
         <li>ℹ️ Status is signaled by both color <i>and</i> label text — good.</li>
         <li>ℹ️ Consider swapping Breadcrumb <Inline>&lt;a&gt;</Inline> for <Inline>next/link</Inline> to keep client-side transitions.</li>
       </ul>
