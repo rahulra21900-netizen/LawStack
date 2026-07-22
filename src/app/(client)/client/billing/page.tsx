@@ -1,29 +1,44 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Badge, Button } from "@/components/ui";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_INVOICES } from "@/mocks/billing";
 import { formatCurrency } from "@/utils";
-import { DollarSign, CreditCard, Download, ArrowRight, CircleCheck as CheckCircle2, Clock } from "lucide-react";
+import { DollarSign, CreditCard, Download, ArrowRight, CircleCheck as CheckCircle2, Clock, BookOpen } from "lucide-react";
+import { DeveloperGuideModal } from "./DeveloperGuideModal";
 
 export default function ClientBillingPage() {
   const { addToast } = useNotifications();
+  const [showGuide, setShowGuide] = useState(false);
   const invoices = MOCK_INVOICES.slice(0, 3);
   const outstanding = invoices.filter((i) => i.status !== "Paid").reduce((sum, i) => sum + (i.amount - i.amountPaid), 0);
 
   return (
     <div className="space-y-6">
-      <div className="space-y-1">
-        <Breadcrumb items={[{ name: "Portal", href: "/client/dashboard" }, { name: "Billing" }]} />
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/15 border border-emerald-500/30">
-            <DollarSign className="w-4 h-4 text-emerald-400" />
-          </span>
-          <span>Billing & Invoices</span>
-        </h1>
-        <p className="text-xs text-slate-400">Review outstanding balances, payment history, and clear invoices securely.</p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-1">
+          <Breadcrumb items={[{ name: "Portal", href: "/client/dashboard" }, { name: "Billing" }]} />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/15 border border-emerald-500/30">
+              <DollarSign className="w-4 h-4 text-emerald-400" />
+            </span>
+            <span>Billing & Invoices</span>
+          </h1>
+          <p className="text-xs text-slate-400">Review outstanding balances, payment history, and clear invoices securely.</p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          leftIcon={<BookOpen className="w-3.5 h-3.5" />}
+          onClick={() => setShowGuide(true)}
+          data-testid="open-dev-guide-btn"
+          aria-label="Open developer guide for the billing page"
+          className="border-emerald-500/30 text-emerald-300 hover:text-white hover:bg-emerald-600/10"
+        >
+          Developer Guide
+        </Button>
       </div>
 
       {/* Stats */}
@@ -104,6 +119,8 @@ export default function ClientBillingPage() {
           </Card>
         ))}
       </div>
+
+      <DeveloperGuideModal isOpen={showGuide} onClose={() => setShowGuide(false)} />
     </div>
   );
 }
