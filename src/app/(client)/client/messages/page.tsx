@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import { useNotifications } from "@/hooks/useNotifications";
-import { Breadcrumb, Button, Badge, Avatar } from "@/components/ui";
+import { Breadcrumb, Button, Avatar } from "@/components/ui";
 import { Card } from "@/components/cards";
-import { MessageSquare, Send, Paperclip, Phone, Video, MoveVertical as MoreVertical, Shield } from "lucide-react";
+import { MessageSquare, Send, Paperclip, Phone, Video, MoveVertical as MoreVertical, Shield, BookOpen } from "lucide-react";
+import { DeveloperGuideModal } from "./DeveloperGuideModal";
 
 const initialMessages = [
   {
@@ -37,6 +38,7 @@ export default function ClientMessagesPage() {
   const { addToast } = useNotifications();
   const [messages, setMessages] = useState(initialMessages);
   const [draft, setDraft] = useState("");
+  const [showGuide, setShowGuide] = useState(false);
 
   const send = () => {
     if (!draft.trim()) return;
@@ -50,7 +52,8 @@ export default function ClientMessagesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-1">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-1">
         <Breadcrumb items={[{ name: "Portal", href: "/client/dashboard" }, { name: "Messages" }]} />
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600/15 border border-indigo-500/30">
@@ -59,6 +62,10 @@ export default function ClientMessagesPage() {
           <span>Secure Messages</span>
         </h1>
         <p className="text-xs text-slate-400">Encrypted thread with your assigned counsel. All messages are audit-logged.</p>
+        </div>
+        <Button variant="outline" size="sm" leftIcon={<BookOpen className="w-3.5 h-3.5" />} onClick={() => setShowGuide(true)} data-testid="open-messages-dev-guide-btn" aria-label="Open developer guide for the messages page" className="border-indigo-500/30 text-indigo-300 hover:bg-indigo-600/10 hover:text-white">
+          Developer Guide
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -154,6 +161,7 @@ export default function ClientMessagesPage() {
           </div>
         </Card>
       </div>
+      <DeveloperGuideModal isOpen={showGuide} onClose={() => setShowGuide(false)} />
     </div>
   );
 }

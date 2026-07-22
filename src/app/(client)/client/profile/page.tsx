@@ -5,16 +5,19 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { Card } from "@/components/cards";
 import { Input, Switch } from "@/components/forms";
-import { User, Mail, Phone, Building2, Shield, Lock, KeyRound, Bell } from "lucide-react";
+import { User, Mail, Phone, Building2, Shield, Lock, KeyRound, Bell, BookOpen } from "lucide-react";
+import { DeveloperGuideModal } from "./DeveloperGuideModal";
 
 export default function ClientProfilePage() {
   const { addToast } = useNotifications();
   const [twoFactor, setTwoFactor] = useState(true);
   const [emailAlerts, setEmailAlerts] = useState(true);
+  const [showGuide, setShowGuide] = useState(false);
 
   return (
     <div className="space-y-6">
-      <div className="space-y-1">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-1">
         <Breadcrumb items={[{ name: "Portal", href: "/client/dashboard" }, { name: "Profile" }]} />
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600/15 border border-indigo-500/30">
@@ -23,6 +26,10 @@ export default function ClientProfilePage() {
           <span>Profile & Security</span>
         </h1>
         <p className="text-xs text-slate-400">Manage your client identity, contact details, and portal security.</p>
+        </div>
+        <Button variant="outline" size="sm" leftIcon={<BookOpen className="w-3.5 h-3.5" />} onClick={() => setShowGuide(true)} data-testid="open-profile-dev-guide-btn" aria-label="Open developer guide for the profile page" className="border-indigo-500/30 text-indigo-300 hover:bg-indigo-600/10 hover:text-white">
+          Developer Guide
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -115,6 +122,7 @@ export default function ClientProfilePage() {
           </Card>
         </div>
       </div>
+      <DeveloperGuideModal isOpen={showGuide} onClose={() => setShowGuide(false)} />
     </div>
   );
 }
