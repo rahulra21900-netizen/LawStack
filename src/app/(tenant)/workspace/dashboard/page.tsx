@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useSimulation } from "@/providers/SimulationProvider";
 import { Breadcrumb, Badge, Button, Avatar } from "@/components/ui";
@@ -25,6 +25,8 @@ import {
   Activity,
   Bell,
   Sparkle,
+  BookOpen,
+  X,
 } from "lucide-react";
 
 const upcomingEvents = [
@@ -88,6 +90,7 @@ const priorityMap: Record<string, "error" | "warning" | "neutral"> = {
 export default function TenantDashboard() {
   const { activeTenant, activeRole, activeUser, featureFlags } = useSimulation();
   const isAiEnabled = featureFlags.find((f) => f.id === "ai-copilot")?.enabled;
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -103,8 +106,15 @@ export default function TenantDashboard() {
             Welcome back, {activeUser.name}. Signed in as <span className="text-slate-300 font-semibold">{activeRole}</span>.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Badge label={`${activeTenant.tier} Subscription`} variant="success" />
+          <Button
+            variant="outline"
+            leftIcon={<BookOpen className="w-4 h-4" />}
+            onClick={() => setShowDeveloperGuide(true)}
+          >
+            Developer Guide
+          </Button>
           <Link href="/workspace/cases/new">
             <Button variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
               New Matter
@@ -310,44 +320,6 @@ export default function TenantDashboard() {
           </div>
         </Card>
 
-        {/* Team workload */}
-        <Card
-          header={
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-indigo-400" />
-                <span className="font-bold text-white text-xs">Team Workload</span>
-              </div>
-              <Link href="/workspace/team" className="text-[10px] text-blue-400 hover:underline flex items-center gap-0.5">
-                Team <ChevronRight className="w-3 h-3" />
-              </Link>
-            </div>
-          }
-        >
-          <div className="space-y-3">
-            {teamWorkload.map((m) => (
-              <div key={m.name} className="flex items-center gap-3">
-                <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${m.color} text-[10px] font-bold text-white`}>
-                  {m.initials}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-white truncate">{m.name}</span>
-                    <span className="text-[10px] text-slate-500">{m.matters} matters</span>
-                  </div>
-                  <div className="mt-1 h-1.5 rounded-full bg-slate-800 overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-blue-500 to-emerald-500"
-                      style={{ width: `${(m.hours / 40) * 100}%` }}
-                    />
-                  </div>
-                  <div className="mt-0.5 text-[9px] text-slate-500">{m.hours}h logged this week</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Card>
-
         {/* Billing snapshot */}
         <Card
           header={
@@ -426,6 +398,306 @@ export default function TenantDashboard() {
           ))}
         </ol>
       </Card>
+
+      {/* Developer Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-amber-400">Senior Advocate & Judicial Guidance</p>
+                <h2 className="text-lg font-bold text-white">Workspace Dashboard — Developer Handoff Guide</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Mandatory Section 1: What it is & Why it is needed */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  1. Core Purpose & Mandatory Overview
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs leading-relaxed space-y-3">
+                  <div>
+                    <strong className="text-white text-sm block mb-1">What it is:</strong>
+                    <p className="text-slate-300">
+                      The Workspace Dashboard is the central digital mission control center for an Indian law practice. When an advocate, senior partner, associate lawyer, or court clerk (Munshi) logs into LawStack each morning, this is the primary screen they see.
+                    </p>
+                  </div>
+                  <div className="border-t border-slate-800/80 pt-2">
+                    <strong className="text-white text-sm block mb-1">Why it is needed (Advocate's Perspective):</strong>
+                    <p className="text-slate-400">
+                      Indian advocates handle dozens of court cases simultaneously across multiple court forums (e.g. High Court, District Courts, NCLT, Consumer Commissions). Without a centralized real-time dashboard:
+                      <br />
+                      • Advocates miss court hearing dates, leading to adverse dismissal orders or ex-parte judgments against clients.
+                      <br />
+                      • Junior lawyers get overburdened while others remain underutilized.
+                      <br />
+                      • Unbilled court appearance hours and uncollected client retainers slip through paper diaries.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 2: Beginner Legal Glossary for Developers (Zero Legal Knowledge Required) */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  2. Indian Court & Practice Glossary for Software Engineers
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-3 leading-relaxed">
+                  <p className="text-slate-300">
+                    If you are a software developer with zero background in Indian legal systems, here are the essential concepts you need to know to build this dashboard:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">1. Advocate & Senior Counsel</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Licensed lawyers registered under the Advocates Act, 1961. Partners lead the firm, Senior Counsel present oral arguments in court, and Associates draft legal papers.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">2. Court Clerk (Munshi)</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Legal administrative staff responsible for physical court registry filings, cause-list monitoring, and obtaining certified order copies from court readers.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">3. Cause List</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        The official daily schedule published by Indian High Courts & District Courts listing case numbers, item numbers, courtroom numbers, and presiding judges for that day.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">4. Litigation Pipeline Stages</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Cases move through 4 stages: <strong className="text-slate-200">Intake</strong> (Initial onboarding) ➔ <strong className="text-slate-200">Pleadings</strong> (Filing petitions & reply affidavits) ➔ <strong className="text-slate-200">Discovery</strong> (Filing evidence & witness cross-examination) ➔ <strong className="text-slate-200">Trial/Arguments</strong> (Final oral arguments).
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 3: Component Breakdown */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  3. Complete Dashboard Components Breakdown (All 10 Core Widgets)
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  {/* 1. Active Matters */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>📁 1. Active Matters Metric Card</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> A metric card displaying the total count of active court cases currently handled by the firm (e.g. 34 active matters).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Managing partners need an instant count of active litigation volume without sifting through paper case files.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/workspace/stats</code></p>
+                      <p>• Filter logic: Count cases where <code className="text-blue-300">status === "Active"</code>.</p>
+                    </div>
+                  </div>
+
+                  {/* 2. Clients */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>👥 2. Clients Metric Card</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Total registered individual clients and corporate company accounts in the workspace roster (e.g. 18 clients).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Tracks active client engagements and DPDP Act 2023 verified consent records.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/clients/count</code></p>
+                      <p>• Card Click Route: Redirects to <code className="text-blue-400">/workspace/clients</code>.</p>
+                    </div>
+                  </div>
+
+                  {/* 3. Documents */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>📄 3. Documents Metric Card</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Total legal petitions, affidavits, evidence exhibits, and written submissions stored (e.g. 156 documents).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Flags pending drafts awaiting senior partner review before court registry submission.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/documents/stats</code></p>
+                      <p>• Card Click Route: Redirects to <code className="text-blue-400">/workspace/documents</code>.</p>
+                    </div>
+                  </div>
+
+                  {/* 4. Hearings */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>⚖️ 4. Hearings Metric Card</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Total court hearings scheduled for the firm's advocates during the current calendar week (e.g. 3 hearings this week).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Missing a hearing date can result in an ex-parte order or contempt notice. Advocates must know their weekly hearing load.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/calendar/hearings?week=current</code></p>
+                      <p>• UI Text: Display next scheduled hearing date & court room (e.g. "Next: Mon 10:00 AM").</p>
+                    </div>
+                  </div>
+
+                  {/* 5. Active Matter Docket & Pipeline */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2 md:col-span-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>📋 5. Active Matter Docket & Case Stage Pipeline</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> A table listing primary active cases with case number, title, practice area, lead advocate, and stage badge. Below the list, a 4-step pipeline displays case counts across court stages (<span className="text-amber-400 font-semibold">Intake: 4</span> ➔ <span className="text-amber-400 font-semibold">Pleadings: 9</span> ➔ <span className="text-amber-400 font-semibold">Discovery: 14</span> ➔ <span className="text-amber-400 font-semibold">Trial: 7</span>).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Advocates need instant access to active case files and a visual overview of how matters progress through the judicial system.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/cases?limit=5&status=active</code></p>
+                      <p>• Row Click: Navigates to <code className="text-blue-400">/workspace/cases/[id]</code>.</p>
+                    </div>
+                  </div>
+
+                  {/* 6. Upcoming Calendar */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>📅 6. Upcoming Calendar</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Chronological schedule of court appearances, client consultations, filing limitation deadlines, and witness depositions.</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Court limitation periods are strictly enforced under the Limitation Act, 1963. Missing a deadline bars the client from court relief.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Badges: <span className="text-amber-400 font-semibold">Amber</span> for Hearings, <span className="text-blue-400 font-semibold">Blue</span> for Client Meetings, <span className="text-red-400 font-semibold">Red</span> for Deadlines.</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/calendar/events?upcoming=true</code></p>
+                    </div>
+                  </div>
+
+                  {/* 7. Priority Tasks */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>✅ 7. Priority Tasks List</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Action items assigned to advocates and paralegals (e.g. draft reply affidavit, obtain certified copy, prepare vakalatnama).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Ensures daily legal drafting and court registry work items are completed on schedule.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/tasks?assignedTo=currentUser</code></p>
+                      <p>• Priority badges: High (Red), Medium (Yellow), Low (Gray).</p>
+                    </div>
+                  </div>
+
+                  {/* 8. Team Workload */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>📊 8. Team Workload & Hours Tracker</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Progress bars showing logged billable court hours for each advocate in the firm against a 40-hour weekly capacity.</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Managing partners use this to ensure work is distributed fairly and junior associates are not burnout.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Progress Bar Formula: <code className="text-blue-300">(loggedHours / 40) * 100</code></p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/team/workload</code></p>
+                    </div>
+                  </div>
+
+                  {/* 9. Billing Snapshot */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>💳 9. Billing Snapshot</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Financial summary: Outstanding Invoices (₹18,42,500), MTD Revenue (₹12.4L), Billable Hours (1,284h), and Realization Rate (78%).</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Tracks fee collections and retainer deposits without opening external accounting tools.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Realization Rate Formula: <code className="text-blue-300">(Collected Revenue / Billed Revenue) * 100</code></p>
+                      <p>• Endpoint: <code className="text-blue-400">GET /api/billing/summary</code></p>
+                    </div>
+                  </div>
+
+                  {/* 10. Activity Feed */}
+                  <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2 md:col-span-2">
+                    <p className="font-bold text-white text-sm flex items-center gap-2">
+                      <span>🔔 10. Recent Workspace Activity Feed</span>
+                    </p>
+                    <p><strong className="text-slate-200">What it is:</strong> Chronological audit timeline showing real-time updates performed by team members across case files.</p>
+                    <p><strong className="text-slate-200">Why it is needed:</strong> Keeps all partners, associates, and clerks informed on recent filings, status edits, and document uploads.</p>
+                    <div className="text-slate-400 space-y-1 pt-1 border-t border-slate-800/80">
+                      <p className="font-semibold text-slate-200">Developer Instructions:</p>
+                      <p>• Stream or fetch events from <code className="text-blue-400">GET /api/activity?limit=5</code></p>
+                      <p>• Clicking "Full feed" opens <code className="text-blue-400">/workspace/activity</code>.</p>
+                    </div>
+                  </div>
+
+                </div>
+              </section>
+
+              {/* Section 4: Navigation Map */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  4. Navigation Map & Click Routes
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                        <th className="pb-2">UI Element</th>
+                        <th className="pb-2">Behavior</th>
+                        <th className="pb-2">Target URL Route</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                      <tr>
+                        <td className="py-2 font-semibold text-white">+ New Matter Button</td>
+                        <td className="py-2">Opens 5-step case creation wizard</td>
+                        <td className="py-2 font-mono text-blue-400">/workspace/cases/new</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Active Matter Item Row</td>
+                        <td className="py-2">Opens case workspace for selected ID</td>
+                        <td className="py-2 font-mono text-blue-400">/workspace/cases/[id]</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Master Calendar Link</td>
+                        <td className="py-2">Opens full calendar schedule</td>
+                        <td className="py-2 font-mono text-blue-400">/workspace/calendar</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Billing Snapshot Link</td>
+                        <td className="py-2">Opens financial ledger and invoices</td>
+                        <td className="py-2 font-mono text-blue-400">/workspace/billing</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              {/* Section 5: Developer API Checklist */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-amber-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  5. Backend Developer API Checklist
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                  <ul className="space-y-1.5 text-slate-300">
+                    <li>• <strong className="text-white">Workspace Stats API:</strong> <code className="text-blue-400">GET /api/workspace/stats</code></li>
+                    <li>• <strong className="text-white">Active Matters API:</strong> <code className="text-blue-400">GET /api/cases?status=active</code></li>
+                    <li>• <strong className="text-white">Upcoming Events API:</strong> <code className="text-blue-400">GET /api/calendar/events</code></li>
+                    <li>• <strong className="text-white">Team Workload API:</strong> <code className="text-blue-400">GET /api/team/workload</code></li>
+                    <li>• <strong className="text-white">Billing Summary API:</strong> <code className="text-blue-400">GET /api/billing/summary</code></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

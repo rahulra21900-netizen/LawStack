@@ -26,6 +26,7 @@ import {
   Check,
   Scale,
   Building,
+  X,
 } from "lucide-react";
 import { useNotifications } from "@/hooks/useNotifications";
 
@@ -111,6 +112,7 @@ const courtSyncItems = [
 export default function IntelligencePage() {
   const { activeTenant } = useSimulation();
   const { addToast } = useNotifications();
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   // IPC -> BNS Lookup State
   const [legacyInput, setLegacyInput] = useState("ipc 420");
@@ -173,7 +175,18 @@ export default function IntelligencePage() {
             IPC/CrPC → BNS/BNSS criminal code concordance, eCourts CNR auto-fetcher, and High Court defect scanner for {activeTenant.name}.
           </p>
         </div>
-        <Badge label="BNS 2023 & eCourts 3.0 Ready" variant="success" />
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDeveloperGuide(true)}
+            className="border-blue-500/40 text-blue-300 hover:bg-blue-500/10"
+            leftIcon={<BookOpen className="h-4 w-4" />}
+          >
+            Developer Guide
+          </Button>
+          <Badge label="BNS 2023 & eCourts 3.0 Ready" variant="success" />
+        </div>
       </div>
 
       {/* KPIs */}
@@ -432,6 +445,190 @@ export default function IntelligencePage() {
         </Card>
 
       </div>
+
+      {/* Developer Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-blue-400">Senior Advocate & Judicial Guidance</p>
+                <h2 className="text-lg font-bold text-white">Indian Legal Intelligence Suite — Developer Guide</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Mandatory Section 1: What it is & Why it is needed */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  1. Core Purpose & Mandatory Overview
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs leading-relaxed space-y-3">
+                  <div>
+                    <strong className="text-white text-sm block mb-1">What it is:</strong>
+                    <p className="text-slate-300">
+                      The Indian Legal Intelligence Suite is an advanced legal research and e-Filing verification engine. It bridges legacy criminal statutes (IPC/CrPC) to new 2023 criminal codes (BNS/BNSS/BSA), fetches live case dockets via 16-digit CNR numbers from eCourts & National Judicial Data Grid (NJDG), and scans petitions for High Court registry filing defects.
+                    </p>
+                  </div>
+                  <div className="border-t border-slate-800/80 pt-2">
+                    <strong className="text-white text-sm block mb-1">Why it is needed (Senior Advocate & Judicial Officer's Perspective):</strong>
+                    <p className="text-slate-400">
+                      Indian criminal procedure underwent a massive historical transition on July 1, 2024:
+                      <br />
+                      • <strong>BNS/BNSS/BSA Criminal Code Concordance:</strong> India replaced its 160-year-old criminal legal framework (IPC 1860, CrPC 1973, Evidence Act 1872) with Bharatiya Nyaya Sanhita (BNS) 2023, Bharatiya Nagarik Suraksha Sanhita (BNSS) 2023, and Bharatiya Sakshya Adhiniyam (BSA) 2023. Advocates drafting petitions must cite new sections accurately and generate formatted High Court footnotes.
+                      <br />
+                      • <strong>16-Digit CNR Real-Time Docket Fetching:</strong> Advocates manage dozens of cases across multiple High Courts and District Benches. Manual cause list tracking leads to missed hearings. The 16-digit CNR auto-fetches live order sheets and next hearing dates directly from eCourts.
+                      <br />
+                      • <strong>High Court Registry Defect Scanning:</strong> High Courts (e.g. Delhi, MP, Bombay) reject petitions for minor formatting errors (missing advocate enrolment stamps, unsealed verifications, improper margins). Pre-filing defect scanning prevents registry rejections.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 2: Beginner Legal Glossary for Developers (Zero Legal Knowledge Required) */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  2. Indian Law & Legal Research Concepts Explained for Software Engineers
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-3 leading-relaxed">
+                  <p className="text-slate-300">
+                    If you are a software developer with zero background in Indian legal research or eCourts APIs, here are the core concepts:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">1. BNS / BNSS / BSA Criminal Codes</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        The 2023 enacted criminal laws replacing legacy IPC 1860, CrPC 1973, and Evidence Act 1872 in Indian courts.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">2. 16-Digit CNR (Case Number Record)</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Unique alphanumeric identifier assigned to every court case in India by eCourts / NJDG (e.g. MPHC010049212026).
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">3. Ratio Decidendi</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        The binding legal principle or reasoning behind a judge's ruling in a Supreme Court or High Court precedent.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">4. High Court Registry Filing Defect</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Formal procedural errors flagged by court registry officers before a petition is listed for hearing.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 3: Component Breakdown */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  3. Complete Component & Feature Breakdown
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-amber-400" />
+                      1. IPC/CrPC → BNS/BNSS Concordance Converter
+                    </p>
+                    <p className="text-slate-400">Search input supporting legacy section lookup (e.g. IPC 420, CrPC 154), displaying BNS section titles, ambiguity warnings, and 1-click High Court citation footnote copy generators.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      2. AI Landmark Precedent & Judgment Assistant
+                    </p>
+                    <p className="text-slate-400">Automated case law finder retrieving Supreme Court & High Court rulings (e.g. Specific Performance under Contract Act or Anticipatory Bail guidelines).</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-blue-400" />
+                      3. eCourts / NJDG CNR Direct Case Fetcher
+                    </p>
+                    <p className="text-slate-400">Input box for 16-digit CNR codes auto-fetching real-time court bench assignments, next hearing dates, and order sheet excerpts.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-red-400" />
+                      4. High Court Automatic Filing Defect Scanner
+                    </p>
+                    <p className="text-slate-400">Textarea scanner checking draft petitions against Delhi & Bombay High Court registry manuals to detect missing bar stamps or unsealed verifications.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 4: Navigation & Button Actions Map */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  4. Button Actions & Interactive Controls Navigation Map
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                        <th className="pb-2">UI Action</th>
+                        <th className="pb-2">Behavior</th>
+                        <th className="pb-2">Target Action / Output</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Copy Footnote Button</td>
+                        <td className="py-2">Copies formatted High Court citation to clipboard</td>
+                        <td className="py-2 font-mono text-emerald-400">Clipboard Copy</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Fetch Status Button</td>
+                        <td className="py-2">Queries NJDG API for CNR case details</td>
+                        <td className="py-2 font-mono text-blue-400">eCourts API Sync</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Scan for Filing Defects Button</td>
+                        <td className="py-2">Parses draft text against registry rulebook</td>
+                        <td className="py-2 font-mono text-red-400">Defect Scan Output</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              {/* Section 5: Backend API Checklist */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  5. Backend Developer API Checklist
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                  <ul className="space-y-1.5 text-slate-300">
+                    <li>• <strong className="text-white">BNS Concordance API:</strong> <code className="text-blue-400">GET /api/intelligence/concordance?section=</code></li>
+                    <li>• <strong className="text-white">eCourts NJDG Fetch API:</strong> <code className="text-blue-400">POST /api/intelligence/cnr-fetch</code></li>
+                    <li>• <strong className="text-white">Registry Defect Scanner API:</strong> <code className="text-blue-400">POST /api/intelligence/defect-scan</code></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

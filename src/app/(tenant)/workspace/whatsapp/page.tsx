@@ -19,6 +19,8 @@ import {
   BookMarked,
   Info,
   UserPlus,
+  BookOpen,
+  X,
 } from "lucide-react";
 
 const templates = [
@@ -131,6 +133,7 @@ export default function WhatsAppHub() {
   const [selectedTemplate, setSelectedTemplate] = useState(templates[0]);
   const [selectedConv, setSelectedConv] = useState<typeof conversations[number]>(conversations[0]);
   const [query, setQuery] = useState("");
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   const filtered = conversations.filter(
     (c) => c.name.toLowerCase().includes(query.toLowerCase()) || c.phone.includes(query)
@@ -154,8 +157,17 @@ export default function WhatsAppHub() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDeveloperGuide(true)}
+            className="border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10"
+            leftIcon={<BookOpen className="h-4 w-4" />}
+          >
+            Developer Guide
+          </Button>
           <Badge label="Meta Business Verified" variant="success" />
-          <Button variant="primary" leftIcon={<Send className="w-4 h-4" />} onClick={() => addToast("Broadcast queued", "3 approved templates scheduled to opted-in clients.", "success")}>
+          <Button variant="primary" size="sm" leftIcon={<Send className="w-4 h-4" />} onClick={() => addToast("Broadcast queued", "3 approved templates scheduled to opted-in clients.", "success")}>
             New broadcast
           </Button>
         </div>
@@ -405,6 +417,190 @@ export default function WhatsAppHub() {
           </Link>
         </Card>
       </div>
+
+      {/* Developer Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-emerald-400">Senior Advocate & Judicial Guidance</p>
+                <h2 className="text-lg font-bold text-white">WhatsApp Business Hub — Developer Guide</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Mandatory Section 1: What it is & Why it is needed */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  1. Core Purpose & Mandatory Overview
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs leading-relaxed space-y-3">
+                  <div>
+                    <strong className="text-white text-sm block mb-1">What it is:</strong>
+                    <p className="text-slate-300">
+                      The WhatsApp Business Hub is the official Meta API integration workspace for sending automated hearing reminders, case status updates, invoice payment links, and court adjournment notices directly to clients via WhatsApp.
+                    </p>
+                  </div>
+                  <div className="border-t border-slate-800/80 pt-2">
+                    <strong className="text-white text-sm block mb-1">Why it is needed (Senior Advocate & Judicial Officer's Perspective):</strong>
+                    <p className="text-slate-400">
+                      WhatsApp is the primary mode of real-time communication in India. However, legal communications require strict compliance:
+                      <br />
+                      • <strong>Bar Council of India Rule 36 Compliance:</strong> Lawyers are strictly prohibited from soliciting clients or running unsolicited cold advertising. All WhatsApp outreach must be client-initiated or backed by explicit digital opt-in consent.
+                      <br />
+                      • <strong>Meta 24-Hour Customer Service Window:</strong> Within 24 hours of a client message, advocates can send free-form replies. Outside this window, only Meta-approved Highly Structured Message (HSM) templates with dynamic variables (such as client name or hearing date) can be sent.
+                      <br />
+                      • <strong>Privilege & Audit Security:</strong> Communication logs are bound under Section 132 BSA 2023 advocate-client privilege.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 2: Beginner Legal Glossary for Developers (Zero Legal Knowledge Required) */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  2. Indian Law & WhatsApp API Concepts Explained for Software Engineers
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-3 leading-relaxed">
+                  <p className="text-slate-300">
+                    If you are a software developer with zero background in Indian legal regulations or WhatsApp Business API, here are the essential terms:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">1. BCI Rule 36 (No Solicitation)</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Bar Council of India rule banning advocates from advertising or cold messaging. All WhatsApp outreach requires recorded digital opt-in consent.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">2. Meta-Approved HSM Template</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Pre-reviewed message format approved by Meta for utility notices (e.g. Hearing Reminders, Case Updates, Payment Requests).
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">3. 24-Hour Session Window</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Meta rule: Free-form messaging is allowed for 24 hours after a client sends a message. Once expired, template messages must be used.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">4. Digital Opt-in Ledger</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Audit log recording client consent timestamps and phone numbers before triggering broadcast messages.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 3: Component Breakdown */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  3. Complete Component & Feature Breakdown
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      1. Top Metric Cards (4 Cards)
+                    </p>
+                    <p className="text-slate-400">Displays counts for <strong className="text-slate-200">Approved Templates</strong>, <strong className="text-slate-200">Opted-in Clients</strong>, <strong className="text-slate-200">30-day Message Volume</strong>, and <strong className="text-slate-200">Read-rate %</strong>.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-blue-400" />
+                      2. Live Conversations Column
+                    </p>
+                    <p className="text-slate-400">Searchable list of active client chats, online status indicator, unread message badges, and <strong className="text-emerald-400">Invite Client</strong> opt-in trigger.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-amber-400" />
+                      3. Chat Thread & Template Compose Box
+                    </p>
+                    <p className="text-slate-400">Mock message history showing client queries and dispatched templates. Interactive template selector pill list with dynamic variable previews.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-purple-400" />
+                      4. Approved Template Library & Compliance Ledger
+                    </p>
+                    <p className="text-slate-400">Grid displaying approved Meta templates (<strong className="text-white">Hearing Reminder</strong>, <strong className="text-white">Case Status</strong>, <strong className="text-white">Invoice Payment</strong>, <strong className="text-white">Adjournment</strong>) and BCI Rule 36 compliance checklist.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 4: Navigation & Button Actions Map */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  4. Button Actions & Navigation Links
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                        <th className="pb-2">UI Action</th>
+                        <th className="pb-2">Behavior</th>
+                        <th className="pb-2">Target Route</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                      <tr>
+                        <td className="py-2 font-semibold text-white">New Broadcast Button</td>
+                        <td className="py-2">Queues approved template broadcast to opted-in clients</td>
+                        <td className="py-2 font-mono text-emerald-400">Broadcast Queue</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Invite Client Button</td>
+                        <td className="py-2">Dispatches SMS with WhatsApp opt-in deep link</td>
+                        <td className="py-2 font-mono text-blue-400">Opt-in Dispatch</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Send Template Button</td>
+                        <td className="py-2">Dispatches selected HSM template to active client</td>
+                        <td className="py-2 font-mono text-emerald-400">API Dispatch</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              {/* Section 5: Backend API Checklist */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  5. Backend Developer API Checklist
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                  <ul className="space-y-1.5 text-slate-300">
+                    <li>• <strong className="text-white">List Conversations API:</strong> <code className="text-blue-400">GET /api/whatsapp/conversations</code></li>
+                    <li>• <strong className="text-white">Send Template Message API:</strong> <code className="text-blue-400">POST /api/whatsapp/messages/template</code></li>
+                    <li>• <strong className="text-white">Record Opt-in Consent:</strong> <code className="text-blue-400">POST /api/whatsapp/opt-in</code></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

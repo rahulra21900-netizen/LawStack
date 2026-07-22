@@ -9,7 +9,7 @@ import { DetailDrawer } from "@/components/dialogs/DetailDrawer";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_CASES } from "@/mocks/cases";
 import { Case } from "@/types";
-import { Briefcase, Plus, Download, Eye, ExternalLink } from "lucide-react";
+import { Briefcase, Plus, Download, Eye, ExternalLink, BookOpen, X } from "lucide-react";
 import Link from "next/link";
 
 export default function CasesListPage() {
@@ -21,6 +21,7 @@ export default function CasesListPage() {
   const [density, setDensity] = useState<"comfortable" | "compact">("comfortable");
   const [inspectCase, setInspectCase] = useState<Case | null>(null);
   const [showFilterBar, setShowFilterBar] = useState(false);
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   const filteredCases = MOCK_CASES.filter((c) => {
     const matchesSearch =
@@ -51,6 +52,13 @@ export default function CasesListPage() {
           </h1>
           <p className="text-xs text-slate-400">Search, filter, and inspect active legal firm matters.</p>
         </div>
+        <Button
+          variant="outline"
+          leftIcon={<BookOpen className="w-4 h-4" />}
+          onClick={() => setShowDeveloperGuide(true)}
+        >
+          Developer Guide
+        </Button>
       </div>
 
       {/* Metrics */}
@@ -229,6 +237,212 @@ export default function CasesListPage() {
           }}
         />
       )}
+
+      {/* Developer Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-blue-400">Senior Advocate & Judicial Guidance</p>
+                <h2 className="text-lg font-bold text-white">Cases & Matter Management — Developer Guide</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Mandatory Section 1: What it is & Why it is needed */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  1. Core Purpose & Mandatory Overview
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs leading-relaxed space-y-3">
+                  <div>
+                    <strong className="text-white text-sm block mb-1">What it is:</strong>
+                    <p className="text-slate-300">
+                      The Cases & Matter Management page is the central court registry for a law firm. It indexes every active lawsuit, criminal bail petition, tax dispute, intellectual property case, and corporate contract handled by the firm.
+                    </p>
+                  </div>
+                  <div className="border-t border-slate-800/80 pt-2">
+                    <strong className="text-white text-sm block mb-1">Why it is needed (Advocate's Perspective):</strong>
+                    <p className="text-slate-400">
+                      In Indian litigation, a law firm might manage 200+ ongoing cases across Supreme Court, High Courts, District Courts, and Tribunals. Advocates need a master docket to:
+                      <br />
+                      • Instantly search cases by title, docket code, or 16-digit eCourts **CNR number**.
+                      <br />
+                      • Track litigation progress across stages (Intake ➔ Pleadings ➔ Discovery ➔ Trial).
+                      <br />
+                      • Flag **Urgent & Critical Alerts** for court hearings scheduled for tomorrow so Advocates prepare oral arguments in time.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 2: Beginner Legal Glossary for Developers (Zero Legal Knowledge Required) */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  2. Indian Court & Litigation Concepts Explained for Software Engineers
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-3 leading-relaxed">
+                  <p className="text-slate-300">
+                    If you are a software developer with zero background in Indian legal systems, here are the essential concepts you need to know to build this page:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">1. What is a "Matter"?</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        In legal practice, a "Matter" is any specific legal assignment, lawsuit, dispute, or advisory retainer managed for a client by the law firm.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">2. What is a "CNR Code"?</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        The 16-digit alphanumeric **Case Number Record** assigned by eCourts India. It acts as the unique passport number for any court case in India across all court registries.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">3. Lead Counsel</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        The primary Advocate responsible for steering the case strategy and presenting oral arguments before the Bench of judges.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">4. Urgency Levels</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        <span className="text-red-400 font-semibold">Critical</span> = Hearing scheduled tomorrow / Urgent stay order pending.<br />
+                        <span className="text-amber-400 font-semibold">Urgent</span> = Hearing within 7 days.<br />
+                        <span className="text-slate-400 font-semibold">Normal</span> = Routine filing date.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 3: Component Breakdown */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  3. Complete Component & Feature Breakdown
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-blue-400" />
+                      1. Top Metric Cards (4 Cards)
+                    </p>
+                    <p className="text-slate-400">Displays counts for <strong className="text-slate-200">Active Matters</strong>, <strong className="text-slate-200">In Discovery Stage</strong>, <strong className="text-slate-200">Pre-Trial Stage</strong>, and <strong className="text-slate-200">Hearings Scheduled (Next 30 Days)</strong>.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      2. Microsoft Fluent Command Bar
+                    </p>
+                    <p className="text-slate-400">Includes real-time search input, <strong className="text-white">+ New Matter</strong> button (`/workspace/cases/new`), Refresh, Filter panel toggle, Density switcher (`Comfortable` / `Compact`), Export CSV, and batch Delete selected items.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-amber-400" />
+                      3. Expandable Filter Panel
+                    </p>
+                    <p className="text-slate-400">Toggles open to allow multi-parameter filtering by <strong className="text-slate-200">Practice Area</strong> (Intellectual Property, Tax Law, Corporate Law) and <strong className="text-slate-200">Matter Status</strong> (Active vs Archived).</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-cyan-400" />
+                      4. Selectable Data Table
+                    </p>
+                    <p className="text-slate-400">Renders case rows with checkboxes, Title, Docket Code, CNR number, Court Name, Practice Area, Lead Advocate, Stage Badge, Status Badge, Next Hearing date with Urgency Badges (<span className="text-red-400 font-semibold">Critical</span>, <span className="text-amber-400 font-semibold">Urgent</span>, <span className="text-slate-400 font-semibold">Normal</span>), and action icons.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5 md:col-span-2">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-purple-400" />
+                      5. Inspect Slide-Over Drawer (`DetailDrawer`)
+                    </p>
+                    <p className="text-slate-400">Tapping any case row or the <strong className="text-white">Eye icon</strong> opens a slide-over panel displaying case details without leaving the table view. Includes an <strong className="text-white">Open Case File</strong> button navigating to <code className="text-blue-400">/workspace/cases/[id]</code>.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 4: Navigation Map */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  4. Button Actions & Navigation Links
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                        <th className="pb-2">UI Button / Action</th>
+                        <th className="pb-2">Behavior</th>
+                        <th className="pb-2">Target Route</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                      <tr>
+                        <td className="py-2 font-semibold text-white">+ New Matter Button</td>
+                        <td className="py-2">Opens 5-step case creation wizard</td>
+                        <td className="py-2 font-mono text-blue-400">/workspace/cases/new</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Eye Icon (Inspect)</td>
+                        <td className="py-2">Opens slide-over detail drawer</td>
+                        <td className="py-2 font-mono text-emerald-400">In-page drawer</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">External Link Icon</td>
+                        <td className="py-2">Opens full case overview page</td>
+                        <td className="py-2 font-mono text-blue-400">/workspace/cases/[id]</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Filter Toggle Button</td>
+                        <td className="py-2">Expands / collapses the filter panel</td>
+                        <td className="py-2 font-mono text-emerald-400">In-page state</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Density Switcher</td>
+                        <td className="py-2">Toggles row spacing between Comfortable & Compact</td>
+                        <td className="py-2 font-mono text-emerald-400">In-page state</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              {/* Section 5: Backend API Checklist */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  5. Backend Developer API Checklist
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                  <ul className="space-y-1.5 text-slate-300">
+                    <li>• <strong className="text-white">List Cases API:</strong> <code className="text-blue-400">GET /api/cases?search=&practice=&status=</code></li>
+                    <li>• <strong className="text-white">Case Stats API:</strong> <code className="text-blue-400">GET /api/cases/stats</code></li>
+                    <li>• <strong className="text-white">Batch Delete API:</strong> <code className="text-blue-400">DELETE /api/cases/batch</code></li>
+                    <li>• <strong className="text-white">Export CSV API:</strong> <code className="text-blue-400">GET /api/cases/export</code></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+

@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button } from "@/components/ui";
 import { Input, Select } from "@/components/forms";
-import { Users } from "lucide-react";
+import { Users, BookOpen, X } from "lucide-react";
 
 export default function NewClientPage() {
   const router = useRouter();
   const { addToast } = useNotifications();
   const [step, setStep] = useState(1);
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   // Wizard state values
   const [name, setName] = useState("");
@@ -29,13 +30,22 @@ export default function NewClientPage() {
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
-      <div className="space-y-1">
-        <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Clients", href: "/workspace/clients" }, { name: "New" }]} />
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          <Users className="w-5 h-5 text-emerald-500" />
-          <span>Onboard New Client</span>
-        </h1>
-        <p className="text-xs text-slate-400">Complete the onboarding wizard to create a client registry.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="space-y-1">
+          <Breadcrumb items={[{ name: "Workspace", href: "/workspace/dashboard" }, { name: "Clients", href: "/workspace/clients" }, { name: "New" }]} />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+            <Users className="w-5 h-5 text-emerald-500" />
+            <span>Onboard New Client</span>
+          </h1>
+          <p className="text-xs text-slate-400">Complete the onboarding wizard to create a client registry.</p>
+        </div>
+        <Button
+          variant="outline"
+          leftIcon={<BookOpen className="w-4 h-4" />}
+          onClick={() => setShowDeveloperGuide(true)}
+        >
+          Developer Guide
+        </Button>
       </div>
 
       {/* Progress Tracker */}
@@ -140,6 +150,123 @@ export default function NewClientPage() {
           )}
         </div>
       </div>
+
+      {/* Developer Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-emerald-400">Developer Guide</p>
+                <h2 className="text-lg font-bold text-white">Client Intake Wizard — Developer Guide</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Section 1: Overview */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  1. Core Purpose & Legal Context
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs leading-relaxed space-y-3">
+                  <div>
+                    <strong className="text-white text-sm block mb-1">What it is:</strong>
+                    <p className="text-slate-300">
+                      The Client Onboarding Wizard is a 4-step form used by law firms to onboard new individual clients or corporate enterprise entities into the LawStack platform.
+                    </p>
+                  </div>
+                  <div className="border-t border-slate-800/80 pt-2">
+                    <strong className="text-white text-sm block mb-1">Why it is needed:</strong>
+                    <p className="text-slate-400">
+                      Onboarding a client requires structured data collection (corporate name, primary contact details, billing retainer terms) while establishing DPDP Act 2023 data consent records and dispatching private portal invitations.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 2: 4-Step Breakdown */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  2. 4-Step Onboarding Form Breakdown
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-blue-400" />
+                      Step 1: Profile & Entity
+                    </p>
+                    <p className="text-slate-400">Captures Client / Corporate Entity Name, DBA subsidiary name, and Industry Scope (Technology, Financial, Manufacturing, Personal).</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      Step 2: Contact Details
+                    </p>
+                    <p className="text-slate-400">Captures primary email address and phone line for automated WhatsApp hearing updates and billing notifications.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-amber-400" />
+                      Step 3: Billing Terms
+                    </p>
+                    <p className="text-slate-400">Sets retainer payment schedule (Net 15, Net 30, Due Upon Receipt) for automated invoice generation.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-purple-400" />
+                      Step 4: Verification & Register
+                    </p>
+                    <p className="text-slate-400">Displays summary card for partner review before submitting the record to the backend database.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 3: Navigation Map */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  3. Button Actions & Submit Handler
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                  <p><strong className="text-white">Next Step Button:</strong> Advances form state (`step` state incremented from 1 to 4).</p>
+                  <p><strong className="text-white">Register Client Button:</strong> Triggers form submission (`POST /api/clients`), creates client record, and redirects to `/workspace/clients`.</p>
+                </div>
+              </section>
+
+              {/* Section 4: Backend Payload Spec */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  4. Backend API Payload Specification (`POST /api/clients`)
+                </h3>
+                <pre className="p-4 bg-slate-950 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 overflow-x-auto">
+{`{
+  "name": "${name || "Reliance Retail"}",
+  "companyName": "${companyName || "Stark Labs"}",
+  "email": "${email || "billing@stark.com"}",
+  "phone": "${phone || "+91 98765 43210"}",
+  "industry": "${industry}",
+  "billingTerms": "${billingTerms}",
+  "dpdpConsentCaptured": true,
+  "dpdpConsentTimestamp": "${new Date().toISOString()}"
+}`}
+                </pre>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

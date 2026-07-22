@@ -1,15 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useNotifications } from "@/hooks/useNotifications";
 import { Breadcrumb, Button, Badge } from "@/components/ui";
 import { DataTable } from "@/components/tables";
 import { Card, MetricCard } from "@/components/cards";
 import { MOCK_REPORTS } from "@/mocks/reports";
-import { ChartBar as BarChart2, Plus, Download, FileText, TrendingUp, Clock, CircleCheck as CheckCircle2 } from "lucide-react";
+import { ChartBar as BarChart2, Plus, Download, FileText, TrendingUp, Clock, CircleCheck as CheckCircle2, BookOpen, X } from "lucide-react";
 
 export default function ReportsPage() {
   const { addToast } = useNotifications();
+  const [showDeveloperGuide, setShowDeveloperGuide] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -24,9 +25,19 @@ export default function ReportsPage() {
           </h1>
           <p className="text-xs text-slate-400">Generate and review legal audits, workload balance, and invoice summaries.</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDeveloperGuide(true)}
+            className="border-blue-500/40 text-blue-300 hover:bg-blue-500/10"
+            leftIcon={<BookOpen className="h-4 w-4" />}
+          >
+            Developer Guide
+          </Button>
           <Button
             variant="secondary"
+            size="sm"
             leftIcon={<Download className="w-4 h-4" />}
             onClick={() => addToast("Export Reports", "Report archive bundle exported.", "success")}
           >
@@ -34,6 +45,7 @@ export default function ReportsPage() {
           </Button>
           <Button
             variant="primary"
+            size="sm"
             leftIcon={<Plus className="w-4 h-4" />}
             onClick={() => addToast("Report Generation", "Compilation engine launched in background.", "info")}
           >
@@ -81,6 +93,177 @@ export default function ReportsPage() {
           { header: "Timestamp", accessor: (r) => <span className="text-slate-400">{new Date(r.createdAt).toLocaleString()}</span> },
         ]}
       />
+
+      {/* Developer Guide Modal */}
+      {showDeveloperGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+          <div className="w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 sticky top-0 bg-slate-900 z-10">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-blue-400">Senior Advocate & Judicial Guidance</p>
+                <h2 className="text-lg font-bold text-white">Practice Management Reports — Developer Guide</h2>
+              </div>
+              <button
+                onClick={() => setShowDeveloperGuide(false)}
+                className="rounded-lg border border-slate-700 p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+                aria-label="Close developer guide modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="space-y-6 p-6 text-sm text-slate-300">
+              {/* Mandatory Section 1: What it is & Why it is needed */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  1. Core Purpose & Mandatory Overview
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs leading-relaxed space-y-3">
+                  <div>
+                    <strong className="text-white text-sm block mb-1">What it is:</strong>
+                    <p className="text-slate-300">
+                      The Practice Management Reports module compiles operational, financial, workload, and court matter velocity analytics for the law firm.
+                    </p>
+                  </div>
+                  <div className="border-t border-slate-800/80 pt-2">
+                    <strong className="text-white text-sm block mb-1">Why it is needed (Senior Advocate & Judicial Officer's Perspective):</strong>
+                    <p className="text-slate-400">
+                      Managing partners and senior counsel need actionable data to optimize law firm performance:
+                      <br />
+                      • <strong>Firm Productivity & Matter Velocity Audits:</strong> Measures case progression speeds across court stages (intake ➔ pleadings ➔ trial ➔ judgment) and tracks advocate billable hour utilization.
+                      <br />
+                      • <strong>GST 18% RCM & Retainer Ledger Audits:</strong> Formats tax-compliant financial summaries for GST 18% Reverse Charge Mechanism accounting.
+                      <br />
+                      • <strong>Automated Recurring Distribution:</strong> Automatically compiles weekly financial reports and monthly performance digests for firm equity partners.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 2: Beginner Legal Glossary for Developers (Zero Legal Knowledge Required) */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  2. Indian Practice Reports Concepts Explained for Software Engineers
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-3 leading-relaxed">
+                  <p className="text-slate-300">
+                    If you are a software developer with zero background in law firm business operations, here are the key concepts:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">1. Matter Velocity Report</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Analytical breakdown measuring the average duration (in days) cases take to move from filing/intake through pleadings, discovery, and final judgment.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">2. Fee Realization Rate</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Financial metric comparing total professional legal fees billed against actual cash collected from clients.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">3. Audit Log Archive</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Cryptographically preserved historical report exports stored for compliance reviews.
+                      </p>
+                    </div>
+
+                    <div className="p-3 bg-slate-900/80 rounded-lg border border-slate-800 space-y-1">
+                      <strong className="text-white font-bold block">4. Scheduled Automated Compilation</strong>
+                      <p className="text-slate-400 text-[11px]">
+                        Background report engine running recurring cron jobs to compile PDF/CSV summaries.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 3: Component Breakdown */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  3. Complete Component & Feature Breakdown
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-blue-400" />
+                      1. Metric Cards (4 Cards)
+                    </p>
+                    <p className="text-slate-400">Displays counts for <strong className="text-slate-200">Reports (30d)</strong>, <strong className="text-slate-200">Scheduled Reports</strong>, <strong className="text-slate-200">Avg Compile Time</strong>, and <strong className="text-slate-200">Shared Count</strong>.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                      2. Quick Report Templates (4 Templates)
+                    </p>
+                    <p className="text-slate-400">Template triggers: <strong className="text-emerald-400">Financial</strong>, <strong className="text-blue-400">Productivity</strong>, <strong className="text-amber-400">Matter Velocity</strong>, and <strong className="text-indigo-400">Team Workload</strong>.</p>
+                  </div>
+
+                  <div className="p-3.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1.5 col-span-1 md:col-span-2">
+                    <p className="font-bold text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-purple-400" />
+                      3. Archived Reports Data Table
+                    </p>
+                    <p className="text-slate-400">DataTable displaying Report Title, Category Badge, Author/Generated By, and Generation Timestamp.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Section 4: Navigation & Button Actions Map */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  4. Button Actions & Interactive Controls Navigation Map
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                        <th className="pb-2">UI Action</th>
+                        <th className="pb-2">Behavior</th>
+                        <th className="pb-2">Target Output</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Generate Report Button</td>
+                        <td className="py-2">Launches background report compilation engine</td>
+                        <td className="py-2 font-mono text-blue-400">Async Report Engine</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-semibold text-white">Export Archive Button</td>
+                        <td className="py-2">Exports ZIP bundle of generated PDF/CSV reports</td>
+                        <td className="py-2 font-mono text-emerald-400">ZIP Export</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              {/* Section 5: Backend API Checklist */}
+              <section className="space-y-3">
+                <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest border-b border-slate-800 pb-2">
+                  5. Backend Developer API Checklist
+                </h3>
+                <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                  <ul className="space-y-1.5 text-slate-300">
+                    <li>• <strong className="text-white">List Archived Reports:</strong> <code className="text-blue-400">GET /api/reports</code></li>
+                    <li>• <strong className="text-white">Generate Custom Report:</strong> <code className="text-blue-400">POST /api/reports/generate</code></li>
+                    <li>• <strong className="text-white">Export Archive ZIP:</strong> <code className="text-blue-400">GET /api/reports/export-archive</code></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
